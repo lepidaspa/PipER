@@ -37,20 +37,20 @@ def get_model (request):
     #fields_table = json.loads(mdl)
     fields_table = {
         'Duct' : {
-	    '_type':'LineString',
-            'ID' : 'str',
+	        '_type':'LineString',
+            'ID' : 'int',
             'Owner': 'str',
             'OwnerID' : 'str',
             'StartID': 'str',
             'EndID': 'str',
-            'Length': 'str',
+            'Length': 'int',
             'Type': 'str',
             'Availability': 'str',
             'CreationDate': 'str',
             'LastUpdate': 'str',
         },
         'Well' : {
-	    '_type':'Point',
+            '_type':'Point',
             'ID': 'int',
             'Owner': 'str',
             'OwnerID': 'str',
