@@ -5,10 +5,7 @@
 			@font-face {
 				font-family: 'WebSymbolsRegular';
 				src: url('../../fstatic/fonts/websymbols-regular-webfont.eot');
-				src: url('../../fstatic/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'), 
-					url('../../fstatic/fonts/websymbols-regular-webfont.woff') format('woff'), 
-					url('../../fstatic/fonts/websymbols-regular-webfont.ttf') format('truetype'), 
-					url('../../fstatic/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
+				src: url('../../fstatic/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../../fstatic/fonts/websymbols-regular-webfont.woff') format('woff'), url('../../fstatic/fonts/websymbols-regular-webfont.ttf') format('truetype'), url('../../fstatic/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
 			}
 			.logo {
 				height: 50px;
@@ -148,27 +145,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
 		<script src="https://github.com/andyet/ICanHaz.js/raw/master/ICanHaz.min.js"></script>
-		
+
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
-		
+
 		<script id="inv_col_int" type="text/html">
-  			<label for="search_geo_address">{{}}:</label>
-                                        <select>
-						<option value="lt">&lt;</option>
-                                                <option value="lt">&le;</option>
-                                                <option value="lt">=</option>
-                                                <option value="lt">&ge;</option>
-                                                <option value="lt">&gt;</option>			
-					</select>
-					<select>
-						<option value="123"> 123</option>
-					</select>
+
 		</script>
 		<script id="inv_col_src" type="text/html">
-			
+
 		</script>
-		
+
 		<script>
 			FIdER = {};
 			OpenLayers.ImgPath = "https://github.com/sirmmo/openlayers_themes/raw/master/dark/";
@@ -195,7 +182,6 @@
 			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
 			FIdER.start.extend(new OpenLayers.LonLat(12.7558364, 45.1395245).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
-
 			FIdER.vector_layer = new OpenLayers.Layer.Vector();
 			//FIdER.features = new OpenLayers.
 
@@ -211,7 +197,7 @@
 			});
 
 			$('.nav_btn').live('click', function() {
-				if($(this).hasClass('selected')) {
+				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
 				} else {
@@ -278,30 +264,30 @@
 					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
 
 					FIdER.map.zoomToExtent(FIdER.start);
-					
+
 					//prepare_gui
-					$.getJSON("/request/model?full=1", function(data){
-						
+					$.getJSON("/request/model?full=1", function(data) {
+
 						model = [];
-						
-						for (var i in data){
+
+						for (var i in data) {
 							table = {};
-							
+
 							table.name = i;
 							table.cols = []
 							stuff = data[i];
-							for (var col in stuff){
+							for (var col in stuff) {
 								col_obj = {}
 								col_obj.name = col;
 								col_obj.type = stuff['col']
 								table.cols.push(col_obj);
 							}
 							model.push(table);
-							
+
 							$('#inventory_q').append(ich[type](table));
 						}
 					});
-					
+
 				});
 			});
 
@@ -349,79 +335,88 @@
 				</div>
 				<div class="content" id="inventory_q">
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">ID:</label>
+						<input type="checkbox">
+						</input><label for="search_col_id">ID:</label>
 						<select name="search_col_id">
 							<option value="lt">&lt;</option>
-                            <option value="lt">&le;</option>
-                            <option value="lt">=</option>
-                            <option value="lt">&ge;</option>
-                            <option value="lt">&gt;</option>			
+							<option value="lt">&le;</option>
+							<option value="lt" selected="selected">=</option>
+							<option value="lt">&ge;</option>
+							<option value="lt">&gt;</option>
 						</select>
-					<input type="text"></input>
+						<input type="text">
+						</input>
 					</div>
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">Owner:</label>
-						 in 
-					<select multiple="multiple" name="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="opel">Opel</option>
-  <option value="audi">Audi</option>
-</select>
+						<input type="checkbox">
+						</input><label for="search_col_owner">Owner:</label>
+						in
+						<select multiple="multiple" name="owner_val">
+							<option value="1">Lepida S.p.A.</option>
+						</select>
 					</div>
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">OwnerID:</label>
+						<input type="checkbox">
+						</input><label for="search_col_id">OwnerID:</label>
 						<select name="search_col_id">
 							<option value="lt">&lt;</option>
-                            <option value="lt">&le;</option>
-                            <option value="lt">=</option>
-                            <option value="lt">&ge;</option>
-                            <option value="lt">&gt;</option>			
+							<option value="lt">&le;</option>
+							<option value="lt" selected="selected">=</option>
+							<option value="lt">&ge;</option>
+							<option value="lt">&gt;</option>
 						</select>
-					<input type="text"></input>
+						<input type="text">
+						</input>
 					</div>
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">StartID:</label>
+						<input type="checkbox">
+						</input><label for="search_col_id">StartID:</label>
 						<select name="search_col_id">
 							<option value="lt">&lt;</option>
-                            <option value="lt">&le;</option>
-                            <option value="lt">=</option>
-                            <option value="lt">&ge;</option>
-                            <option value="lt">&gt;</option>			
+							<option value="lt">&le;</option>
+							<option value="lt" selected="selected">=</option>
+							<option value="lt">&ge;</option>
+							<option value="lt">&gt;</option>
 						</select>
-					<input type="text"></input>
+						<input type="text">
+						</input>
 					</div>
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">EndID:</label>
+						<input type="checkbox">
+						</input><label for="search_col_id">EndID:</label>
 						<select name="search_col_id">
 							<option value="lt">&lt;</option>
-                            <option value="lt">&le;</option>
-                            <option value="lt">=</option>
-                            <option value="lt">&ge;</option>
-                            <option value="lt">&gt;</option>			
+							<option value="lt">&le;</option>
+							<option value="lt" selected="selected">=</option>
+							<option value="lt">&ge;</option>
+							<option value="lt">&gt;</option>
 						</select>
-					<input type="text"></input>
+						<input type="text">
+						</input>
 					</div>
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">Length:</label>
+						<input type="checkbox">
+						</input><label for="search_col_id">Length:</label>
 						<select name="search_col_id">
 							<option value="lt">&lt;</option>
-                            <option value="lt">&le;</option>
-                            <option value="lt">=</option>
-                            <option value="lt">&ge;</option>
-                            <option value="lt">&gt;</option>			
+							<option value="lt">&le;</option>
+							<option value="lt" selected="selected">=</option>
+							<option value="lt">&ge;</option>
+							<option value="lt">&gt;</option>
 						</select>
-					<input type="text"></input>
+						<input type="text">
+						</input>
 					</div>
 					<div class="line">
-					<input type="checkbox"></input><label for="search_col_id">Type:</label>
-in
-					<select multiple="multiple" name="cars">
-  <option value="volvo">TLC</option>
-  <option value="saab">Rete Idrica</option>
-  <option value="opel">Rete Elettrica</option>
-  <option value="audi">Pubblica Illuminazione</option>
-</select>
+						<input type="checkbox">
+						</input><label for="search_col_id">Type:</label>
+						in
+						<select multiple="multiple" name="cars">
+							<option value="volvo">TLC</option>
+							<option value="saab">Rete Idrica</option>
+							<option value="opel">Rete Elettrica</option>
+							<option value="audi">Pubblica Illuminazione</option>
+						</select>
 					</div>
 				</div>
 			</div>
