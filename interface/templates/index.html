@@ -314,7 +314,7 @@
 			function get_queries(datas){
 				$.ajax({
 					url:'/interface/s',
-					data:{'q':data},
+					data:{'q':"{\"column\":\"Length\",\"operator\":\"gt\",\"params\":10}"},
 					success:function(layer){
 						if(layer.properties.hasKey('errors'))
 							alert(layer.properties.errors);
