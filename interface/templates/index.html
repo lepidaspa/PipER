@@ -289,7 +289,38 @@
 					});
 
 				});
+				
+				
+				$('#do_search_btn').click(function(){
+					$.ajax({
+						url:'/interface/search',
+						data:{
+							bb:"[-180,-90,180,90]",
+							cbd:"show_data",
+							cbq:"get_queries",
+							q:{name:"Length", op:"lt", value:"130"}
+						}
+					});
+				});
+				
+				
+				
 			});
+			
+			function show_data(datas){
+				
+			}
+			
+			function get_query(datas){
+				$.ajax({
+					url:'/interface/s',
+					data:{'q':data},
+					success:function(layer){
+						if(layer.properties.hasKey('errors'))
+							alert(layer.properties.errors);
+					}
+				});
+			}
 
 		</script>
 	</head>
