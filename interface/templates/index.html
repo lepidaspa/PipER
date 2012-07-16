@@ -294,6 +294,7 @@
 				$('#do_search_btn').click(function(){
 					$.ajax({
 						url:'/interface/search',
+						dataType:"jsonp",
 						data:{
 							bb:"[-180,-90,180,90]",
 							cbd:"show_data",
