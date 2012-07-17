@@ -6,6 +6,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 from interface import views
+from data import views
+from broker import views
+from model_manager import views
 
 urlpatterns = patterns('',
     # Examples:
@@ -27,7 +30,6 @@ urlpatterns = patterns('',
     url(r'^federation/new/helo', views.start_token),
     
     url(r'^$', views.index),
-    url(r'^interface/urls$', views.urls),
     url(r'^interface/search', views.search),
     url(r'^interface/s', views.do_search),
 
