@@ -8,24 +8,61 @@ except:
     import simplejson as json
 import urllib2
 
-# Create your views here.
-def jsonp_forward(request):
-    bb = request.REQUEST.get('BB', "[-180,-90,180,90]")
-    cb = request.REQUEST.get('callback', "get_map")
-    #get proxies for bb
-    
-    proxies = Proxy.geo.get_for_BB(bb)
-    
-    full_map = []
-    #get data from proxy
-    for proxy in proxies:    
-        full_map.append(proxy.token) 
-    ret = ";".join(["%s(%s)" % (cb,tok,) for tok in full_map])
-    return HttpResponse(ret)
+from broker.models import *
 
 
-def get_map(request, proxy):
-    proxy = Proxy.objects.get(token = proxy)
-    #/data/proxy.token
-    return HttpResponse(json.dumps(json.loads(urllib2.urlopen("%s/data/%s" % (settings.FIdER_BROKER, proxy.token,)))))
+def search(request):
+    """
+    Search pattern
+    """
+    bb = request.REQUEST.get('bb')
+    bb = json.loads(bb)
+    query = request.REQUEST.get('q')
+    query= json.loads(query)
+    cb_data = request.REQUEST.get('cbd')
+    cb_queries = request.REQUEST.get('cbq')
+
     
+
+    proxies = get_for_bb(bb)
+
+    data = []#taManager.query(bb, query)   
+    
+
+
+    response = ""
+
+    response+=cb_data+"("+json.dumps(data)+");"
+
+    for p in proxies:
+        p['bb'] = bb
+        p['q'] = query
+        response+=cb_queries+"("+json.dumps(p)+");"
+        #response+=cb_queries+"(\"/"+p['url'] + "/query/"+p['token']+"/"+p['name']+"\");"
+
+
+    return HttpResponse(response)
+
+def do_search(request):
+    query = request.REQUEST.get('q')
+    query= json.loads(query)
+
+    maxitems = int(request.REQUEST.get('maxitems','100'))
+    offset = int(request.REQUEST.get('offset','0'))
+    
+    message = {}
+    message['token'] = query['token']
+    message['message_type'] = "request"
+    message['message_format'] = "query"
+    message['query'] = {}
+    message['query']['BB'] = query['bb']
+    message['query']['inventory'] = query['q']
+    message['query']['time'] = ""
+    message['maxitems'] = maxitems
+    message['offset'] = offset
+
+    import urllib2
+    url = query['url'] + "/query/" + query['token'] + "/" + query['name'] + "/"
+
+    response = urllib2.urlopen(url, 'remotequery='+json.dumps(message))
+    return HttpResponse(response)

@@ -12,7 +12,7 @@ from model_manager.models import *
 
 
 
-def get_models(request):
+def get_model(request):
     data = {}
     v = request.REQUEST.get('v', None)
     m = request.REQUEST.get('m', None)
@@ -26,6 +26,43 @@ def get_models(request):
             #data[model.name]['_type'] = model.type
             for attribute in model.attributes:
                 data[model.name][str(attribute)] = attribute.type
-    return HttpResponse(json.dumps(data))
+    return HttpResponse(json.dumps(data), mimetype="application/json")
         
     
+def _get_model (request):
+    """
+    Sends the conversion table
+    """
+
+    #fb = settings.FIdER_BACKEND_URL
+    #mdl = sendMessageToServer("", fb+"/get_model/last", "GET")
+
+    #fields_table = json.loads(mdl)
+    fields_table = {
+        'Duct' : {
+            '_type':'LineString',
+            'ID' : 'int',
+            'Owner': 'str',
+            'OwnerID' : 'str',
+            'StartID': 'str',
+            'EndID': 'str',
+            'Length': 'int',
+            'Type': 'str',
+            'Availability': 'str',
+            'CreationDate': 'str',
+            'LastUpdate': 'str',
+        },
+        'Well' : {
+            '_type':'Point',
+            'ID': 'int',
+            'Owner': 'str',
+            'OwnerID': 'str',
+            'Address': 'str',
+            'Type': 'str',
+            'CreationDate': 'str',
+            'LastUpdate': 'str',
+        }
+
+    }
+
+    return HttpResponse(json.dumps(fields_table), mimetype="application/json")
