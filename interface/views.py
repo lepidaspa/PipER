@@ -214,3 +214,10 @@ def do_search(request):
 
     response = urllib2.urlopen(url, 'remotequery='+json.dumps(message))
     return HttpResponse(response)
+
+
+def newsearch (request):
+
+
+
+	return render_to_response('newsearch.html')

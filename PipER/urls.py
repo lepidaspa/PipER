@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^interface/urls$', views.urls),
     url(r'^interface/search', views.search),
     url(r'^interface/s', views.do_search),
+	url(r'^newui/', views.newsearch)
 
     
 )

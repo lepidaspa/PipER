@@ -1,0 +1,216 @@
+body
+{
+    font-family:        sans-serif;
+    background-color:   #ff8800;
+    color:              #ffffff;
+    /*text-align: center; */
+}
+
+input, select
+{
+    border:             1px solid #ff8800;
+    background-color:   #ffffff;
+
+}
+
+#servicebar
+{
+    position:           absolute;
+    top:                0;
+    left:               8px;
+    right:              8px;
+    height:             1.5em;
+
+    padding-left:       4px;
+    padding-top:        4px;
+
+    font-weight:        bold;
+    font-style:         italic;
+
+    border-bottom:      1px solid #ffffff;
+}
+
+#contextguide
+{
+
+    position:           absolute;
+    top:                2.5em;
+    left:               80%;
+    right:              0;
+    bottom:             0;
+    overflow:           auto;
+    padding-left:       8px;
+    padding-right:      8px;
+
+}
+
+
+#navigation
+{
+    position:           absolute;
+    top:                2.5em;
+    left:               0;
+    right:              75%;
+    bottom:             0;
+    overflow:           auto;
+    padding-left:       8px;
+    padding-right:      8px;
+}
+
+#navigation > *, #contextguide > *
+{
+    font-size:          small;
+
+}
+
+
+#functionality
+{
+    position:           absolute;
+    top:                2.5em;
+    left:               25%;
+    right:              20%;
+    bottom:             0;
+
+    overflow:           auto;
+
+    padding:            0.5em;
+
+    border-left:        1px solid #ffffff;
+    border-right:       1px solid #ffffff;
+}
+
+
+.uipanel
+{
+    border:             1px solid #ffffff;
+    padding:            8px;
+    margin-bottom:      8px;
+}
+
+#sp_place
+{
+    max-width:          12em;
+    min-width:          8em;
+}
+
+#sp_radius_combo
+{
+    text-wrap:          none;
+}
+
+#sp_radius_unit
+{
+    display:            inline;
+}
+
+input.txtradius
+{
+    width:                  3em;
+    /*min-width:              6em; */
+}
+
+input.txtcoord
+{
+    max-width:              9.5em;
+}
+
+input.txtmeas
+{
+    max-width:              4em;
+}
+
+fieldset
+{
+    border:             none;
+    padding:            0;
+    margin:             0;
+}
+
+label
+{
+    font-weight:        bold;
+}
+
+table.formtable
+{
+
+    width:              100%;
+    padding:            0;
+
+
+}
+
+.container
+{
+    padding:            0;
+    overflow:           hidden;
+}
+
+tr, td
+{
+    padding:            0;
+}
+
+tr
+{
+    width:              100%;
+}
+
+hr
+{
+    width:              95%;
+    border:             none;
+    border-top:         1px solid #ffffff;
+    left:               auto;
+    right:              auto;
+}
+
+
+td
+{
+    max-width:          40%;
+}
+
+
+
+.searchfields
+{
+    display:             table;
+}
+
+.sf_field
+{
+    display:            table-row;
+}
+
+.sf_fieldname, .sf_fieldcontrol, .sf_fieldnote
+{
+    display:            table-cell;
+}
+
+.sf_fieldname
+{
+    font-weight:        bold;
+}
+
+.sf_field.bookend
+{
+    border-bottom:      1px solid #ffffff;
+}
+
+#sf_fields_ownerid, #sf_fields_owner
+{
+    width:              98%;
+}
+
+#sf_fields_usage
+{
+    width:              100%;
+}
+
+.sf_fieldname.tall
+{
+    vertical-align: top;
+}
+

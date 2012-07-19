@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
+    <script src="../../newsearch.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../fstatic/newsearch.css">
+    <title>PipER UI V2</title>
+
+
+</head>
+<body>
+
+<div id="servicebar">
+    PipER
+</div>
+
+<div id="navigation">
+
+    <div class="uipanel" id="panel_search">
+
+
+        <div class="container">
+            <table class="formtable">
+
+
+                <tr>
+                    <td class="switch"></td>
+                    <td><label for="sp_place">Luogo</label></td>
+                    <td><label for="sp_radius">Entro</label></td>
+                </tr>
+
+                <tr>
+                    <td class="switch" ><input type="radio" name="geoparam" value="location" checked></td>
+                    <td><input id="sp_place" type="text"></td>
+                    <td id="sp_radius_combo">
+                        <input id="sp_radius" class="txtradius" type="text">&nbsp;
+                        <select id="sp_radius_unit">
+                            <option value="km" selected>km</option>
+                            <option value="m">m</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="switch"></td>
+                    <td colspan=2><label for="sp_bbox">Area</label></td>
+                </tr>
+
+                <tr>
+                    <td class="switch"><input type="radio" name="geoparam" value="bbox"></td>
+                    <td colspan=2>
+                        <!--
+                        <fieldset id="sp_bbox">
+                            <input type="text" id="bbox_w" class="txtcoord">&nbsp;<input type="text" id="bbox_s" class="txtcoord"><br><input type="text" id="bbox_e" class="txtcoord">&nbsp;<input type="text" id="bbox_n" class="txtcoord">
+                        </fieldset>
+                        -->
+                        [bbox x0] [bbox y0] [bbox x1] [bbox y1]
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <hr>
+
+
+        <div class="container">
+
+            <div class="searchfields">
+
+                <div class="sf_field">
+                    <div class="sf_fieldname">
+                        <label for="sf_fields_owner">Ente</label>
+                    </div>
+                    <div class="sf_fieldcontrol">
+                        <input id="sf_fields_owner" type="text">
+                    </div>
+                    <div class="sf_fieldnote">
+                        <input type=button id="getOwnersList" value="?">
+                    </div>
+                </div>
+
+                <div class="sf_field bookend">
+                    <div class="sf_fieldname">
+                        <label for="sf_fields_ownerid">Identificativo</label>
+                    </div>
+                    <div class="sf_fieldcontrol">
+                        <input id="sf_fields_ownerid" type="text">
+                    </div>
+                    <div class="sf_fieldnote">
+                        <input type="checkbox" id="sf_field_allow_related" checked>
+                    </div>
+                </div>
+
+
+                <div class="sf_field">
+                    <div class="sf_fieldname">
+                        <label for="sf_fields_lengths">Lunghezza</label>
+                    </div>
+                    <div class="sf_fieldcontrol">
+                        <fieldset id="sf_fields_lengths">
+                            min<input type="text" class="txtmeas" id="sf_fields_len_min">
+                            max<input type="text" class="txtmeas" id="sf_fields_len_max">
+                        </fieldset>
+                    </div>
+                    <div class="sf_fieldnote">
+                        cm
+                    </div>
+                </div>
+
+                <div class="sf_field">
+                    <div class="sf_fieldname">
+                        <label for="sf_fields_depths">Profondità</label>
+                    </div>
+                    <div class="sf_fieldcontrol">
+                        <fieldset id="sf_fields_depths">
+                            min<input type="text" class="txtmeas" id="sf_fields_dep_min">
+                            max<input type="text" class="txtmeas" id="sf_fields_dep_max">
+                        </fieldset>
+                    </div>
+                    <div class="sf_fieldnote">
+                        cm
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="uipanel" id="panel_info">
+
+
+
+
+
+    </div>
+
+</div>
+
+<div id="functionality">
+
+    <div id="viewport">
+
+    </div>
+
+</div>
+
+<div id="contextguide">
+
+</div>
+
+
+
+
+
+</body>
+
+    <script>
+
+        pageInit();
+
+    </script>
+
+</html>
