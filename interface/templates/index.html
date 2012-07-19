@@ -299,7 +299,7 @@
 							bb:"[-180,-90,180,90]",
 							cbd:"show_data",
 							cbq:"get_queries",
-							q:"{\"column\":\"Length\",\"operator\":\"gt\",\"params\":10}"
+							q:'[{"column":"Length","operator":"gt","params":10}]'
 						}
 					});
 				});
@@ -315,7 +315,7 @@
 			function get_queries(datas){
 				$.ajax({
 					url:'/interface/s',
-					data:{'q':"{\"column\":\"Length\",\"operator\":\"gt\",\"params\":10}"},
+					data:{'q':'[{"column":"Length","operator":"gt","params":10}]'},
 					success:function(layer){
 						if(layer.properties.hasKey('errors'))
 							alert(layer.properties.errors);

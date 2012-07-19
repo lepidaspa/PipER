@@ -69,11 +69,18 @@ def get_for_bb(BB):
 
         mdata = Metadata.objects.filter(q_in, proxy__mode_query__isnull=False)
 
-        # prs = ProxyRequest.objects.filter(data__in= Proxy.objects.filter(mode_query__isnull=False, metadata__name__in=mdata).distinct()).distinct()
+        from django.db import connection
+        print connection.queries
+
+        #prs = ProxyRequest.objects.filter(data__in= Proxy.objects.filter(mode_query__isnull=False, metadata__name__in=mdata).distinct()).distinct()
         mdata = Metadata.objects.all()
-	data = []
+        data = []
         for meta in mdata: 
-            data.append({'url':meta.proxy.request.url, 'token':meta.proxy.request.token, 'name':meta.name})
+            data.append({
+                         'url':meta.proxy.request.url, 
+                         'token':meta.proxy.request.token, 
+                         'name':meta.name
+                         })
         return data 
                 
 
@@ -100,3 +107,12 @@ class Metadata(models.Model):
     meta = models.TextField()
    
     name = models.TextField()
+
+
+class MetadataInfo(models.Model):
+    metadata = models.ForeignKey(Metadata)
+    
+class MetadataRefreshTime(models.Model):
+    metadata = models.ForeignKey(Metadata)
+    
+    

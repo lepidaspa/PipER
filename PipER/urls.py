@@ -5,7 +5,10 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-from interface import views
+from interface import views as iviews
+from data import views as dviews
+from broker import views as bviews
+from model_manager import views as mviews
 
 urlpatterns = patterns('',
     # Examples:
@@ -22,9 +25,9 @@ urlpatterns = patterns('',
         }),
     
          
-    url(r'^request/model$', views.get_model),
-    url(r'^submit/manifest', views.approve_manifest),
-    url(r'^federation/new/helo', views.start_token),
+    url(r'^request/model$', mviews.get_model),
+    url(r'^submit/manifest', iviews.approve_manifest),
+    url(r'^federation/new/helo', iviews.start_token),
     
     url(r'^$', views.index),
     url(r'^interface/urls$', views.urls),
