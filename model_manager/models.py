@@ -11,7 +11,7 @@ class DataModel(models.Model):
     def __str__(self):
         return self.name    
     
-class DataModelAttribute(models.model):
+class DataModelAttribute(models.Model):
     data_model = models.ForeignKey(DataModel, related_name="attributes")
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
