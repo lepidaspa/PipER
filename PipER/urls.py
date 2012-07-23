@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-from interface import views as iviews
 from data import views as dviews
 from broker import views as bviews
 from model_manager import views as mviews
@@ -26,15 +25,15 @@ urlpatterns = patterns('',
     
          
     url(r'^request/model$', 'mviews.get_model'),
-    url(r'^submit/manifest', 'iviews.approve_manifest'),
-    url(r'^federation/new/helo', 'iviews.start_token'),
+    url(r'^submit/manifest', 'interface.views.approve_manifest'),
+    url(r'^federation/new/helo', 'interface.views.start_token'),
     
-    url(r'^$', 'iviews.index'),
-    url(r'^interface/urls$', 'iviews.urls'),
-    url(r'^interface/search', 'iviews.search'),
-    url(r'^interface/s', 'iviews.do_search'),
+    url(r'^$', 'interface.views.index'),
+    url(r'^interface/urls$', 'interface.views.urls'),
+    url(r'^interface/search', 'interface.views.search'),
+    url(r'^interface/s', 'interface.views.do_search'),
     
-	url(r'^newui/', 'iviews.newsearch')
+	url(r'^newui/', 'interface.views.newsearch')
 
     
 )
