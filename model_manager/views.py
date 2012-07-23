@@ -12,7 +12,7 @@ from model_manager.models import *
 
 
 
-def get_model(request):
+def _get_model(request):
     data = {}
     v = request.REQUEST.get('v', None)
     m = request.REQUEST.get('m', None)
@@ -29,7 +29,7 @@ def get_model(request):
     return HttpResponse(json.dumps(data), mimetype="application/json")
         
 
-def get_model_secondary(request):
+def _get_model_secondary(request):
     data = {}
     v = request.REQUEST.get('v', None)
     m = request.REQUEST.get('m', None)
@@ -48,7 +48,7 @@ def get_model_secondary(request):
     
     
     
-def _get_model (request):
+def get_model (request):
     """
     Sends the conversion table
     """
@@ -85,3 +85,48 @@ def _get_model (request):
     }
 
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")
+
+def get_model_secondary (request):
+    """
+    Sends the conversion table
+    """
+
+    #fb = settings.FIdER_BACKEND_URL
+    #mdl = sendMessageToServer("", fb+"/get_model/last", "GET")
+
+    #fields_table = json.loads(mdl)
+    fields_table = {
+                    'Duct' : {
+                              'name':"Cavidotto",
+                              'objtype':'LineString',
+                              'properties':{
+                                            'ID' : 'int',
+                                            'Owner': 'str',
+                                            'OwnerID' : 'str',
+                                            'StartID': 'str',
+                                            'EndID': 'str',
+                                            'Length': 'int',
+                                            'Type': 'str',
+                                            'Availability': 'str',
+                                            'CreationDate': 'str',
+                                            'LastUpdate': 'str',
+                                            }
+                              },
+                    'Well' :{
+                              'name':"Pozzetto",
+                              'objtype':'Point',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Owner': 'str',
+                                            'OwnerID': 'str',
+                                            'Address': 'str',
+                                            'Type': 'str',
+                                            'CreationDate': 'str',
+                                            'LastUpdate': 'str',
+                                            }
+                             }
+                    }
+
+    return HttpResponse(json.dumps(fields_table), mimetype="application/json")
+
+

@@ -24,7 +24,8 @@ urlpatterns = patterns('',
         }),
     
          
-    url(r'^request/model$', 'mviews.get_model'),
+    url(r'^request/model$', 'model_manager.views.get_model'),
+    url(r'^request/getmodel$', 'model_manager.views.get_model_secondary'),
     url(r'^submit/manifest', 'interface.views.approve_manifest'),
     url(r'^federation/new/helo', 'interface.views.start_token'),
     
@@ -33,7 +34,7 @@ urlpatterns = patterns('',
     url(r'^interface/search', 'interface.views.search'),
     url(r'^interface/s', 'interface.views.do_search'),
     
-	url(r'^newui/', 'interface.views.newsearch')
+	#url(r'^newui/', 'interface.views.newsearch')
 
     
 )
