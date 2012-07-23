@@ -29,11 +29,11 @@ urlpatterns = patterns('',
     url(r'^submit/manifest', 'iviews.approve_manifest'),
     url(r'^federation/new/helo', 'iviews.start_token'),
     
-    url(r'^$', 'views.index'),
-    url(r'^interface/urls$', 'views.urls'),
-    url(r'^interface/search', 'views.search'),
-    url(r'^interface/s', 'views.do_search'),
-	url(r'^newui/', 'views.newsearch')
+    url(r'^$', 'iviews.index'),
+    url(r'^interface/urls$', 'iviews.urls'),
+    url(r'^interface/search', 'iviews.search'),
+    url(r'^interface/s', 'iviews.do_search'),
+	url(r'^newui/', 'iviews.newsearch')
 
     
 )
