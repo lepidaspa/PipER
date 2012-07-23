@@ -25,15 +25,15 @@ urlpatterns = patterns('',
         }),
     
          
-    url(r'^request/model$', mviews.get_model),
-    url(r'^submit/manifest', iviews.approve_manifest),
-    url(r'^federation/new/helo', iviews.start_token),
+    url(r'^request/model$', 'mviews.get_model'),
+    url(r'^submit/manifest', 'iviews.approve_manifest'),
+    url(r'^federation/new/helo', 'iviews.start_token'),
     
-    url(r'^$', views.index),
-    url(r'^interface/urls$', views.urls),
-    url(r'^interface/search', views.search),
-    url(r'^interface/s', views.do_search),
-	url(r'^newui/', views.newsearch)
+    url(r'^$', 'views.index'),
+    url(r'^interface/urls$', 'views.urls'),
+    url(r'^interface/search', 'views.search'),
+    url(r'^interface/s', 'views.do_search'),
+	url(r'^newui/', 'views.newsearch')
 
     
 )
