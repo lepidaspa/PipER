@@ -28,6 +28,25 @@ def get_model(request):
                 data[model.name][str(attribute)] = attribute.type
     return HttpResponse(json.dumps(data), mimetype="application/json")
         
+
+def get_model_secondary(request):
+    data = {}
+    v = request.REQUEST.get('v', None)
+    m = request.REQUEST.get('m', None)
+    if v is not None:
+        version = DataModelContainer.objects.get(id = v)
+    else:
+        version = DataModelContainer.objects.order_by('-id')[0]
+    for model in version.models:
+        if (m is not None and m == model.name) or m is None:
+            data[model.name] = {}
+            #data[model.name]['_type'] = model.type
+            for attribute in model.attributes:
+                data[model.name][str(attribute)] = attribute.type
+    return HttpResponse(json.dumps(data), mimetype="application/json")
+        
+    
+    
     
 def _get_model (request):
     """
