@@ -31,8 +31,8 @@ urlpatterns = patterns('',
     
     url(r'^$', 'interface.views.index'),
     url(r'^interface/urls$', 'interface.views.urls'),
-    url(r'^interface/search', 'interface.views.search'),
-    url(r'^interface/s', 'interface.views.do_search'),
+    url(r'^interface/search', 'broker.views.search'),
+    url(r'^interface/s', 'broker.views.do_search'),
     
 	#url(r'^newui/', 'interface.views.newsearch')
 
