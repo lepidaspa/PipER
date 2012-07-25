@@ -182,6 +182,8 @@
 			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
 			FIdER.start.extend(new OpenLayers.LonLat(12.7558364, 45.1395245).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
+			
+
 			FIdER.vector_layer = new OpenLayers.Layer.Vector();
 			//FIdER.features = new OpenLayers.
 
@@ -233,6 +235,8 @@
 						controls : []
 					});
 
+					Fider.map.setOptions({restrictedExtent: FIdER.start});
+
 					//Base Maps
 					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
 						type : google.maps.MapTypeId.SATELLITE,
@@ -257,9 +261,6 @@
 					FIdER.map.addControl(new OpenLayers.Control.PanZoomBar());
 					FIdER.map.addControl(new OpenLayers.Control.Navigation());
 					FIdER.map.addControl(new OpenLayers.Control.LayerSwitcher($('layers_panel')));
-					//FIdER.map.addControl(new OpenLayers.Control.Permalink());
-					//FIdER.map.addControl(new OpenLayers.Control.Permalink('permalink'));
-					FIdER.map.addControl(new OpenLayers.Control.MousePosition());
 					FIdER.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
 
