@@ -126,7 +126,30 @@ def get_model_secondary (request):
                                             'CreationDate': 'str',
                                             'LastUpdate': 'str',
                                             }
+                             },
+                    'Tube' :{
+                              'name':"Tubazione",
+                              'objtype':'LineString',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Owner': 'str',
+                                            'OwnerID': 'str',
+                                            'Type': 'str',
+                                            'Parent':'Duct'
+                                            }
+                             },
+                    'SpliceEnclosure' :{
+                              'name':"Muffola",
+                              'objtype':'LineString',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Owner': 'str',
+                                            'OwnerID': 'str',
+                                            'Type': 'str',
+                                            'Parent':'Well'
+                                            }
                              }
+                    
                     }
 
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")
