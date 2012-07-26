@@ -140,7 +140,7 @@ def get_model_secondary (request):
                              },
                     'SpliceEnclosure' :{
                               'name':"Muffola",
-                              'objtype':'LineString',
+                              'objtype':'Point',
                               'properties':{
                                             'ID': 'int',
                                             'Owner': 'str',
