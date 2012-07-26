@@ -5,4 +5,4 @@ from broker.models import *
 
 @task()
 def read_proxies():
-    pass
+    return
