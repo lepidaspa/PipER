@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'south',
     'couchdbkit.ext.django',
     'djcelery',
     'broker',
@@ -165,5 +166,6 @@ COUCHDB_DATABASES = (
      ('data',  'http://127.0.0.1:5984/piper'),     
  )
 
-
+import djcelery
+djcelery.setup_loader()
 
