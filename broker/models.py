@@ -108,10 +108,6 @@ class Metadata(models.Model):
    
     name = models.TextField()
 
-
-class MetadataInfo(models.Model):
-    metadata = models.ForeignKey(Metadata)
-    
 class MetadataRefreshTime(models.Model):
     metadata = models.ForeignKey(Metadata)
     
