@@ -123,7 +123,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'couchdbkit.ext.django',
-    'celery',
+    'djcelery',
     'broker',
     'interface',
     'model_manager',
