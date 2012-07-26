@@ -3,7 +3,7 @@ from django.db import models
 class DataModelContainer(models.Model):
     
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 class DataModel(models.Model):
     #type = models.CharField(max_length=50, choices=[('point', 'Point'),(''),()])
