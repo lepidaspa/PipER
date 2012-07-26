@@ -169,3 +169,14 @@ COUCHDB_DATABASES = (
 import djcelery
 djcelery.setup_loader()
 
+
+
+from datetime import timedelta
+
+CELERYBEAT_SCHEDULE = {
+    'runs-every-30-minutes': {
+        'task': 'read_proxies',
+        'schedule': timedelta(minutes=30),
+    },
+}
+
