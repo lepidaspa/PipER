@@ -1,8 +1,7 @@
+from broker.models import *
 from celery import task
 
 
-from broker.models import *
-
-@task()
+@task
 def read_proxies():
     return
