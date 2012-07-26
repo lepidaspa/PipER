@@ -6,13 +6,13 @@ class DataModelContainer(models.Model):
 class DataModel(models.Model):
     #type = models.CharField(max_length=50, choices=[('point', 'Point'),(''),()])
     name = models.CharField(max_length=255)
-    container = models.ForeignKey(DataModelContainer, related_name="models")
+    container = models.ForeignKey('DataModelContainer', related_name="models")
     
     def __str__(self):
         return self.name    
     
 class DataModelAttribute(models.Model):
-    data_model = models.ForeignKey(DataModel, related_name="attributes")
+    data_model = models.ForeignKey('DataModel', related_name="attributes")
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
     private = models.BooleanField(default=False)
