@@ -55,10 +55,6 @@ def get_model (request):
     Sends the conversion table
     """
 
-    #fb = settings.FIdER_BACKEND_URL
-    #mdl = sendMessageToServer("", fb+"/get_model/last", "GET")
-
-    #fields_table = json.loads(mdl)
     fields_table = {
         'Duct' : {
             '_type':'LineString',
@@ -92,11 +88,6 @@ def get_model_secondary (request):
     """
     Sends the conversion table
     """
-
-    #fb = settings.FIdER_BACKEND_URL
-    #mdl = sendMessageToServer("", fb+"/get_model/last", "GET")
-
-    #fields_table = json.loads(mdl)
     fields_table = {
                     'Duct' : {
                               'name':"Cavidotto",
