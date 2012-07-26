@@ -4,4 +4,4 @@ from celery import task
 
 @task
 def read_proxies():
-    return
+    print "ciao"
