@@ -89,6 +89,22 @@ def get_model_secondary (request):
     Sends the conversion table
     """
     fields_table = {
+                    'Duct' : {
+                              'name':"Cavidotto",
+                              'objtype':'LineString',
+                              'properties':{
+                                            'ID' : 'int',
+                                            'Owner': 'str',
+                                            'OwnerID' : 'str',
+                                            'StartID': 'str',
+                                            'EndID': 'str',
+                                            'Length': 'int',
+                                            'Type': ['Pubblica Illuminazione', 'TLC', 'Rete Elettrica']],
+                                            'Availability': 'str',
+                                            'CreationDate': 'str',
+                                            'LastUpdate': 'str',
+                                            }
+                              },
                     'Duct1' : {
                               'name':"Cavidotto Pubblica Illuminazione",
                               'objtype':'LineString',
@@ -100,7 +116,7 @@ def get_model_secondary (request):
                                             'StartID': 'str',
                                             'EndID': 'str',
                                             'Length': 'int',
-                                            'Type': 'str',
+                                            'Type': ['Pubblica Illuminazione'],
                                             'Availability': 'str',
                                             'CreationDate': 'str',
                                             'LastUpdate': 'str',
@@ -117,7 +133,7 @@ def get_model_secondary (request):
                                             'StartID': 'str',
                                             'EndID': 'str',
                                             'Length': 'int',
-                                            'Type': 'str',
+                                            'Type': ['TLC'],
                                             'Availability': 'str',
                                             'CreationDate': 'str',
                                             'LastUpdate': 'str',
@@ -134,7 +150,7 @@ def get_model_secondary (request):
                                             'StartID': 'str',
                                             'EndID': 'str',
                                             'Length': 'int',
-                                            'Type': 'str',
+                                            'Type': ['Rete Elettrica'],
                                             'Availability': 'str',
                                             'CreationDate': 'str',
                                             'LastUpdate': 'str',
