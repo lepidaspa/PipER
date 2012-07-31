@@ -92,6 +92,7 @@ def get_model_secondary (request):
                     'Duct' : {
                               'name':"Cavidotto",
                               'objtype':'LineString',
+                              'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
                                             'Owner': 'str',
