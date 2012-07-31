@@ -10,6 +10,7 @@ class DataModel(models.Model):
     name = models.CharField(max_length=255)
     container = models.ForeignKey('DataModelContainer', related_name="models")
     geo_type = models.CharField(max_length=255, choices=(("Point","Punctual"),("LineString","Linear")))
+    
     def __str__(self):
         return self.name    
     

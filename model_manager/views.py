@@ -89,9 +89,44 @@ def get_model_secondary (request):
     Sends the conversion table
     """
     fields_table = {
-                    'Duct' : {
-                              'name':"Cavidotto",
+                    'Duct1' : {
+                              'name':"Cavidotto Pubblica Illuminazione",
                               'objtype':'LineString',
+                              'super':'Duct',
+                              'properties':{
+                                            'ID' : 'int',
+                                            'Owner': 'str',
+                                            'OwnerID' : 'str',
+                                            'StartID': 'str',
+                                            'EndID': 'str',
+                                            'Length': 'int',
+                                            'Type': 'str',
+                                            'Availability': 'str',
+                                            'CreationDate': 'str',
+                                            'LastUpdate': 'str',
+                                            }
+                              },
+                    'Duct2' : {
+                              'name':"Cavidotto TLC",
+                              'objtype':'LineString',
+                              'super':'Duct',
+                              'properties':{
+                                            'ID' : 'int',
+                                            'Owner': 'str',
+                                            'OwnerID' : 'str',
+                                            'StartID': 'str',
+                                            'EndID': 'str',
+                                            'Length': 'int',
+                                            'Type': 'str',
+                                            'Availability': 'str',
+                                            'CreationDate': 'str',
+                                            'LastUpdate': 'str',
+                                            }
+                              },
+                    'Duct3' : {
+                              'name':"Cavidotto Rete Elettrica",
+                              'objtype':'LineString',
+                              'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
                                             'Owner': 'str',
