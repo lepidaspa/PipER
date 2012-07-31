@@ -110,5 +110,5 @@ class Metadata(models.Model):
 
 class MetadataRefreshTime(models.Model):
     metadata = models.ForeignKey(Metadata)
-    
+    crontab = models.TextField(default="0 1 * * SAT")
     
