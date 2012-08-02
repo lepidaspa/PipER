@@ -306,7 +306,7 @@
 							table.cols = []
 							stuff = mdata[i].properties;
 							for (var col in stuff) {
-								if (col.type != "str") {
+								if (stuff[col] != "str") {
 									col_obj = {}
 									col_obj.name = col;
 									col_obj.type = stuff[col];
