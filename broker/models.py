@@ -77,7 +77,7 @@ def get_for_bb(BB):
         print connection.queries
 
         #prs = ProxyRequest.objects.filter(data__in= Proxy.objects.filter(mode_query__isnull=False, metadata__name__in=mdata).distinct()).distinct()
-        mdata = Metadata.objects.all()
+        mdata = Metadata.objects.filter(proxy__mode_query__isnull=False)
         data = []
         for meta in mdata: 
             data.append({
