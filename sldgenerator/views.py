@@ -10,3 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 from model_manager.models import *
 
+import sld
+
+def get_sld(request):
+    sf = sld.StyledLayerDescriptor()
+    
+    return HttpResponse(sf.as_sld())
+    
+
