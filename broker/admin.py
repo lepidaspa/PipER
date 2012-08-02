@@ -5,15 +5,23 @@ from  broker.models import *
 
 class ProxyRequestOptions(admin.ModelAdmin):
     save_on_top = True
+    def has_add_permission(self, request):
+        return False
 
 class ProxyOptions(admin.ModelAdmin):
     save_on_top = True
+    def has_add_permission(self, request):
+        return False
     
 class MetadataOptions(admin.ModelAdmin):
     save_on_top = True
+    def has_add_permission(self, request):
+        return False
     
 class MetadataRefreshTimeOptions(admin.ModelAdmin):
     save_on_top = True
+    def has_add_permission(self, request):
+        return False
     
     
 admin.site.register(ProxyRequest, ProxyRequestOptions)
