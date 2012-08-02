@@ -8,12 +8,20 @@ from django.conf import settings
 
 from django.views.decorators.csrf import csrf_exempt
 
-from model_manager.models import *
+from model_manager.views import *
 
 import sld
 
 def get_sld(request):
+    
+    m = request.REQUEST.get('model')
+    f = request.REQUEST.get('field')
+    
     sf = sld.StyledLayerDescriptor()
+    
+    nl = sf.create_namedlayer()
+    ustyle = nl.create_style()
+    
     
     return HttpResponse(sf.as_sld())
     

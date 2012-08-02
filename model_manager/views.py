@@ -84,10 +84,7 @@ def get_model (request):
 
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")
 
-def get_model_secondary (request):
-    """
-    Sends the conversion table
-    """
+def do_get_model_secondaty(models= []):
     fields_table = {
                     'Duct' : {
                               'name':"Cavidotto",
@@ -195,6 +192,24 @@ def get_model_secondary (request):
                              }
                     
                     }
+    
+    if len(models) == 0 :
+        return fields_table
+    else:
+        ff = {}
+        for m in models:
+            ff[m] = fields_table[m]
+        return ff
+
+def get_model_secondary (request):
+    """
+    Sends the conversion table
+    """
+    
+    models = request.REQUEST.get('models').split('|')
+    
+    fields_table = do_get_model_secondary
+   
 
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")
 
