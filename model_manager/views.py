@@ -206,9 +206,11 @@ def get_model_secondary (request):
     Sends the conversion table
     """
     
-    models = request.REQUEST.get('models').split('|')
+    models = request.REQUEST.get('models', [])
+    if models is not None:
+        models = models.split('|')
     
-    fields_table = do_get_model_secondary
+    fields_table = do_get_model_secondary(models)
    
 
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")

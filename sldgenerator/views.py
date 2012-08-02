@@ -14,17 +14,40 @@ import sld
 
 def get_sld(request):
     
-    m = request.REQUEST.get('model', "TEST")
-    f = request.REQUEST.get('field', "ANY")
+    m = request.REQUEST.get('model', "Duct")
+    f = request.REQUEST.get('field', "Type")
+    
+    mod = do_get_model_secondary([m])
+    print json.dumps(mod)
+    
+    if mod =={}:
+        return HttpResponse("ERROR")
+    
+    props = mod[m]['properties']
+    if not props.has_key(f):
+        return HttpResponse("ERROR")
+    
+    fv = props[f]
+    
+    if not isinstance(fv, type([])):
+        return HttpResponse("ERROR")
+    
+    ot = mod[m]['objtype']
+    if ot == "LineString":
+        ot = sld.LineSymbolizer
+    elif ot == "Point":
+        ot = sld.PointSymbolizer
+    
     
     sf = sld.StyledLayerDescriptor()
     
     nl = sf.create_namedlayer(m)
     ustyle = nl.create_userstyle()
-    ftstyle = ustyle.create_featuretypestyle()
-    ftsr = ftstyle.create_rule(f, sld.LineSymbolizer)
-    ftsrf = ftsr.create_filter(f, '==', '10')
-    
+    for v in fv:
+        ftstyle = ustyle.create_featuretypestyle()
+        ftsr = ftstyle.create_rule(f+"__"+v, ot)
+        ftsrf = ftsr.create_filter(f, '==', v)
+        
     return HttpResponse(sf.as_sld())
     
 
