@@ -204,9 +204,17 @@
 			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
 			FIdER.start.extend(new OpenLayers.LonLat(12.7558364, 45.1395245).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
+			FIdER.sld_formatter = new OpenLayers.Format.SLD();
+			FIdER.style = new OpenLayers.StyleMap();
+			
 			
 
-			FIdER.vector_layer = new OpenLayers.Layer.Vector();
+			
+
+			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
+				styleMap: new OpenLayers.StyleMap()
+
+			});
 			//FIdER.features = new OpenLayers.
 
 			//global events
@@ -318,6 +326,13 @@
 					
 					
 					FIdER.map.addLayer(FIdER.vector_layer);
+					
+					$.get('/sld?model=Duct&field=Tipo', function(els){
+						FIdER.style = FIdER.sld_formatter.read(els);
+						FIdER.vector_layer.styleMap.styles['default'] = FIdER.style.namedLayers['Duct'].userStyles['Duct_Type']
+						FIdER.vector_layer.redraw();
+					});
+					
 
 					//prepare_gui
 					$.getJSON($.urls.get_model + "?models=Duct", function(mdata) {

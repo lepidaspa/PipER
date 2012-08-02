@@ -21,15 +21,20 @@ def get_sld(request):
     print json.dumps(mod)
     
     if mod =={}:
+        print "no model"
         return HttpResponse("ERROR")
     
     props = mod[m]['properties']
     if not props.has_key(f):
+        
+        print "no prop"
         return HttpResponse("ERROR")
     
     fv = props[f]
     
     if not isinstance(fv, type([])):
+        
+        print "no instances"
         return HttpResponse("ERROR")
     
     ot = mod[m]['objtype']
