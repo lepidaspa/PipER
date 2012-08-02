@@ -252,7 +252,7 @@
 			});
 			$('#search_panel .subpanel .title').live('click', function() {
 				$('.panel .subpanel .content').hide();
-				$('.panel .subpanel .content').removeClass('is_s_selected');
+				$('.panel .subpanel').removeClass('is_s_selected');
 				$(this).next().show();
 				$(this).parent().addClass('is_s_selected');
 			});
