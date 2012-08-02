@@ -66,7 +66,7 @@ class DataModelAttributeSemantic(models.Model):
 class DataModelAttribute(models.Model):
     data_model = models.ForeignKey('DataModel', related_name="attributes")
     name = models.CharField(max_length=255)
-    type = models.CharField(max_length=255, choices=(("Integer","int"),("String","str"),("Float","float"),("Boolean","bool"),("List","list")) )
+    type = models.CharField(max_length=255, choices=(("int","Integer"),("str","String"),("float","Float"),("bool","Boolean"),("list", "List")) )
     private = models.BooleanField(default=False)
     semantic = models.ForeignKey(DataModelAttributeSemantic, null=True, blank=True)
     
