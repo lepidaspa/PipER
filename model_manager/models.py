@@ -31,10 +31,10 @@ class DataModel(models.Model):
                 j['properties'][str(attr)] = attr.type
             else:
                 s = attr.semantic.related_table_name.values
-                if attr.semantic.filter == "":
-                    s = s.filter(value = attr.semantic.filter)
+                if attr.semantic.filter != "":
+                    s = s.filter(super__value = attr.semantic.filter)
                 else: 
-                    s = s.all()
+                    s = s.filter(super = "")
                 vv = []
                 for v in s:
                     vv.append(v.value)

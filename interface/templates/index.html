@@ -261,11 +261,14 @@
 					//Controls
 					FIdER.map.addControl(new OpenLayers.Control.PanZoomBar());
 					FIdER.map.addControl(new OpenLayers.Control.Navigation());
-					FIdER.map.addControl(new OpenLayers.Control.LayerSwitcher($('layers_panel')));
+					FIdER.map.addControl(new OpenLayers.Control.LayerSwitcher();
 					FIdER.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
 
 					FIdER.map.zoomToExtent(FIdER.start);
+					
+					
+					FIdER.map.addLayer(FIdER.vector_layer);
 
 					//prepare_gui
 					$.getJSON("/request/model?full=1", function(data) {
@@ -294,7 +297,20 @@
 				
 				
 				$('#do_search_btn').click(function(){
-					$.ajax({
+					
+					//is_geo:
+					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val()), function(data){
+						if(data.status == "OK"){
+							if (data.results.length == 1){
+								console.log(data.results[0]);
+							}
+							else{
+								console.log(data.results);
+							}
+						}
+					};
+					
+					/*$.ajax({
 						url:'/interface/search',
 						dataType:"jsonp",
 						data:{
@@ -303,7 +319,7 @@
 							cbq:"get_queries",
 							q:'[{"column":"Length","operator":"gt","params":10}]'
 						}
-					});
+					});*/
 				});
 				
 				
