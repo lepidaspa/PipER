@@ -229,11 +229,11 @@
                 	pa = [];
                 	for (var e in feature.feature.attributes)
                 		pa.push({'key':e, 'value':feature.feature.attributes[e]});
-                	xxte =  {"attributes":pa, "id":feature.feature.id};
+                	xxte =  {"attributes":pa, "id":feature.feature.id.replace('.','_')};
                     $('#properties_panel .subpanel').append(ich.attribs(xxte));
                 },
                 'featureunselected': function(feature) {
-					$('#properties_panel .subpanel').find("#__"+feature.feature.id).remove();
+					$('#properties_panel .subpanel').find("#__"+feature.feature.id.replace('.','_')).remove();
                 }
             });
 			
