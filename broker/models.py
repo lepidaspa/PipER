@@ -77,7 +77,7 @@ def get_for_bb(BB):
         print connection.queries
 
         #prs = ProxyRequest.objects.filter(data__in= Proxy.objects.filter(mode_query__isnull=False, metadata__name__in=mdata).distinct()).distinct()
-        mdata = Metadata.objects.all().exclude(proxy__mode_query__like="""{"time": "none", "inventory": "none", "geographic": "none", "bi": "none", "signs": false}""")
+        mdata = Metadata.objects.all().exclude(proxy__mode_query__contains="""{"time": "none", "inventory": "none", "geographic": "none", "bi": "none", "signs": false}""")
         data = []
         for meta in mdata: 
             data.append({
