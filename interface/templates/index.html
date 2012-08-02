@@ -339,7 +339,6 @@
 					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
 					FIdER.map.addControl(FIdER.selector_control);
 					
-					FIdER.selector_control.activate();
 					
 
 					FIdER.map.zoomToExtent(FIdER.start);
@@ -419,6 +418,9 @@
 								q:$.stringifyJSON(prepared_query)
 							}
 						});
+						
+						
+						FIdER.selector_control.activate();
 					}
 				});
 				
