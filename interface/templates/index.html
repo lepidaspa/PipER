@@ -299,7 +299,7 @@
 				$('#do_search_btn').click(function(){
 					
 					//is_geo:
-					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val()), function(gqdata){
+					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
 						console.log(gqdata);
 						if(gqdata.status == "OK"){
 							if (gqdata.results.length == 1){
@@ -310,7 +310,7 @@
 								console.log(gqdata.results);
 							}
 						}
-					};
+					});
 					
 					/*$.ajax({
 						url:'/interface/search',
