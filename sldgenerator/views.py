@@ -14,12 +14,12 @@ import sld
 
 def get_sld(request):
     
-    m = request.REQUEST.get('model')
-    f = request.REQUEST.get('field')
+    m = request.REQUEST.get('model', "TEST")
+    f = request.REQUEST.get('field', "ANY")
     
     sf = sld.StyledLayerDescriptor()
     
-    nl = sf.create_namedlayer()
+    nl = sf.create_namedlayer(m)
     ustyle = nl.create_style()
     
     
