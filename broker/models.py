@@ -109,6 +109,6 @@ class Metadata(models.Model):
     name = models.TextField()
 
 class MetadataRefreshTime(models.Model):
-    metadata = models.ForeignKey(Metadata)
+    metadata = models.ForeignKey(Proxy)
     crontab = models.TextField(default="0 1 * * SAT")
     
