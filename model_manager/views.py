@@ -84,7 +84,7 @@ def get_model (request):
 
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")
 
-def do_get_model_secondaty(models= []):
+def do_get_model_secondary(models= []):
     fields_table = {
                     'Duct' : {
                               'name':"Cavidotto",
