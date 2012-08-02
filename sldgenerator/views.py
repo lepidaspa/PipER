@@ -23,7 +23,7 @@ def get_sld(request):
     ustyle = nl.create_userstyle()
     ftstyle = ustyle.create_featuretypestyle()
     ftsr = ftstyle.create_rule(f, sld.LineSymbolizer)
-    ftsr.create_filter(f, '=', '10')
+    ftsrf = ftsr.create_filter(f, '==', '10')
     
     return HttpResponse(sf.as_sld())
     
