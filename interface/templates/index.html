@@ -226,7 +226,10 @@
 			
 			FIdER.vector_layer.events.on({
                 'featureselected': function(feature) {
-                    $('#properties_panel .subpanel').append(ich.attribs(feature.feature));
+                	pa = [];
+                	for (var e in feature.feature.attributes)
+                		pa.push({'key':e, 'value':feature.feature.attributes[e]}); 
+                    $('#properties_panel .subpanel').append(ich.attribs({attributes:pa, id:feature.feature.id}));
                 },
                 'featureunselected': function(feature) {
 					$('#properties_panel .subpanel').find("#__"+feature.feature.id).remove();
