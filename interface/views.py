@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.conf import settings
 
-
+from broker.models import * 
 from django.views.decorators.csrf import csrf_exempt
 
 
