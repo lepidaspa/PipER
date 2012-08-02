@@ -6,3 +6,6 @@ from model_manager.models import *
 admin.site.register(DataModelAttribute)
 admin.site.register(DataModelContainer)
 admin.site.register(DataModel)
+admin.site.register(DataModelAttributeValues)
+admin.site.register(DataModelAttributeTable)
+admin.site.register(DataModelAttributeSemantic)
