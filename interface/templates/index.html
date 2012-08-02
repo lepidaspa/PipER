@@ -328,7 +328,7 @@
 
 					FIdER.map.addLayer(FIdER.vector_layer);
 
-
+					FIdER.selector_control = new OpenLayers.Control.SelectFeature({layers: [FIdER.vector_layer]});
 
 
 					//Controls
@@ -337,7 +337,9 @@
 					FIdER.map.addControl(new OpenLayers.Control.LayerSwitcher());
 					FIdER.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
-					FIdER.map.addControl(new OpenLayers.Control.SelectFeature({layers: [FIdER.vector_layer]})).activate();
+					FIdER.map.addControl(FIdER.selector_control);
+					
+					FIdER.selector_control.activate();
 					
 
 					FIdER.map.zoomToExtent(FIdER.start);
