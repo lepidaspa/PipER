@@ -178,10 +178,10 @@
 			</div>
 		</script>
 		<script id="attribs" type="text/html">
-			<ul id="{% templatetag openvariable %}id{% templatetag closevariable %}">
-			{% templatetag openvariable %}#eachkeys attributes{% templatetag closevariable %}
+			<ul id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
+			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li>{% templatetag openvariable %}this.key{% templatetag closevariable %} - {% templatetag openvariable %}this.value{% templatetag closevariable %}</li>
-    		{% templatetag openvariable %}/eachkeys{% templatetag closevariable %}
+    		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
     		</ul>
 		</script>
 
@@ -228,8 +228,9 @@
                 'featureselected': function(feature) {
                 	pa = [];
                 	for (var e in feature.feature.attributes)
-                		pa.push({'key':e, 'value':feature.feature.attributes[e]}); 
-                    $('#properties_panel .subpanel').append(ich.attribs({attributes:pa, id:feature.feature.id}));
+                		pa.push({'key':e, 'value':feature.feature.attributes[e]});
+                	xxte =  {"attributes":pa, "id":feature.feature.id};
+                    $('#properties_panel .subpanel').append(ich.attribs(xxte));
                 },
                 'featureunselected': function(feature) {
 					$('#properties_panel .subpanel').find("#__"+feature.feature.id).remove();
