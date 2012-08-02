@@ -23,7 +23,7 @@ class DataModelAttributeTable(models.Model):
 class DataModelAttributeValues(models.Model):
     table = models.ForeignKey(DataModelAttributeTable)
     value = models.CharField(max_length = 255)
-    super = models.ForeignKey('DataModelAttributeValues', related_name="children")
+    super = models.ForeignKey('DataModelAttributeValues', related_name="children", null=True, blank=True)
     def __str__(self):
         return self.name
 
