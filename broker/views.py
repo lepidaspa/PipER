@@ -46,7 +46,7 @@ def do_search(request):
     query = request.REQUEST.get('q')
     query= json.loads(query)
 
-    maxitems = int(request.REQUEST.get('maxitems','100'))
+    maxitems = int(request.REQUEST.get('maxitems','400'))
     offset = int(request.REQUEST.get('offset','0'))
     
     message = {}

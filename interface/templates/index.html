@@ -402,8 +402,13 @@
 					dataType:"json",
 					data:{'q':$.stringifyJSON(datas)},
 					success:function(layer){
-						if(layer.properties.hasKey('errors'))
+						if(layer.properties.errors.length > 0)
 							alert(layer.properties.errors);
+						else{
+							var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
+							var formatmap = geojson_format.read(layer.features);
+						    FIdER.vector_layer.addFeatures(formatmap);				
+    					}
 					}
 				});
 			}
