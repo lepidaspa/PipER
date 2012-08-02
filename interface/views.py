@@ -18,7 +18,8 @@ def index(request):
 def urls(request):
     return HttpResponse(json.dumps({
         'broker_get_proxies':'',
-        'broker_get_map':''
+        'broker_get_map':'',
+        'get_model':"/request/getmodel"
     }))
     
 

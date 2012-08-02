@@ -295,7 +295,7 @@
 					FIdER.map.addLayer(FIdER.vector_layer);
 
 					//prepare_gui
-					$.getJSON("/request/get_model?models=Duct", function(mdata) {
+					$.getJSON($.urls.get_model + "?models=Duct", function(mdata) {
 
 						model = [];
 
