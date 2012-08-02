@@ -37,7 +37,7 @@ class DataModel(models.Model):
                     s = s.all()
                 vv = []
                 for v in s:
-                    vv.append(v)
+                    vv.append(v.value)
                 j['properties'][attr.name] = vv
         return j
 
