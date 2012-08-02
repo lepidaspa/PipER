@@ -307,8 +307,8 @@
 								if (gqdata.results.length == 1){
 									
 									gq = new OpenLayers.Bounds();
-									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.bounds.southwest.lng, gqdata.results[0].geometry.bounds.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
-									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.bounds.northeast.lng, gqdata.results[0].geometry.bounds.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.southwest.lng, gqdata.results[0].geometry.viewport.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.northeast.lng, gqdata.results[0].geometry.viewport.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
 									FIdER.map.zoomToExtent(gq);
 								}
 								else{
