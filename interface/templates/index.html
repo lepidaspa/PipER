@@ -399,6 +399,7 @@
 			function get_queries(datas){
 				$.ajax({
 					url:'/interface/s',
+					dataType:"json",
 					data:{'q':$.stringifyJSON(datas)},
 					success:function(layer){
 						if(layer.properties.hasKey('errors'))
