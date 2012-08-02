@@ -97,7 +97,7 @@ def do_get_model_secondary(models= []):
                                             'StartID': 'str',
                                             'EndID': 'str',
                                             'Length': 'int',
-                                            'Type': ['Pubblica Illuminazione', 'TLC', 'Rete Elettrica'],
+                                            'Type': ['Pubblica Illuminazione', 'TLC', 'Rete Elettrica', 'Fognature'],
                                             'Availability': 'str',
                                             'CreationDate': 'str',
                                             'LastUpdate': 'str',

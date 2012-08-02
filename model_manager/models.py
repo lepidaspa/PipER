@@ -10,9 +10,36 @@ class DataModel(models.Model):
     name = models.CharField(max_length=255)
     container = models.ForeignKey('DataModelContainer', related_name="models")
     federated = models.BooleanField(default=False)
+    within = models.ForeignKey('DataModel', related_name="contains", null=True, blank=True)
     geo_type = models.CharField(max_length=255, choices=(("Point","Punctual"),("LineString","Linear")))
     def __str__(self):
-        return self.name    
+        return self.name  
+    
+    def to_json(self):
+        j = {
+             'name':self.name,
+             'objtype': self.geo_type,
+             'properties': {}
+             }  
+        if self.federated:
+            j['federated'] = True
+        if self.within is not None:
+            j['within'] = self.within.id
+        
+        for attr in self.attributes.all():
+            if attr.type in ['str', 'int', 'float','bool']:
+                j['properties'][str(attr)] = attr.type
+            else:
+                s = attr.semantic.related_table_name.values
+                if attr.semantic.filter is not None:
+                    s = s.filter(value = attr.semantic.filter)
+                else: 
+                    s = s.all()
+                vv = []
+                for v in s:
+                    vv.append(v)
+                j['properties'][attr.name] = vv
+        return j
 
 
 class DataModelAttributeTable(models.Model):
@@ -21,11 +48,11 @@ class DataModelAttributeTable(models.Model):
         return self.name
     
 class DataModelAttributeValues(models.Model):
-    table = models.ForeignKey(DataModelAttributeTable)
+    table = models.ForeignKey(DataModelAttributeTable, related_name="values")
     value = models.CharField(max_length = 255)
     super = models.ForeignKey('DataModelAttributeValues', related_name="children", null=True, blank=True)
     def __str__(self):
-        return self.name
+        return "%s - %s" % (self.table, self.value, )
 
 
 class DataModelAttributeSemantic(models.Model):
@@ -39,13 +66,13 @@ class DataModelAttributeSemantic(models.Model):
 class DataModelAttribute(models.Model):
     data_model = models.ForeignKey('DataModel', related_name="attributes")
     name = models.CharField(max_length=255)
-    type = models.CharField(max_length=255)
+    type = models.CharField(max_length=255, choices=(("Integer","int"),("String","str"),("Float","float"),("Boolean","bool"),("List","list")) )
     private = models.BooleanField(default=False)
     semantic = models.ForeignKey(DataModelAttributeSemantic, null=True, blank=True)
     
     
     def __str__(self):
-        return "_" if self.private else "" + self.name + ": " + self.type  
+        return "_" if self.private else "" + self.name 
     
     
 
