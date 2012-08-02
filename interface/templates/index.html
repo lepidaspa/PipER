@@ -369,16 +369,21 @@
 						move_to_geo();
 					}
 					else{
-						/*$.ajax({
+						
+						prepared_query = [];
+						
+						
+						
+						$.ajax({
 							url:'/interface/search',
 							dataType:"jsonp",
 							data:{
-								bb:"[-180,-90,180,90]",
+								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
 								cbd:"show_data",
 								cbq:"get_queries",
 								q:'[{"column":"Length","operator":"gt","params":10}]'
 							}
-						});*/
+						});
 					}
 				});
 				
