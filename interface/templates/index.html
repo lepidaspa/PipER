@@ -328,7 +328,13 @@
 
 					FIdER.map.addLayer(FIdER.vector_layer);
 
-					FIdER.selector_control = new OpenLayers.Control.SelectFeature({layers: [FIdER.vector_layer]});
+					FIdER.selector_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+                        clickout: false, toggle: false,
+                        multiple: false, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
+                        multipleKey: "shiftKey", // shift key adds to selection
+                        box: true
+                    });
 
 
 					//Controls
