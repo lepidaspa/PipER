@@ -295,21 +295,23 @@
 					FIdER.map.addLayer(FIdER.vector_layer);
 
 					//prepare_gui
-					$.getJSON("/request/model?full=1", function(data) {
+					$.getJSON("/request/get_model?models=Duct", function(mdata) {
 
 						model = [];
 
-						for (var i in data) {
+						for (var i in mdata) {
 							table = {};
 
 							table.name = i;
 							table.cols = []
-							stuff = data[i];
+							stuff = data[i].properties;
 							for (var col in stuff) {
-								col_obj = {}
-								col_obj.name = col;
-								col_obj.type = stuff[col]
-								table.cols.push(col_obj);
+								if (col.type != "str") {
+									col_obj = {}
+									col_obj.name = col;
+									col_obj.type = stuff[col];
+									table.cols.push(col_obj);
+								}
 							}
 							model.push(table);
 
@@ -421,77 +423,7 @@
 						<input type="text">
 						</input>
 					</div>
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_owner">Owner:</label>
-						in
-						<select multiple="multiple" name="owner_val">
-							<option value="1">Lepida S.p.A.</option>
-						</select>
-					</div>
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_id">OwnerID:</label>
-						<select name="search_col_id">
-							<option value="lt">&lt;</option>
-							<option value="lt">&le;</option>
-							<option value="lt" selected="selected">=</option>
-							<option value="lt">&ge;</option>
-							<option value="lt">&gt;</option>
-						</select>
-						<input type="text">
-						</input>
-					</div>
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_id">StartID:</label>
-						<select name="search_col_id">
-							<option value="lt">&lt;</option>
-							<option value="lt">&le;</option>
-							<option value="lt" selected="selected">=</option>
-							<option value="lt">&ge;</option>
-							<option value="lt">&gt;</option>
-						</select>
-						<input type="text">
-						</input>
-					</div>
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_id">EndID:</label>
-						<select name="search_col_id">
-							<option value="lt">&lt;</option>
-							<option value="lt">&le;</option>
-							<option value="lt" selected="selected">=</option>
-							<option value="lt">&ge;</option>
-							<option value="lt">&gt;</option>
-						</select>
-						<input type="text">
-						</input>
-					</div>
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_id">Length:</label>
-						<select name="search_col_id">
-							<option value="lt">&lt;</option>
-							<option value="lt">&le;</option>
-							<option value="lt" selected="selected">=</option>
-							<option value="lt">&ge;</option>
-							<option value="lt">&gt;</option>
-						</select>
-						<input type="text">
-						</input>
-					</div>
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_id">Type:</label>
-						in
-						<select multiple="multiple" name="cars">
-							<option value="volvo">TLC</option>
-							<option value="saab">Rete Idrica</option>
-							<option value="opel">Rete Elettrica</option>
-							<option value="audi">Pubblica Illuminazione</option>
-						</select>
-					</div>
+				
 				</div>
 			</div>
 			<button id="do_search_btn">
