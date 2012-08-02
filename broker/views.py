@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from broker.models import Proxy
+from broker.models import *
 
 from django.conf import settings
 try:
@@ -7,6 +7,7 @@ try:
 except:
     import simplejson as json
 import urllib2
+
 
 
 def search(request):
