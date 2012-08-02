@@ -33,6 +33,10 @@ def save_meta(metadata):
         mm.BB_west = md['area'][3] 
         mm.name = md['name']
         mm.save()
+        
+    rt = MetadataRefreshTime()
+    rt.metadata = p
+    rt.save()
     
     return True	
 
@@ -97,6 +101,9 @@ class Proxy(models.Model):
     mode_write = models.TextField(null=True, blank=True)
     mode_query = models.TextField(null=True, blank=True)
     
+    def __str__(self):
+        return str(self.request)
+    
         
 class Metadata(models.Model):
     proxy = models.ForeignKey(Proxy, related_name="metadata")
@@ -107,8 +114,15 @@ class Metadata(models.Model):
     meta = models.TextField()
    
     name = models.TextField()
+    
+    def __str__(self):
+        return str(self.proxy) + ":"+ self.name
 
 class MetadataRefreshTime(models.Model):
     metadata = models.ForeignKey(Proxy)
     crontab = models.TextField(default="0 1 * * SAT")
+    
+    def __str__(self):
+        return str(self.metadata) + self.crontab
+        
     
