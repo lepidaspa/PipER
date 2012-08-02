@@ -15,7 +15,7 @@ class DataModel(models.Model):
     def __str__(self):
         return self.name  
     
-    def to_json(self):
+    def to_large_json(self):
         j = {
              'name':self.name,
              'objtype': self.geo_type,
@@ -31,7 +31,7 @@ class DataModel(models.Model):
                 j['properties'][str(attr)] = attr.type
             else:
                 s = attr.semantic.related_table_name.values
-                if attr.semantic.filter is not None:
+                if attr.semantic.filter == "":
                     s = s.filter(value = attr.semantic.filter)
                 else: 
                     s = s.all()
