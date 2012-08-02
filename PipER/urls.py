@@ -35,7 +35,7 @@ urlpatterns = patterns('',
     url(r'^interface/s', 'broker.views.do_search'),
     
     url(r'^sld$', 'sldgenerator.views.get_sld'),
-    url(r'^external/(?P<path>.*)$', 'utils.proxy')
+    url(r'^external/(?P<path>.*)$', 'interface.views.proxy')
     
 	#url(r'^newui/', 'interface.views.newsearch')
 
