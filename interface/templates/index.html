@@ -150,11 +150,33 @@
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
 
-		<script id="inv_col_int" type="text/html">
-
+		<script id="range" type="text/html">
+			<div class="line">
+				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
+				<label for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
+				<select name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">
+					<option value="lt">&lt;</option>
+					<option value="lt">&le;</option>
+					<option value="lt" selected="selected">=</option>
+					<option value="lt">&ge;</option>
+					<option value="lt">&gt;</option>
+				</select>
+				<input type="text">
+				</input>
+			</div>
 		</script>
-		<script id="inv_col_src" type="text/html">
-
+		<script id="mulit" type="text/html">
+			<div class="line">
+				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
+				<label for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
+				<select name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}" multiple="true">
+					{% templatetag openvariable %}#type{% templatetag closevariable %}
+					<option value="{% templatetag openvariable %}.{% templatetag closevariable %}">{% templatetag openvariable %}.{% templatetag closevariable %}</option>
+					{% templatetag openvariable %}/type{% templatetag closevariable %}
+				</select>
+				<input type="text">
+				</input>
+			</div>
 		</script>
 
 		<script>
@@ -302,7 +324,7 @@
 						for (var i in mdata) {
 							table = {};
 
-							table.name = i;
+							table.name = mdata[i].name;
 							table.cols = []
 							stuff = mdata[i].properties;
 							for (var col in stuff) {
@@ -315,7 +337,17 @@
 							}
 							model.push(table);
 
-							//$('#inventory_q').append(ich[type](table));
+						}
+						
+						for (var el in model){
+							e = model[el];
+							for (var ul in e.cols){
+								c = e.cols[ul];
+								if (c.type == "int")
+									$('#inventory_q').append(ich.range(c));
+								else
+									$('#inventory_q').append(ich.multi(c))
+							}
 						}
 					});
 
@@ -410,19 +442,7 @@
 					<span>Inventario</span>
 				</div>
 				<div class="content" id="inventory_q">
-					<div class="line">
-						<input type="checkbox">
-						</input><label for="search_col_id">ID:</label>
-						<select name="search_col_id">
-							<option value="lt">&lt;</option>
-							<option value="lt">&le;</option>
-							<option value="lt" selected="selected">=</option>
-							<option value="lt">&ge;</option>
-							<option value="lt">&gt;</option>
-						</select>
-						<input type="text">
-						</input>
-					</div>
+			
 				
 				</div>
 			</div>
