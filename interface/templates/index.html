@@ -212,7 +212,9 @@
 			});
 			$('#search_panel .subpanel .title').live('click', function() {
 				$('.panel .subpanel .content').hide();
+				$('.panel .subpanel .content').removeClass('is_s_selected');
 				$(this).next().show();
+				$(this).parent().addClass('is_s_selected');
 			});
 
 			$('do_clear_btn').live('click', function() {
@@ -297,31 +299,36 @@
 				
 				
 				$('#do_search_btn').click(function(){
-					
+					if($('.is_s_selected').data('type') == "geo"){
 					//is_geo:
-					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
-						console.log(gqdata);
-						if(gqdata.status == "OK"){
-							if (gqdata.results.length == 1){
-								
-								
+						$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
+							console.log(gqdata);
+							if(gqdata.status == "OK"){
+								if (gqdata.results.length == 1){
+									
+									gq = new OpenLayers.Bounds();
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.southwest.lng, gqdata.results[0].geometry.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.northeast.lng, gqdata.results[0].geometry.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									FIdER.map.zoomToExtent(gq);
+								}
+								else{
+									console.log(gqdata.results);
+								}
 							}
-							else{
-								console.log(gqdata.results);
+						});
+					}
+					else{
+						/*$.ajax({
+							url:'/interface/search',
+							dataType:"jsonp",
+							data:{
+								bb:"[-180,-90,180,90]",
+								cbd:"show_data",
+								cbq:"get_queries",
+								q:'[{"column":"Length","operator":"gt","params":10}]'
 							}
-						}
-					});
-					
-					/*$.ajax({
-						url:'/interface/search',
-						dataType:"jsonp",
-						data:{
-							bb:"[-180,-90,180,90]",
-							cbd:"show_data",
-							cbq:"get_queries",
-							q:'[{"column":"Length","operator":"gt","params":10}]'
-						}
-					});*/
+						});*/
+					}
 				});
 				
 				
@@ -370,8 +377,8 @@
 		</nav>
 		<div id="map"></div>
 		<div id="search_panel" class="panel search_btn">
-			<div class="subpanel">
-				<div class="title">
+			<div class="subpanel" data-type="geo">
+				<div class="title" >
 					<img src="http://cdn5.iconfinder.com/data/icons/duesseldorf/32/world.png">
 					<span>Geografica</span>
 				</div>
@@ -380,7 +387,7 @@
 					<input type="text" id="search_geo_address" />
 				</div>
 			</div>
-			<div class="subpanel">
+			<div class="subpanel" data-type="inventory">
 				<div class="title">
 					<img src="http://www.freeiconsweb.com/Icons-show/cc_mono_icon_set_png/box.png">
 					<span>Inventario</span>
