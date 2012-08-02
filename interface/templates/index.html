@@ -399,7 +399,7 @@
 			function get_queries(datas){
 				$.ajax({
 					url:'/interface/s',
-					data:{'q':'[{"column":"Length","operator":"gt","params":10}]'},
+					data:datas,
 					success:function(layer){
 						if(layer.properties.hasKey('errors'))
 							alert(layer.properties.errors);
