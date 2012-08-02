@@ -329,7 +329,7 @@
 					
 					$.get('/sld?model=Duct&field=Tipo', function(els){
 						FIdER.style = FIdER.sld_formatter.read(els);
-						FIdER.vector_layer.styleMap.styles['default'] = FIdER.style.namedLayers['Duct'].userStyles['Duct_Type']
+						FIdER.vector_layer.styleMap.styles['default'] = FIdER.style.namedLayers['Duct'].userStyles[0];
 						FIdER.vector_layer.redraw();
 					});
 					
