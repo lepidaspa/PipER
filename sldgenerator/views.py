@@ -20,8 +20,10 @@ def get_sld(request):
     sf = sld.StyledLayerDescriptor()
     
     nl = sf.create_namedlayer(m)
-    ustyle = nl.create_style()
-    
+    ustyle = nl.create_userstyle()
+    ftstyle = ustyle.create_featuretypestyle()
+    ftsr = ftstyle.create_rule()
+    ftsr.create_filter(f, '=', '10')
     
     return HttpResponse(sf.as_sld())
     
