@@ -222,12 +222,27 @@
 
 			});
 			
-			$('#search_geo_address').keypress(function(e){
-				code= (e.keyCode ? e.keyCode : e.which);
-				if (code == 13) 
-					move_to_geo();
-            	e.preventDefault();
-			});
+	
+			
+			move_to_geo = function(){
+					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
+							console.log(gqdata);
+							if(gqdata.status == "OK"){
+								if (gqdata.results.length == 1){
+									
+									gq = new OpenLayers.Bounds();
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.southwest.lng, gqdata.results[0].geometry.viewport.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.northeast.lng, gqdata.results[0].geometry.viewport.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									FIdER.map.zoomToExtent(gq);
+
+								}
+								else{
+									console.log(gqdata.results);
+								}
+							}
+						});
+				}
+			
 			//run
 			$(function() {
 
@@ -305,24 +320,12 @@
 				});
 				
 				
-				move_to_geo = function(){
-					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
-							console.log(gqdata);
-							if(gqdata.status == "OK"){
-								if (gqdata.results.length == 1){
-									
-									gq = new OpenLayers.Bounds();
-									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.southwest.lng, gqdata.results[0].geometry.viewport.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
-									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.northeast.lng, gqdata.results[0].geometry.viewport.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
-									FIdER.map.zoomToExtent(gq);
-
-								}
-								else{
-									console.log(gqdata.results);
-								}
-							}
-						});
-				}
+				$('#search_geo_address').keypress(function(e){
+					code= (e.keyCode ? e.keyCode : e.which);
+					if (code == 13) 
+						move_to_geo();
+            		e.preventDefault();
+				});
 				
 				$('#do_search_btn').click(function(){
 					if($('.is_s_selected').data('type') == "geo"){
