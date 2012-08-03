@@ -51,7 +51,7 @@ def put_data(data):
             
     return HttpResponse()
             
-def query(bb, query):
+def run_query(bb, query):
     connection = Connection()
     db = connection.data
     collection = db['elements']

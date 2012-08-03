@@ -25,7 +25,7 @@ def search(request):
 
     proxies = get_for_bb(bb)
 
-    data = query(bb, query)   
+    data = run_query(bb, query)   
     
 
 
