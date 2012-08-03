@@ -178,7 +178,7 @@
 			</div>
 		</script>
 		<script id="attribs" type="text/html">
-			<ul id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
+			<ul class="attrib_el" id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
@@ -277,7 +277,10 @@
 				$(this).parent().find('.use_in_query').attr('checked', true);
 			});
 			
-	
+			$('#do_clear_btn').live('click', function(){
+				FIdER.vector_layer.removeAllFeatures();
+				$('.attrib_el').remove();
+			});
 			
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -513,15 +516,15 @@
 				</div>
 			</div>
 			<button id="do_search_btn">
-				Search
+				Cerca
 			</button>
 			<button id="do_clear_btn">
-				Clear
+				Annulla
 			</button>
 		</div>
 		<div id="properties_panel" class="panel properties_btn">
 			<div class="subpanel">
-				Prperties for item:
+				Proprietà:
 			</div>
 		<!--</div>
 		<div id="bi_panel" class="large panel bi_btn">
