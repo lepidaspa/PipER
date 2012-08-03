@@ -56,7 +56,8 @@ def run_query(bb, query):
     db = connection.data
     collection = db['elements']
     
-    
+    print json.dumps(bb)
+    print json.dumps(query)
     
     elements = collection.find()
     els = []
