@@ -434,17 +434,14 @@
 								qqq = {};
 								
 								if($(d).find('.label').length == 0){
-								
-								qqq['column'] = $(d).data('column');
-								qqq['operator'] = $(d).data('operator');
-								qqq['params'] = $(d).parent().find('.params').val();
+									qqq['column'] = $(d).data('column');
+									qqq['operator'] = $(d).data('operator');
+									qqq['params'] = $(d).parent().find('.params').val();
 								}
 								else {
-								
-								qqq['column'] = $(d).find('.label').data('column');
-								qqq['operator'] = $(d).find('.label').data('operator');
-								qqq['params'] = $(d).parent().find('.params').val();
-									
+									qqq['column'] = $(d).find('.label').data('column');
+									qqq['operator'] = $(d).find('.label').data('operator');
+									qqq['params'] = $(d).parent().find('.params').val();
 								}
 								prepared_query.push(qqq);
 							});
