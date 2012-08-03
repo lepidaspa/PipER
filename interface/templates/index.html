@@ -157,14 +157,7 @@
 		<script id="range" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
-				<label for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
-				<select class="query_element" name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">
-					<option value="lt">&lt;</option>
-					<option value="lt">&le;</option>
-					<option value="lt" selected="selected">=</option>
-					<option value="lt">&ge;</option>
-					<option value="lt">&gt;</option>
-				</select>
+				<label>{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
 				Min:<input class="query_element small_in" type="text"></input> Max: <input class="query_element small_in" type="text"></input> 
 			</div>
 		</script>
