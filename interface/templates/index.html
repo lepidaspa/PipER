@@ -178,7 +178,7 @@
 			</div>
 		</script>
 		<script id="attribs" type="text/html">
-			<ul class="attrib_el" id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
+			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
@@ -279,7 +279,7 @@
 			
 			$('#do_clear_btn').live('click', function(){
 				FIdER.vector_layer.removeAllFeatures();
-				$('.attrib_el').remove();
+				$('.attribs_element').remove();
 			});
 			
 			move_to_geo = function(){
