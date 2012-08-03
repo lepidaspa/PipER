@@ -141,6 +141,9 @@
 			#owner-logo {
 				background-image: url(../../fstatic/lepida_logo_white.png);
 			}
+			.small_in{
+				width:20%;
+			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
@@ -162,8 +165,7 @@
 					<option value="lt">&ge;</option>
 					<option value="lt">&gt;</option>
 				</select>
-				<input class="query_element" type="text">
-				</input>
+				Min:<input class="query_element small_in" type="text"></input> Max: <input class="query_element small_in" type="text"></input> 
 			</div>
 		</script>
 		<script id="multi" type="text/html">
@@ -280,6 +282,7 @@
 			$('#do_clear_btn').live('click', function(){
 				FIdER.vector_layer.removeAllFeatures();
 				$('.attribs_element').remove();
+				FIdER.selector_control.deactivate();
 			});
 			
 			move_to_geo = function(){
