@@ -21,7 +21,7 @@ def put_data(data):
         u"message_type": (u'response',),
         u"message_format": (u'read',),
         u"data": {
-            u"upsert": {
+            u"upserts": {
                 "metadata_name": /GEOJSON - FeatureCollection/,
                 "metadata_name": /GEOJSON - FeatureCollection/,
                 "metadata_name": /GEOJSON - FeatureCollection/
@@ -41,10 +41,11 @@ def put_data(data):
     #avoid duplicates
     
     for metadata_name, featurecollection in data['data']['upserts'].items():
-        for feature in featurecollection['features']:
-            feature['_proxy'] = token_id
-            feature['_metadata'] = metadata_name
-            collection.insert(feature)
+        for fc in featurecollection:
+            for feature in fc['features']:
+                feature['_proxy'] = token_id
+                feature['_metadata'] = metadata_name
+                collection.insert(feature)
             
     return HttpResponse()
             
