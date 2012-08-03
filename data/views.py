@@ -69,7 +69,7 @@ def run_query(bb, query):
         "features":els
     }
     
-    return HttpResponse(json.dumps(response))
+    return response
     
     
     
