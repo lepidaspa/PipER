@@ -7,7 +7,7 @@ try:
 except:
     import simplejson as json
 import urllib2
-
+from data.views import *
 
 
 def search(request):
@@ -25,7 +25,7 @@ def search(request):
 
     proxies = get_for_bb(bb)
 
-    data = []#taManager.query(bb, query)   
+    data = query(bb, query)   
     
 
 

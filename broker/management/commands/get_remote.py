@@ -10,3 +10,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         p = Proxy.objects.get(id=args[0])
         data = urllib2.urlopen("%sdata/%s" % (p.request.url, p.request.token))
+        

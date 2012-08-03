@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import pymongo
 
-
+from django.contrib.gis.gdal import OGRGeometry
 from pymongo import Connection
 
 
@@ -43,22 +43,29 @@ def put_data(data):
     for metadata_name, featurecollection in data['data']['upserts'].items():
         for fc in featurecollection:
             for feature in fc['features']:
+                polygon = OGRGeometry(json.dumps(feature['geometry']))
+                feature['_center'] = json.loads(polygon.geos.centroid.json)
                 feature['_proxy'] = token_id
                 feature['_metadata'] = metadata_name
                 collection.insert(feature)
             
     return HttpResponse()
             
-def query(request):
+def query(bb, query):
     connection = Connection()
     db = connection.data
     collection = db['elements']
     
-    elements = collection.find()
     
+    
+    elements = collection.find()
+    els = []
+    for el in elements:
+        del el['_id']
+        els.append(el)
     response = {
         "type": "FeatureCollection",
-        "features":elements
+        "features":els
     }
     
     return HttpResponse(json.dumps(response))
