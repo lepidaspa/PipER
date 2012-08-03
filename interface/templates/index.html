@@ -157,15 +157,22 @@
 		<script id="range" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
-				<label>{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
-				Min:<input class="query_element small_in" type="text"></input> Max: <input class="query_element small_in" type="text"></input> 
+				{% templatetag openvariable %}name{% templatetag closevariable %}:
+				<span class="q_el" >
+					<label class="label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="gt">Min:</label>
+					<input class="query_element small_in params" type="text"></input>
+				</span>
+				<span class="q_el" >
+					<label class="label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="lt">Max:</label>
+					<input class="query_element small_in params" type="text"></input> 
+				</span>
 			</div>
 		</script>
 		<script id="multi" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
-				<label for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
-				<select class="query_element" name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}" multiple="true">
+				<label class="q_el" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="in" for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
+				<select class="query_element params" name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}" multiple="true">
 					{% templatetag openvariable %}#type{% templatetag closevariable %}
 					<option value="{% templatetag openvariable %}.{% templatetag closevariable %}">{% templatetag openvariable %}.{% templatetag closevariable %}</option>
 					{% templatetag openvariable %}/type{% templatetag closevariable %}
@@ -422,6 +429,17 @@
 						
 						prepared_query = [];
 						
+						$('.line').find('.use_in_query:checked').parent().each(function(a,b){
+							$(b).find('.q_el').each(function(c,d){
+								qqq = {};
+								
+								qqq['column'] = $(d).find('.label').data('column');
+								qqq['operator'] = $(d).find('.label').data('operator');
+								qqq['params'] = $(d).find('.params').val();
+								
+								prepared_query.push(qqq);
+							});
+						});
 						
 						
 						$.ajax({
