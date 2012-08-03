@@ -40,7 +40,7 @@ def put_data(data):
     #do coorections on data wwith specific elements...
     #avoid duplicates
     
-    for metadata_name, featurecollection in data['data']['upsert'].items():
+    for metadata_name, featurecollection in data['data']['upserts'].items():
         for feature in featurecollection['features']:
             feature['_proxy'] = token_id
             feature['_metadata'] = metadata_name
