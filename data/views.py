@@ -58,7 +58,7 @@ def run_query(bb, query):
     
     print json.dumps(bb)
     print json.dumps(query)
-    poly = [[bb[0], bb[1]],[bb[1], bb[2]],[bb[2], bb[3]],[bb[3], bb[0]],[bb[0], bb[1]]]
+    poly = [[bb[0], bb[1]],[bb[2], bb[1]],[bb[2], bb[3]],[bb[0], bb[3]],[bb[0], bb[1]]]
     print json.dumps(poly)
     elements = collection.find({ "_center.coordinates" : { "$within" : { "$polygon" : poly } } })
     els = []
