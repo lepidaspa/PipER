@@ -285,6 +285,9 @@
 				FIdER.selector_control.deactivate();
 			});
 			
+			$('#home_btn').live('click', function(){
+				
+			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
 							console.log(gqdata);
@@ -470,7 +473,7 @@
 			
 			function show_data(datas){
 				var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
-				FIdER.vector_layer.addFeatures(geojson_format.read($.stringifyJSON(datas)));	
+		 		FIdER.vector_layer.addFeatures(geojson_format.read($.stringifyJSON(datas)));	
 			}
 			
 			function get_queries(datas){
@@ -501,6 +504,9 @@
 			</div>
 		</header>
 		<nav>
+			<div class="nav_btn" id="home_btn">
+				<span>L</span>
+			</div>
 			<div class="nav_btn" id="search_btn">
 				<span>L</span>
 			</div>

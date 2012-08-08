@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 import pymongo
 
 from django.contrib.gis.gdal import OGRGeometry
-from pymongo import Connection
+from pymongo import Connection, GEO2D
 
 
 def put_data(data):
@@ -36,6 +36,8 @@ def put_data(data):
     
     token_id = data['token']
     collection = db['elements']
+    
+    db.elements.create_index([('_center.coordinates',GEO2D)])
     
     #do coorections on data wwith specific elements...
     #avoid duplicates
