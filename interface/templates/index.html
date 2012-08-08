@@ -254,7 +254,7 @@
 				$(this).removeClass('hover');
 			});
 
-			$('.nav_btn').live('click', function() {
+			$('.nav_btn').not('#home_btn').live('click', function() {
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
@@ -290,7 +290,6 @@
 			$('#home_btn').live('click', function(){
 				
 					FIdER.map.zoomToExtent(FIdER.start);
-					$('#home_btn').trigger('click');
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
