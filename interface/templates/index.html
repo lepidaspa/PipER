@@ -231,11 +231,14 @@
 			FIdER.vector_layer.events.on({
                 'featureselected': function(feature) {
                 	pa = [];
-                	for (var e in feature.feature.attributes)
-                		pa.push({'key':e, 'value':feature.feature.attributes[e]});
-                	xxte =  {"attributes":pa, "id":feature.feature.id.replace(/\./g,'_')};
-                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
-                    $('#properties_panel .subpanel .content').show();
+                	if (FIdER.map.selectedFeatures.length == 1){
+	                	for (var e in feature.feature.attributes)
+	                		pa.push({'key':e, 'value':feature.feature.attributes[e]});
+	                	xxte =  {"attributes":pa, "id":feature.feature.id.replace(/\./g,'_')};
+	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
+	                    $('#properties_panel .subpanel .content').show();
+	                    $('#properties_btn').click();
+	                }
                 },
                 'featureunselected': function(feature) {
 					$('#properties_panel .subpanel .content').find("#__"+feature.feature.id.replace(/\./g,'_')).remove();
