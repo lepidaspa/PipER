@@ -405,22 +405,23 @@
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: false
                     });
+                    FIdER.selected_control_new = null;
                     FIdER.selected_control_type = null;
                     FIdER.selected_control = null;
                     
-                    FIdER.toggle_selector = function(dtype){
-                    	do_activate = (FIdER.selected_control_type != null && FIdER.selected_control_type != dtype);
+                    FIdER.toggle_selector = function(){
+                    	do_activate = (FIdER.selected_control_type != null && FIdER.selected_control_type != FIdER.selected_control_new);
                     	
                     	if (FIdER.selected_control_type != null){
                     		FIdER.selected_control_type = null;
                     	}
                     	if (do_activate){
-	                    	if(dtype == "one"){
+	                    	if(FIdER.selected_control_new == "one"){
 	                    		FIdER.is_selected_control = "one";
 	                    		FIdER.selected_control = FIdER.select_one_control;
 	                    		
 	                    	}
-	                    	if(dtype == "multi"){
+	                    	if(FIdER.selected_control_new == "multi"){
 	                    		FIdER.is_selected_control = "multi";
 	                    		FIdER.selected_control = FIdER.select_multi_control;
 	                    		
@@ -441,7 +442,8 @@
                     	FIdER.toggle_selector();
                     });
                     $('#select_multi_control').live('click', function(){
-                    	FIdER.toggle_selector('multi');
+                    	FIdER.selected_control_new = "multi";
+                    	FIdER.toggle_selector();
                     });
 
 					//Controls
