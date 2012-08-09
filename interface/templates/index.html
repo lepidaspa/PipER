@@ -392,14 +392,14 @@
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: false
                     });
-                    FIdER.is_selected_control = null;
+                    FIdER.selected_control_type = null;
                     FIdER.selected_control = null;
                     
                     FIdER.get_activation_for = function(dtype){
-                    	do_activate = (FIdER.is_selected_control != null && FIdER.is_selected_control != dtype);
+                    	do_activate = (FIdER.selected_control_type != null && FIdER.selected_control_type != dtype);
                     	
-                    	if (FIdER.is_selected_control != null){
-                    		FIdER.is_selected_control = null;
+                    	if (FIdER.selected_control_type != null){
+                    		FIdER.selected_control_type = null;
                     	}
                     	if (do_activate){
 	                    	if(dtype == "one"){
@@ -534,7 +534,7 @@
 						});
 						
 						
-	                    FIdER.is_selected_control = "one";
+	                    FIdER.selected_control_type = "one";
 	                    FIdER.selected_control = FIdER.select_one_control;
 						FIdER.selected_control.activate();
 					}
