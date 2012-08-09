@@ -237,8 +237,10 @@
 	                	xxte =  {"attributes":pa, "id":feature.feature.id.replace(/\./g,'_')};
 	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#properties_panel .subpanel .content').show();
+						$('.panel').hide();
 	                    $('#properties_btn').click();
 	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
+						$('.panel').hide();
 	                	$('#bi_btn').click();
 	                }
                 },
@@ -246,10 +248,12 @@
                 	
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 						$('#properties_panel .subpanel .content').find("#__"+feature.feature.id.replace(/\./g,'_')).remove();
-						$('#properties_panel')show();
+						$('.panel').hide();
+	                    $('#properties_btn').click();
 						}
 					else if (FIdER.vector_layer.selectedFeatures.length > 1){
-						$('#bi_panel')show();
+						$('.panel').hide();
+						$('#bi_btn').click();
 					}
 					else if (FIdER.vector_layer.selectedFeatures.length == 0){
 						$('.panel').hide();
