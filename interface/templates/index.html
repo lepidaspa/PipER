@@ -416,20 +416,20 @@
                     		FIdER.selected_control_type = null;
                     	}
                     	if (do_activate){
-	                    	if(FIdER.selected_control_new == "one"){
+	                    	if(FIdER.selected_control_new === "one"){
 	                    		FIdER.is_selected_control = "one";
 	                    		FIdER.selected_control = FIdER.select_one_control;
 	                    		FIdER.selected_control.activate();
 	                    		
 	                    	}
-	                    	if(FIdER.selected_control_new == "multi"){
+	                    	if(FIdER.selected_control_new === "multi"){
 	                    		FIdER.is_selected_control = "multi";
 	                    		FIdER.selected_control = FIdER.select_multi_control;
 	                    		FIdER.selected_control.activate();
 	                    		
 	                    	}
                     	} else
-							{
+							{
 	                    		FIdER.selected_control.deactivate();
 	                    		FIdER.selected_control = null;
                     		}
