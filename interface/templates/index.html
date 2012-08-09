@@ -220,13 +220,13 @@
 			
 			
 
-			
+			FIdER.cluster_strategy = new OpenLayers.Strategy.Cluster();
+			FIdER.cluster_strategy.deactivate();
 
 			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
 				styleMap: new OpenLayers.StyleMap(),
 				strategies: [
-					//new OpenLayers.Strategy.Fixed(),
-					new OpenLayers.Strategy.Cluster()
+					FIdER.cluster_strategy
 				]
 			});
 			
