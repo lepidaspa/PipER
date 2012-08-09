@@ -243,8 +243,17 @@
 	                }
                 },
                 'featureunselected': function(feature) {
-					$('#properties_panel .subpanel .content').find("#__"+feature.feature.id.replace(/\./g,'_')).remove();
-                    $('#properties_panel .subpanel .content').hide();
+                	
+                	if (FIdER.vector_layer.selectedFeatures.length == 1){
+						$('#properties_panel .subpanel .content').find("#__"+feature.feature.id.replace(/\./g,'_')).remove();
+						$('#properties_panel')show();
+						}
+					else if (FIdER.vector_layer.selectedFeatures.length > 1){
+						$('#bi_panel')show();
+					}
+					else if (FIdER.vector_layer.selectedFeatures.length == 0){
+						$('.panel').hide();
+					}
                 }
             });
 			
