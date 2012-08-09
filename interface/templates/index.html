@@ -228,6 +228,11 @@
 			});
 			
 			
+			FIdER.hide_panels = function(){
+					$('.nav_btn').removeClass('selected');
+					$('.panel').hide();
+			};
+			
 			FIdER.vector_layer.events.on({
                 'featureselected': function(feature) {
                 	pa = [];
@@ -237,10 +242,10 @@
 	                	xxte =  {"attributes":pa, "id":feature.feature.id.replace(/\./g,'_')};
 	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#properties_panel .subpanel .content').show();
-						$('.panel').hide();
+						FIdER.hide_panels();
 	                    $('#properties_btn').click();
 	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
-						$('.panel').hide();
+						FIdER.hide_panels();
 	                	$('#bi_btn').click();
 	                }
                 },
@@ -248,15 +253,15 @@
                 	
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 						$('#properties_panel .subpanel .content').find("#__"+feature.feature.id.replace(/\./g,'_')).remove();
-						$('.panel').hide();
+						FIdER.hide_panels();
 	                    $('#properties_btn').click();
 						}
 					else if (FIdER.vector_layer.selectedFeatures.length > 1){
-						$('.panel').hide();
+						FIdER.hide_panels();
 						$('#bi_btn').click();
 					}
 					else if (FIdER.vector_layer.selectedFeatures.length == 0){
-						$('.panel').hide();
+						FIdER.hide_panels();
 					}
                 }
             });
