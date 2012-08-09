@@ -236,6 +236,7 @@
 					$('.panel').hide();
 			};
 			
+			
 			FIdER.vector_layer.events.on({
                 'featureselected': function(feature) {
                 	pa = [];
@@ -355,6 +356,15 @@
 						projection : "EPSG:900913",
 						controls : []
 					});
+					
+					FIdER.map.events.register({
+						'zoomend': function(){
+							if (FIdER.map.getZoom() <= 4)
+								FIdER.cluster_strategy.deactivate();
+							else
+								FIdER.cluster_strategy.activate();
+						}
+					})
 
 					FIdER.map.setOptions({restrictedExtent: FIdER.start});
 
