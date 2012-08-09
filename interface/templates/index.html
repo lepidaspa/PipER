@@ -534,7 +534,9 @@
 						});
 						
 						
-						FIdER.select_one_control.activate();
+	                    FIdER.is_selected_control = "one";
+	                    FIdER.selected_control = FIdER.select_one_control;
+						FIdER.selected_control.activate();
 					}
 				});
 				
