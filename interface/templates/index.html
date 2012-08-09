@@ -355,14 +355,14 @@
 
 					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: false, toggle: false,
-                        multiple: false, hover: false,
+                        multiple: true, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: true
                     });
                     
                     FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
-                        clickout: false, toggle: false,
+                        clickout: true, toggle: true,
                         multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         multipleKey: "shiftKey", // shift key adds to selection
