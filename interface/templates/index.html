@@ -223,8 +223,11 @@
 			
 
 			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
-				styleMap: new OpenLayers.StyleMap()
-
+				styleMap: new OpenLayers.StyleMap(),
+				strategies: [
+					new OpenLayers.Strategy.Fixed(),
+					new OpenLayers.Strategy.Cluster()
+				]
 			});
 			
 			
@@ -395,7 +398,7 @@
                     FIdER.selected_control_type = null;
                     FIdER.selected_control = null;
                     
-                    FIdER.get_activation_for = function(dtype){
+                    FIdER.toggle_selector = function(dtype){
                     	do_activate = (FIdER.selected_control_type != null && FIdER.selected_control_type != dtype);
                     	
                     	if (FIdER.selected_control_type != null){
@@ -423,9 +426,13 @@
                     	
                     };
                     
-                    $('#select_one_control').live('click', FIdER.get_activation_for('one'));
-                    $('#select_multi_control').live('click', FIdER.get_activation_for('multi'));
-
+                    $('#select_one_control').live('click', function(){
+                    	FIdER.selected_control_new = "one";
+                    	FIdER.toggle_selector();
+                    });
+                    $('#select_multi_control').live('click', function(){
+                    	FIdER.toggle_selector('multi');
+                    });
 
 					//Controls
 					FIdER.map.addControl(new OpenLayers.Control.PanZoomBar());
