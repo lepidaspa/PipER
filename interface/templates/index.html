@@ -240,6 +240,7 @@
 	                	for (var e in feature.feature.attributes)
 	                		pa.push({'key':e, 'value':feature.feature.attributes[e]});
 	                	xxte =  {"attributes":pa, "id":feature.feature.id.replace(/\./g,'_')};
+	                    $('#properties_panel .subpanel .content').empty();
 	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#properties_panel .subpanel .content').show();
 						FIdER.hide_panels();
@@ -261,7 +262,7 @@
 						$('#bi_btn').click();
 					}
 					else if (FIdER.vector_layer.selectedFeatures.length == 0){
-						FIdER.hide_panels();
+						FIdER.hide_panels();	
 					}
                 }
             });
