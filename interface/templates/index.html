@@ -359,7 +359,7 @@
 					
 					FIdER.map.events.register({
 						'zoomend': function(){
-							if (FIdER.map.getZoom() <= 4)
+							if (FIdER.map.getZoom() >= 14)
 								FIdER.cluster_strategy.deactivate();
 							else
 								FIdER.cluster_strategy.activate();
