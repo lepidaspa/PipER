@@ -351,13 +351,54 @@
 
 					FIdER.map.addLayer(FIdER.vector_layer);
 
-					FIdER.selector_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: false, toggle: false,
                         multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: true
                     });
+                    
+                    FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+                        clickout: false, toggle: false,
+                        multiple: false, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
+                        multipleKey: "shiftKey", // shift key adds to selection
+                        box: false
+                    });
+                    FIdER.is_selected_control = null;
+                    FIdER.selected_control = null;
+                    
+                    FIdER.get_activation_for = function(dtype){
+                    	do_activate = (FIdER.is_selected_control != null && FIdER.is_selected_control != dtype);
+                    	
+                    	if (FIdER.is_selected_control != null){
+                    		FIdER.is_selected_control = null;
+                    	}
+                    	if (do_activate){
+	                    	if(dtype == "one"){
+	                    		FIdER.is_selected_control = "one";
+	                    		FIdER.selected_control = FIdER.select_one_control;
+	                    		
+	                    	}
+	                    	if(dtype == "multi"){
+	                    		FIdER.is_selected_control = "multi";
+	                    		FIdER.selected_control = FIdER.select_multi_control;
+	                    		
+	                    	}
+	                    	return function(){
+	                    		FIdER.selected_control.activate();
+	                    	} 
+                    	} else
+                    		return function(){
+	                    		FIdER.selected_control.deactivate();
+	                    		FIdER.selected_control = null;
+                    		}
+                    	
+                    };
+                    
+                    $('#select_one_control').live('click', FIdER.get_activation_for('one'));
+                    $('#select_multi_control').live('click', FIdER.get_activation_for('multi'));
 
 
 					//Controls
@@ -466,7 +507,7 @@
 						});
 						
 						
-						FIdER.selector_control.activate();
+						FIdER.select_one_control.activate();
 					}
 				});
 				
@@ -554,12 +595,30 @@
 		</div>
 		<div id="properties_panel" class="panel properties_btn">
 			<div class="subpanel">
-				Propriet&agrave;:
+				<div class="title">
+					<span>Propriet&agrave;:</span>
+				</div>
+				<div class="tools">
+					<span class="tool" id="select_one_control"></span>
+				</div>
+				<div class="content">
+					
+				
+				</div>
 			</div>
 		</div>
 		<div id="bi_panel" class="large panel bi_btn">
 			<div class="subpanel">
-				BI Queries
+				<div class="title">
+					<span>Business Intelligence</span>
+				</div>
+				<div class="tools">
+					<span class="tool" id="select_multi_control"></span>
+				</div>
+				<div class="content">
+					
+				
+				</div>
 			</div>
 		</div>
 		<div id="vis_panel" class="panel setup_btn">
