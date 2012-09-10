@@ -25,7 +25,9 @@ urlpatterns = patterns('',
     
     url(r'^broker$', 'broker.views.index'),
     url(r'^broker/getproxies$', 'broker.views.index'),
-    url(r'^broker/toggle/(?P<id>.*)$', 'broker.views.toggle'),
+    url(r'^broker/refresh', 'broker.views.force_refresh'),
+    url(r'^broker/toggle/(?P<id>\d*)$', 'broker.views.toggle'),
+    
     url(r'^models$', 'model_manager.views.index'),
     url(r'^models/getmodels$', 'model_manager.views.get_model_secondary'),
     

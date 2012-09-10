@@ -234,8 +234,12 @@
 			
 			
 			FIdER.vector_layer.events.on({
-                'featureselected': function(feature) {
-                	pa = [];
+                'featureselected': show_features,
+                'featureunselected': show_features
+            });
+            
+            function show_features(feature){
+            		pa = [];
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 	                	for (var e in feature.feature.attributes)
 	                		pa.push({'key':e, 'value':feature.feature.attributes[e]});
@@ -243,29 +247,10 @@
 	                    $('#properties_panel .subpanel .content').empty();
 	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#properties_panel .subpanel .content').show();
-						FIdER.hide_panels();
-	                    $('#properties_btn').click();
 	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
-						FIdER.hide_panels();
-	                	$('#bi_btn').click();
-	                }
-                },
-                'featureunselected': function(feature) {
-                	
-                	if (FIdER.vector_layer.selectedFeatures.length == 1){
-						$('#properties_panel .subpanel .content').find("#__"+feature.feature.id.replace(/\./g,'_')).remove();
-						FIdER.hide_panels();
-	                    $('#properties_btn').click();
-						}
-					else if (FIdER.vector_layer.selectedFeatures.length > 1){
-						FIdER.hide_panels();
 						$('#bi_btn').click();
-					}
-					else if (FIdER.vector_layer.selectedFeatures.length == 0){
-						FIdER.hide_panels();	
-					}
-                }
-            });
+	                }
+            }
 			
 			//FIdER.features = new OpenLayers.
 
@@ -290,6 +275,9 @@
 					$('.panel').hide();
 					$('.panel.' + $(this).attr('id')).show();
 				}
+				
+				FIdER.select_multi_control.deactivate();
+				FIdER.select_one_control.deactivate();
 			});
 			$('#search_panel .subpanel .title').live('click', function() {
 				$('#search_panel .subpanel .content').hide();
@@ -314,8 +302,15 @@
 			});
 			
 			$('#home_btn').live('click', function(){
-				
 					FIdER.map.zoomToExtent(FIdER.start);
+			});
+			$('#properties_btn').live('click', function(){
+					FIdER.select_one_control.activate();
+					FIdER.select_multi_control.deactivate();
+			});
+			$('#bi_btn').live('click', function(){
+					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control.activate();
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -343,6 +338,8 @@
 
 				FIdER.refresh();
 				$('.panel').hide();
+				
+				
 
 				$.getJSON('/interface/urls', function(data) {
 					$.urls = data;
@@ -355,20 +352,27 @@
 					
 					FIdER.map.events.register('moveend', FIdER.map, function(){
 							if (FIdER.map.getZoom() >= 14){
-								
+								FIdER.vector_layer.display(true);
+								FIdER.bbox_layer.display(false);
+								FIdER.status.active_layer =FIdER.vector_layer; 
+								FIdER.status.url = "search";
 							}
 							else{
+								FIdER.vector_layer.display(false);
+								FIdER.bbox_layer.display(true);
+								FIdER.status.active_layer =FIdER.bbox_layer; 
+								FIdER.status.url = "proxies";
 								
 							}
 								
 						$.ajax({
-							url:'/interface/search',
+							url:'/interface/'+FIdER.status.url,
 							dataType:"jsonp",
 							data:{
 								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
 								cbd:"show_data",
 								cbq:"get_queries",
-								q:$.stringifyJSON(prepared_query)
+								q:FIdER.status.query
 							}
 						});
 						
@@ -510,7 +514,11 @@
 									$('#inventory_q').append(ich.multi(c))
 							}
 						}
+						
+						FIdER.status.query = $.stringifyJSON(prepare_query());
 					});
+					
+					
 
 				});
 				
@@ -519,17 +527,23 @@
 					code= (e.keyCode ? e.keyCode : e.which);
 					if (code == 13) 
 						move_to_geo();
-            		//e.preventDefault();
 				});
 				
 				$('#do_search_btn').click(function(){
 					if($('.is_s_selected').data('type') == "geo"){
-					//is_geo:
 						move_to_geo();
 					}
 					else{
-						
-						prepared_query = [];
+						FIdER.status.query = $.stringifyJSON(prepare_query());
+					}
+				});
+				
+				
+				
+			});
+			
+			function prepare_query(){
+				prepared_query = [];
 						
 						$('.line').find('.use_in_query:checked').parent().each(function(a,b){
 							$(b).find('.q_el').each(function(c,d){
@@ -548,18 +562,12 @@
 								prepared_query.push(qqq);
 							});
 						});
-						
-						
-					}
-				});
-				
-				
-				
-			});
+						return prepared_query;
+			}
 			
 			function show_data(datas){
 				var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
-		 		FIdER.vector_layer.addFeatures(geojson_format.read($.stringifyJSON(datas)));	
+		 		FIdER.active_layer.addFeatures(geojson_format.read($.stringifyJSON(datas)));	
 			}
 			
 			function get_queries(datas){
@@ -640,9 +648,6 @@
 				<div class="title">
 					<span>Propriet&agrave;:</span>
 				</div>
-				<div class="tools">
-					<span class="tool" id="select_one_control">one</span>
-				</div>
 				<div class="content">
 					
 				
@@ -653,9 +658,6 @@
 			<div class="subpanel">
 				<div class="title">
 					<span>Business Intelligence</span>
-				</div>
-				<div class="tools">
-					<span class="tool" id="select_multi_control">area</span>
 				</div>
 				<div class="content">
 					

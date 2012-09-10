@@ -216,6 +216,9 @@
 			$('#home_btn').live('click', function(){
 				window.location = "/";
 			});
+			$('#home_btn').live('click', function(){
+				window.location = "/broker/refresh";
+			});
 			//run
 			$(function() {
 				FIdER.refresh();
@@ -236,6 +239,9 @@
 		<nav>
 			<div class="nav_btn" id="home_btn">
 				<span>h</span>
+			</div>
+			<div class="nav_btn" id="rfrsh_btn">
+				<span>V</span>
 			</div>
 		</nav>
 		<div id="content">

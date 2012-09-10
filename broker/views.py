@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from broker.models import *
-
+from django.core.management import call_command
 from django.conf import settings
 try:
     import json
@@ -44,6 +44,9 @@ def search(request):
     return HttpResponse(response)
 
 def show(request):
+    cbd = request.REQUEST.get('cbd', None)
+    if cbd is None:
+        return HttpResponse()
     jsr = {}
     jsr['type'] = "FeatureCollection"
     jsr['features'] = []
@@ -52,7 +55,7 @@ def show(request):
         jf['type']='Feature'
         jf['geometry']={'type':'Polygon', 'coordinates':[[[meta.BB_south, meta.BB_east],[meta.BB_south, meta.BB_west],[meta.BB_north, meta.BB_west],[meta.BB_north, meta.BB_east]]]}
         jf['properties']={"TYPE":"BBOX"}
-    return HttpResponse(json.dumps(jsr))
+    return HttpResponse(cbd+"("+json.dumps(jsr)+")")
         
 
 def do_search(request):
@@ -83,3 +86,15 @@ def toggle(request, id):
     m = Metadata.objects.get(id=id)
     m.active = not m.active
     m.save()
+    
+def force_refresh(request):
+    return HttpResponse(generate_response())
+
+def generate_response():
+    yield "<div>starting</div>"
+    for proxy in Proxy.objects.all():
+        call_command('pull_remote', str(proxy.id))
+        yield "<div>pulled proxy %s</div>" % str(proxy.id)
+        call_command('get_remote', str(proxy.id))
+        yield "<div>got proxy %s</div>" % str(proxy.id)
+    yield "<div>done</div>"

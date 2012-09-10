@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>PipER</title>
+		<title>PipER - Model Manager</title>
 		<style>
 			@font-face {
 				font-family: 'WebSymbolsRegular';
@@ -220,6 +220,12 @@
 			$(function() {
 				FIdER.refresh();
 				
+				$.getJSON('/models/getmodels', function(data){
+					for (el in data){
+						
+					}
+				});
+				
 			});
 
 		</script>
@@ -227,7 +233,7 @@
 	<body>
 		<header>
 			<div id="fider-logo" class="logo left">
-				<span> PipER </span>
+				<span> PipER - Model Manager</span>
 			</div>
 			<div id="owner-logo" class="logo right">
 				<span> Lepida S.p.A. </span>
