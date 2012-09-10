@@ -10,7 +10,7 @@ import urllib2
 from data.views import *
 
 def index(request):
-    return render_to_response('broker_mgmt.html')
+    return render_to_response('broker_mgmt.html', {'proxies':all_prox()})
     
 def search(request):
     """
@@ -30,7 +30,6 @@ def search(request):
     data = run_query(bb, query)   
     
 
-
     response = ""
 
     response+=cb_data+"("+json.dumps(data)+");"
@@ -43,6 +42,18 @@ def search(request):
 
 
     return HttpResponse(response)
+
+def show(request):
+    jsr = {}
+    jsr['type'] = "FeatureCollection"
+    jsr['features'] = []
+    for meta in Metadata.objects.filter(active=True):
+        jf={}
+        jf['type']='Feature'
+        jf['geometry']={'type':'Polygon', 'coordinates':[[[meta.BB_south, meta.BB_east],[meta.BB_south, meta.BB_west],[meta.BB_north, meta.BB_west],[meta.BB_north, meta.BB_east]]]}
+        jf['properties']={"TYPE":"BBOX"}
+    return HttpResponse(json.dumps(jsr))
+        
 
 def do_search(request):
     query = request.REQUEST.get('q')
@@ -67,3 +78,8 @@ def do_search(request):
 
     response = urllib2.urlopen(url, 'remotequery='+json.dumps(message))
     return HttpResponse(response)
+
+def toggle(request, id):
+    m = Metadata.objects.get(id=id)
+    m.active = not m.active
+    m.save()

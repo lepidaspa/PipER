@@ -198,7 +198,6 @@
 				var width = $(window).width() - $('nav').width();
 				var height = $(window).height() - $('header').height() - $('footer').height() - 10;
 				$('#map').width(width);
-				$('.large').width(width / 2);
 				$('nav').height(height);
 				$('#map').height(height);
 				$('.panel').height(height);
@@ -218,16 +217,13 @@
 			FIdER.sld_formatter = new OpenLayers.Format.SLD();
 			FIdER.style = new OpenLayers.StyleMap();
 			
-			
-
-			FIdER.cluster_strategy = new OpenLayers.Strategy.Cluster();
-			FIdER.cluster_strategy.deactivate();
+			FIdER.status = {};
 
 			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
 				styleMap: new OpenLayers.StyleMap()
-				/*strategies: [
-					FIdER.cluster_strategy
-				]*/
+			});
+			FIdER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
+				styleMap: new OpenLayers.StyleMap()
 			});
 			
 			
@@ -357,14 +353,27 @@
 						controls : []
 					});
 					
-					FIdER.map.events.register({
-						'zoomend': function(){
-							if (FIdER.map.getZoom() >= 14)
-								FIdER.cluster_strategy.deactivate();
-							else
-								FIdER.cluster_strategy.activate();
-						}
-					})
+					FIdER.map.events.register('moveend', FIdER.map, function(){
+							if (FIdER.map.getZoom() >= 14){
+								
+							}
+							else{
+								
+							}
+								
+						$.ajax({
+							url:'/interface/search',
+							dataType:"jsonp",
+							data:{
+								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
+								cbd:"show_data",
+								cbq:"get_queries",
+								q:$.stringifyJSON(prepared_query)
+							}
+						});
+						
+						
+					});
 
 					FIdER.map.setOptions({restrictedExtent: FIdER.start});
 
@@ -389,6 +398,7 @@
 					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
 
 					FIdER.map.addLayer(FIdER.vector_layer);
+					FIdER.map.addLayer(FIdER.bbox_layer);
 
 					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: false, toggle: false,
@@ -540,21 +550,6 @@
 						});
 						
 						
-						$.ajax({
-							url:'/interface/search',
-							dataType:"jsonp",
-							data:{
-								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
-								cbd:"show_data",
-								cbq:"get_queries",
-								q:$.stringifyJSON(prepared_query)
-							}
-						});
-						
-						
-	                    FIdER.selected_control_type = "one";
-	                    FIdER.selected_control = FIdER.select_one_control;
-						FIdER.selected_control.activate();
 					}
 				});
 				
@@ -607,8 +602,8 @@
 			<div class="nav_btn" id="bi_btn">
 				<span>u</span>
 			</div>
-			<div class="nav_btn" id="setup_btn">
-				<span>S</span>
+			<div class="nav_btn" id="info_btn">
+				<span>C</span>
 			</div>
 		</nav>
 		<div id="map"> </div>
@@ -634,7 +629,7 @@
 				</div>
 			</div>
 			<button id="do_search_btn">
-				Cerca
+				Imposta
 			</button>
 			<button id="do_clear_btn">
 				Annulla
@@ -668,10 +663,18 @@
 				</div>
 			</div>
 		</div>
-		<div id="vis_panel" class="panel setup_btn">
+		<div id="vis_panel" class="panel info_btn">
 			<div class="subpanel" id="layers_panel">
-				Stylings:
-				<br />
+				<div id="proxy_list">
+					Proxies:
+				</div>
+				<div id="tools_list">
+					Tools:
+					<ul>
+						<li><a href="/models">Models</a></li>
+						<li><a href="/broker">Proxies</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<footer>

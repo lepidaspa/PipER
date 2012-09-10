@@ -239,32 +239,7 @@
 			</div>
 		</nav>
 		<div id="content">
-			<table>
-				{% for owner in proxies %}
-				<tr>
-					<td>{{owner.name}}</td>
-					<td>
-						<tbody>
-							{% for proxy in row.proxies %}
-							<tr>
-								<td>{{proxy.token}}</td>
-								<td>
-									<tbody>
-										{% for mm in proxy.meta %}
-										<tr>
-											<td>{{mm.name}}</td>
-											<td><a href="/broker/toggle/{{mm.id}}">{% if mm.active %}DE{% endif %}ACTIVATE</td>
-										</tr>
-										{% endfor %}
-									</tbody>
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
+			
 		</div>
 		<footer>
 			<a href="#">PipER</a> - <a href="">Laboratori Guglielmo Marconi S.p.A.</a> &amp; <a href="">Italtel S.p.A.</a> per <a href="">Lepida S.p.A.</a>

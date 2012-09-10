@@ -87,6 +87,34 @@ def get_for_bb(BB):
                          'name':meta.name
                          })
         return data 
+    
+def all_prox():
+    ret = []
+    for owner in Owner.objects.all():
+        oj = {}
+        oj['name']=owner.name
+        oj['data_count'] = owner.proxies.count()
+        oj['global_count'] = 0
+        oj['data'] = []
+        for proxy in owner.proxies.all():
+            pj = {}
+            pj['token']=proxy.token
+            pj['url']=proxy.url
+            pj['manifest']=proxy.data.manifest
+            pj['token']=proxy.token
+            
+            pj['meta_count']=proxy.data.metadata.count()
+            oj['global_count'] = oj['global_count'] + pj['meta_count']
+            pj['meta']=[]
+            for meta in proxy.data.metadata.all():
+                mj = {}
+                mj['name'] = meta.name
+                mj['active'] = meta.active
+                pj['meta'].append(mj)
+            oj['data'].append(pj)
+        
+        ret.append(oj)   
+    return ret  
 
 class Owner(models.Model):
     name = models.CharField(max_length=250)
@@ -96,7 +124,7 @@ class Owner(models.Model):
         return self.name
 
 class ProxyRequest(models.Model):
-    owner = models.ForeignKey(Owner)
+    owner = models.ForeignKey(Owner, related_name="proxies")
     url = models.URLField()
     token = models.TextField(unique=True, primary_key=True, db_index=True)
     def __str__(self):
@@ -122,6 +150,8 @@ class Metadata(models.Model):
     meta = models.TextField()
    
     name = models.TextField()
+    
+    active = models.BooleanField(default=True)
     
     def __str__(self):
         return str(self.proxy) + ":"+ self.name
