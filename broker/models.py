@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django.contrib.auth.models import Group
 # Create your models here.
 import json
 
@@ -86,9 +87,16 @@ def get_for_bb(BB):
                          'name':meta.name
                          })
         return data 
-                
+
+class Owner(models.Model):
+    name = models.CharField(max_length=250)
+    group = models.ForeignKey(Group)
+    
+    def __str__(self):
+        return self.name
 
 class ProxyRequest(models.Model):
+    owner = models.ForeignKey(Owner)
     url = models.URLField()
     token = models.TextField(unique=True, primary_key=True, db_index=True)
     def __str__(self):

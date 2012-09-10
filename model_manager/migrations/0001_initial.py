@@ -19,6 +19,8 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('container', self.gf('django.db.models.fields.related.ForeignKey')(related_name='models', to=orm['model_manager.DataModelContainer'])),
+            ('federated', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('within', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='contains', null=True, to=orm['model_manager.DataModel'])),
             ('geo_type', self.gf('django.db.models.fields.CharField')(max_length=255)),
         ))
         db.send_create_signal('model_manager', ['DataModel'])
@@ -33,15 +35,17 @@ class Migration(SchemaMigration):
         # Adding model 'DataModelAttributeValues'
         db.create_table('model_manager_datamodelattributevalues', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('table', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['model_manager.DataModelAttributeTable'])),
-            ('value', self.gf('django.db.models.fields.TextField')()),
+            ('table', self.gf('django.db.models.fields.related.ForeignKey')(related_name='values', to=orm['model_manager.DataModelAttributeTable'])),
+            ('value', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('super', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='children', null=True, to=orm['model_manager.DataModelAttributeValues'])),
         ))
         db.send_create_signal('model_manager', ['DataModelAttributeValues'])
 
         # Adding model 'DataModelAttributeSemantic'
         db.create_table('model_manager_datamodelattributesemantic', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.TextField')()),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('filter', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('related_table_name', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['model_manager.DataModelAttributeTable'], null=True, blank=True)),
         ))
         db.send_create_signal('model_manager', ['DataModelAttributeSemantic'])
@@ -82,9 +86,11 @@ class Migration(SchemaMigration):
         'model_manager.datamodel': {
             'Meta': {'object_name': 'DataModel'},
             'container': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'models'", 'to': "orm['model_manager.DataModelContainer']"}),
+            'federated': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'geo_type': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'within': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'contains'", 'null': 'True', 'to': "orm['model_manager.DataModel']"})
         },
         'model_manager.datamodelattribute': {
             'Meta': {'object_name': 'DataModelAttribute'},
@@ -97,8 +103,9 @@ class Migration(SchemaMigration):
         },
         'model_manager.datamodelattributesemantic': {
             'Meta': {'object_name': 'DataModelAttributeSemantic'},
+            'filter': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.TextField', [], {}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'related_table_name': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['model_manager.DataModelAttributeTable']", 'null': 'True', 'blank': 'True'})
         },
         'model_manager.datamodelattributetable': {
@@ -109,8 +116,9 @@ class Migration(SchemaMigration):
         'model_manager.datamodelattributevalues': {
             'Meta': {'object_name': 'DataModelAttributeValues'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'table': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['model_manager.DataModelAttributeTable']"}),
-            'value': ('django.db.models.fields.TextField', [], {})
+            'super': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'children'", 'null': 'True', 'to': "orm['model_manager.DataModelAttributeValues']"}),
+            'table': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'values'", 'to': "orm['model_manager.DataModelAttributeTable']"}),
+            'value': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'model_manager.datamodelcontainer': {
             'Meta': {'object_name': 'DataModelContainer'},

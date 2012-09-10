@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from model_manager.models import *
 
-
+def index(request):
+    return render_to_response('model_index.html')
 
 def _get_model(request):
     data = {}
@@ -207,7 +208,7 @@ def get_model_secondary (request):
     """
     
     models = request.REQUEST.get('models', [])
-    if models is not None:
+    if models != []:
         models = models.split('|')
     
     fields_table = do_get_model_secondary(models)

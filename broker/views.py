@@ -9,7 +9,9 @@ except:
 import urllib2
 from data.views import *
 
-
+def index(request):
+    return render_to_response('broker_mgmt.html')
+    
 def search(request):
     """
     Search pattern
