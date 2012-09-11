@@ -155,7 +155,7 @@
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
 
-		<script id="range" type="text/html">
+		<script id="model" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
 				{% templatetag openvariable %}name{% templatetag closevariable %}:
@@ -169,25 +169,6 @@
 				</span>
 			</div>
 		</script>
-		<script id="multi" type="text/html">
-			<div class="line">
-				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
-				<label class="q_el label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="in" for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
-				<select class="query_element params" name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}" multiple="true">
-					{% templatetag openvariable %}#type{% templatetag closevariable %}
-					<option value="{% templatetag openvariable %}.{% templatetag closevariable %}">{% templatetag openvariable %}.{% templatetag closevariable %}</option>
-					{% templatetag openvariable %}/type{% templatetag closevariable %}
-				</select>
-			</div>
-		</script>
-		<script id="attribs" type="text/html">
-			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
-			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
-    			<li>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
-    		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
-    		</ul>
-		</script>
-
 		<script>
 			FIdER = {};
 			//refresh function for resize and startup
@@ -222,7 +203,7 @@
 				
 				$.getJSON('/models/getmodels', function(data){
 					for (el in data){
-						
+						ich.model(data[el]);
 					}
 				});
 				

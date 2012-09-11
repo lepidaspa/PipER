@@ -110,15 +110,15 @@ def do_get_model_secondary(models= []):
                               'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
-                                            'Owner': 'str',
-                                            'OwnerID' : 'str',
-                                            'StartID': 'str',
-                                            'EndID': 'str',
-                                            'Length': 'int',
-                                            'Type': ['Pubblica Illuminazione'],
-                                            'Availability': 'str',
-                                            'CreationDate': 'str',
-                                            'LastUpdate': 'str',
+                                            'Proprietario': 'str',
+                                            'IDProprietario' : 'str',
+                                            'IDInizio': 'str',
+                                            'IDFine': 'str',
+                                            'Lunghezza': 'int',
+                                            'Tipo': ['Pubblica Illuminazione'],
+                                            'Disponibilita': 'str',
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str',
                                             }
                               },
                     'Duct2' : {
@@ -158,6 +158,7 @@ def do_get_model_secondary(models= []):
                     'Well' :{
                               'name':"Pozzetto",
                               'objtype':'Point',
+                              'super':'Well',
                               'properties':{
                                             'ID': 'int',
                                             'Owner': 'str',
@@ -172,6 +173,7 @@ def do_get_model_secondary(models= []):
                               'name':"Tubazione",
                               'objtype':'LineString',
                               'container':'Duct',
+                              'super':'Tube',
                               'properties':{
                                             'ID': 'int',
                                             'Owner': 'str',
@@ -183,6 +185,7 @@ def do_get_model_secondary(models= []):
                               'name':"Muffola",
                               'objtype':'Point',
                               'container':'Well',
+                              'super':'SpliceEnclosure',
                               'properties':{
                                             'ID': 'int',
                                             'Owner': 'str',
@@ -212,8 +215,7 @@ def get_model_secondary (request):
         models = models.split('|')
     
     fields_table = do_get_model_secondary(models)
-   
-
+    
     return HttpResponse(json.dumps(fields_table), mimetype="application/json")
 
 

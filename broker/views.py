@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from broker.models import *
 from django.core.management import call_command
 from django.conf import settings
@@ -50,12 +50,13 @@ def show(request):
     jsr = {}
     jsr['type'] = "FeatureCollection"
     jsr['features'] = []
-    for meta in Metadata.objects.filter(active=True):
+    for meta in Metadata.objects.all():
         jf={}
         jf['type']='Feature'
-        jf['geometry']={'type':'Polygon', 'coordinates':[[[meta.BB_south, meta.BB_east],[meta.BB_south, meta.BB_west],[meta.BB_north, meta.BB_west],[meta.BB_north, meta.BB_east]]]}
+        jf['geometry']={'type':'Polygon', 'coordinates':[[[meta.BB_south, meta.BB_east],[meta.BB_south, meta.BB_west],[meta.BB_north, meta.BB_west],[meta.BB_north, meta.BB_east],[meta.BB_south, meta.BB_east]]]}
         jf['properties']={"TYPE":"BBOX"}
-    return HttpResponse(cbd+"("+json.dumps(jsr)+")")
+        jsr['features'].append(jf)
+    return HttpResponse(cbd+"("+json.dumps(jsr)+");")
         
 
 def do_search(request):
@@ -87,14 +88,25 @@ def toggle(request, id):
     m.active = not m.active
     m.save()
     
+    return HttpResponseRedirect('/broker')
+    
 def force_refresh(request):
     return HttpResponse(generate_response())
 
 def generate_response():
     yield "<div>starting</div>"
     for proxy in Proxy.objects.all():
-        call_command('pull_remote', str(proxy.id))
-        yield "<div>pulled proxy %s</div>" % str(proxy.id)
-        call_command('get_remote', str(proxy.id))
-        yield "<div>got proxy %s</div>" % str(proxy.id)
+        try:
+            call_command('pull_remote', str(proxy.id))
+            yield "<div>pulled proxy %s</div>" % str(proxy.id)
+        except:
+            yield "<div>error pulling proxy %s</div>" % str(proxy.id)
+        try:
+            call_command('get_remote', str(proxy.id))
+            yield "<div>got proxy %s</div>" % str(proxy.id)
+        except:
+            yield "<div>error getting proxy %s</div>" % str(proxy.id)
     yield "<div>done</div>"
+    
+    
+    

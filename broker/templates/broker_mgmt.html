@@ -38,7 +38,7 @@
 				position: absolute;
 				top: 50px;
 			}
-			#map {
+			#content {
 				left: 40px;
 				position: absolute;
 			}
@@ -250,11 +250,13 @@
 				<tr>
 					<td>{{owner.name}}</td>
 					<td>
+						<table>
 						<tbody>
-							{% for proxy in row.proxies %}
+							{% for proxy in owner.data %}
 							<tr>
 								<td>{{proxy.token}}</td>
 								<td>
+									<table>
 									<tbody>
 										{% for mm in proxy.meta %}
 										<tr>
@@ -263,10 +265,12 @@
 										</tr>
 										{% endfor %}
 									</tbody>
+									</table>
 								</td>
 							</tr>
 							{% endfor %}
 						</tbody>
+						</table>
 					</td>
 				</tr>
 				{% endfor %}

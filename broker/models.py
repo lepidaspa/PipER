@@ -108,6 +108,7 @@ def all_prox():
             pj['meta']=[]
             for meta in proxy.data.metadata.all():
                 mj = {}
+                mj['id'] = meta.id
                 mj['name'] = meta.name
                 mj['active'] = meta.active
                 pj['meta'].append(mj)
@@ -124,7 +125,7 @@ class Owner(models.Model):
         return self.name
 
 class ProxyRequest(models.Model):
-    owner = models.ForeignKey(Owner, related_name="proxies")
+    owner = models.ForeignKey(Owner, related_name="proxies", null=True, blank=True)
     url = models.URLField()
     token = models.TextField(unique=True, primary_key=True, db_index=True)
     def __str__(self):

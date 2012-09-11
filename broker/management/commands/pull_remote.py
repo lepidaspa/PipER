@@ -14,7 +14,8 @@ class Command(BaseCommand):
         url = p.request.url
         if url[-1] != "/":
             url += "/"
-        data = urllib2.urlopen("%srefreshremote/%s" % (url, p.request.token))
+        tot = "%srefreshremote/%s/" % (url, p.request.token)
+        print tot
+        data = urllib2.urlopen(tot)
         dd = data.read()
-        print dd
-        put_data(json.loads(dd))
+        print  dd

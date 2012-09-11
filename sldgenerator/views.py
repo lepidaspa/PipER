@@ -15,7 +15,7 @@ import sld
 def get_sld(request):
     
     m = request.REQUEST.get('model', "Duct")
-    f = request.REQUEST.get('field', "Type")
+    f = request.REQUEST.get('field', "Tipo")
     
     mod = do_get_model_secondary([m])
     print json.dumps(mod)
