@@ -342,7 +342,8 @@
 			$.get('http://echo720.server4you.net/sld?model=Duct&field=Tipo', function(sld){
 					sld_reader = new OpenLayers.Format.SLD();
 					FIdER.sld = sld_reader.read(sld);
-					FIdER.ccstyle = FIdER.sld.namedLayers.Duct.userStyles[0]
+					FIdER.ccstyle = new OpenLayers.StyleMap();
+					FIdER.ccstyle.styles['default']=FIdER.sld.namedLayers.Duct.userStyles[0]
 			});
 			FIdER.bbstyle = new OpenLayers.StyleMap({
 				'default':{
@@ -595,6 +596,7 @@
 				FIdER.select_one_control.deactivate();
 				FIdER.slect_multi_control.unselectAll();
 				FIdER.select_multi_control.deactivate();
+				$('#bi_panel .subpanel .content').empty();
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
