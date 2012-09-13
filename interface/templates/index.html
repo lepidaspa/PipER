@@ -635,6 +635,10 @@
 				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
 					
 					$('#spinner').hide();
+					vec = FIdER.vector_layer.getFeaturesByAttribute("Tipo", "Telecomunicazioni")
+					for(feat in vec){
+						FIdER.select_multi_control.select(vec[feat]);
+					}
 				}
 				else 
 				$('#spinner').show();
