@@ -200,6 +200,14 @@
 			.p_name{
 				font-weight:bold;
 			}
+			.fake_link{
+				cursor:hand;
+				
+			}
+			.fake_link:hover{
+				cursor:hand;
+				
+			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
@@ -236,12 +244,19 @@
 			<div class="aproxy">
 				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
 				{% templatetag openvariable %}#data{% templatetag closevariable %}
-					<table data-token="{% templatetag openvariable %}data.token{% templatetag closevariable %}">
+					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
 					{% templatetag openvariable %}#meta{% templatetag closevariable %}
 						<tr>
-							<td>{% templatetag openvariable %}name{% templatetag closevariable %}</td>
-							<td>{% templatetag openvariable %}id{% templatetag closevariable %}</td>
-							<td>{% templatetag openvariable %}active{% templatetag closevariable %}</td>
+							<td width="33%">{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+							<td width="33%">{% templatetag openvariable %}id{% templatetag closevariable %}</td>
+							<td width="33%">
+								{% templatetag openvariable %}#active{% templatetag closevariable %}
+								<span class="fake_link ref_proxy" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}">DISATTIVA</span>
+								{% templatetag openvariable %}/active{% templatetag closevariable %}
+								{% templatetag openvariable %}^active{% templatetag closevariable %}
+								<span class="fake_link ref_proxy" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}">ATTIVA</span>
+								{% templatetag openvariable %}/active{% templatetag closevariable %}
+							</td>
 						</tr>
 					{% templatetag openvariable %}/meta{% templatetag closevariable %}
 					</table>
@@ -252,9 +267,11 @@
 			<div class="uproxy">
 				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
 				{% templatetag openvariable %}#data{% templatetag closevariable %}
-					<table data-token="{% templatetag openvariable %}data.token{% templatetag closevariable %}">
+					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
 					{% templatetag openvariable %}#meta{% templatetag closevariable %}
-						<tr><td>{% templatetag openvariable %}name{% templatetag closevariable %}</td><td></td><td></td></tr>
+						<tr>
+							<td>{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+						</tr>
 					{% templatetag openvariable %}/meta{% templatetag closevariable %}
 					</table>
 				{% templatetag openvariable %}/data{% templatetag closevariable %}
@@ -332,7 +349,7 @@
 					'fillColor':"Orange",
 					'strokeColor':"Orange",
 					'fillOpacity':0.1,
-					'strokeWidth':"2",
+					'strokeWidth':"1",
 					'pointRadius':'6'
 					
 				}
@@ -416,9 +433,27 @@
 			//FIdER.features = new OpenLayers.
 
 			//global events
-			$(window).resize(FIdER.refresh);
+			$(window).resize(FIdER.refresh);		
 
 			//ux events
+			
+			$('.ref_proxy').live('click', function(){
+				d = $(this).data('toggle_url');
+				$.get(d, function(data){
+					$.getJSON('/broker/getproxies', function(pdata){
+					
+					$('#admin_proxies').empty();
+					$('#user_proxies').empty();
+					for (owner in pdata){
+						
+						$('#admin_proxies').append(ich.aproxy(pdata[owner]));
+						$('#user_proxies').append(ich.uproxy(pdata[owner]));
+					
+					}
+				});
+				});
+			});
+			
 			$('.nav_btn').live('mouseover', function() {
 				$(this).addClass('hover');
 			});
@@ -521,8 +556,19 @@
 			});
 			
 			$('#add_infrastructure').live('click', function(){
-					$('<div>Infrastrutture</div>').dialog({
-						title:"Aggiungi Infrastruttur"
+					$('<div>Nome Infrastruttura: <input id="create_infra" type="text"></div>').dialog({
+						title:"Aggiungi Infrastruttura",
+						buttons:{
+							'OK':function(){
+								$.get('/data', function(ddd){
+									console.log(ddd);
+									$( this ).dialog( "destroy" );
+								});
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
 					});	
 			});
 			

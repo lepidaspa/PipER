@@ -92,7 +92,7 @@ def do_search(request):
     message['offset'] = offset
 
     import urllib2
-    url = query['url'] + "query/" + query['token'] + "/" + query['name'] + "/"
+    url = query['url'] + "/query/" + query['token'] + "/" + query['name'] + "/"
 
     response = urllib2.urlopen(url, 'remotequery='+json.dumps(message))
     return HttpResponse(response)
