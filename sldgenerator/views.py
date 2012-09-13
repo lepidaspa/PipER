@@ -65,33 +65,64 @@ def get_sld(request):
     sf = sld.StyledLayerDescriptor()
     
     nl = sf.create_namedlayer("elements")
-    ustyle = nl.create_userstyle()
+    default_style = nl.create_userstyle()
+    slected_style = nl.create_userstyle()
     for v in fv:
         
         color = color_list[i]
         i = i+1
         
-        ftstyle = ustyle.create_featuretypestyle()
-        ftsr = ftstyle.create_rule(f+"__"+v)
+        default_feature_type_style = default_style.create_featuretypestyle()
+        slected_feature_type_style = slected_style.create_featuretypestyle()
+        
+        default_feature_type_style_rule = default_feature_type_style.create_rule(f+"__"+v)
+        slected_feature_type_style_rule = slected_feature_type_style.create_rule(f+"__"+v)
+        default_feature_type_style_rule.create_symbolizer("Line")
+        slected_feature_type_style_rule.create_symbolizer("Line")
         #RULE
-        ftsrf = ftsr.create_filter(f, '==', v)
+        ftsrf = default_feature_type_style_rule.create_filter(f, '==', v)
         #SYMBOL
-        ftsym  = ftsr.create_symbolizer("Line")
-        ftstroke = ftsym.create_stroke()
-        ftstroke.create_cssparameter("stroke",color)
-        ftstroke.create_cssparameter("stroke-width","2")
+        dftsym = default_feature_type_style_rule.LineSymbolizer
+        dftstroke = dftsym.create_stroke()
+        dftstroke.create_cssparameter("stroke",color)
+        dftstroke.create_cssparameter("stroke-width","2")
         
-        ftsymp  = ftsr.PointSymbolizer
-        gftpoint = sld.Graphic(ftsymp)
-        gftpoint.Size = "6"
-        mgftpoint = sld.Mark(gftpoint)
-        mgftpoint.WellKnownName="circle"
-        smgftpoint = mgftpoint.Stroke
-        smgftpoint.create_cssparameter('stroke', color)
         
-        fmgftpoint = mgftpoit.Fill
-        fmgftpoint.create_cssparameter('fill', color)
-        fmgftpoint.create_cssparameter('fill-opacity', "0.1")   
+        sftsym = slected_feature_type_style_rule.LineSymbolizer
+        sftstroke = sftsym.create_stroke()
+        sftstroke.create_cssparameter("stroke",color)
+        sftstroke.create_cssparameter("stroke-width","4")
+        
+        dftsymp  = default_feature_type_style_rule.PointSymbolizer
+        dgftpoint = dftsymp.Graphic
+        dgftpoint.Size = "6"
+        dmgftpoint = dgftpoint.Mark
+        dmgftpoint.WellKnownName="circle"
+        dmgftpoint.create_stroke()
+        dsmgftpoint = dmgftpoint.Stroke
+        dsmgftpoint.create_cssparameter('stroke', color)
+        dsmgftpoint.create_cssparameter("stroke-width","2")
+        
+        #dmgftpoint.create_fill()
+        dfmgftpoint = dmgftpoint.Fill
+        dfmgftpoint.create_cssparameter('fill', color)
+        dfmgftpoint.create_cssparameter('fill-opacity', "0.1")   
+        
+        
+        sftsymp  = slected_feature_type_style_rule.PointSymbolizer
+        sgftpoint = sftsymp.Graphic
+        sgftpoint.Size = "6"
+        smgftpoint = sgftpoint.Mark
+        smgftpoint.WellKnownName="circle"
+        smgftpoint.create_stroke()
+        ssmgftpoint = smgftpoint.Stroke
+        ssmgftpoint.create_cssparameter('stroke', color)
+        ssmgftpoint.create_cssparameter("stroke-width","4")
+        
+        #dmgftpoint.create_fill()
+        sfmgftpoint = smgftpoint.Fill
+        sfmgftpoint.create_cssparameter('fill', color)
+        sfmgftpoint.create_cssparameter('fill-opacity', "0.1")   
 
 
     return HttpResponse(sf.as_sld())
