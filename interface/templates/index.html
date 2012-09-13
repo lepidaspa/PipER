@@ -668,6 +668,9 @@
 					FIdER.map.events.register('moveend', FIdER.map, function(){
 						$('.panel').hide();
 						$('.selected').removeClass('selected');
+						FIdER.vector_layer.styleMap.styles.default = FIdER.ccstyle.styles.default;
+						FIdER.vector_layer.styleMap.styles.select = FIdER.ccstyle.styles.select;
+						FIdER.vector_layer.redraw();
 						if (FIdER.map.getZoom() >= 15){
 							FIdER.vector_layer.display(true);
 							FIdER.bbox_layer.display(false);
