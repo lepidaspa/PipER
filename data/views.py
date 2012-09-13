@@ -14,7 +14,7 @@ from django.contrib.gis.gdal import OGRGeometry
 from pymongo import Connection, GEO2D
 
 
-def put_data(data):
+def put_data(proxy, data):
     """
     {
         u"token": unicode,
@@ -49,6 +49,7 @@ def put_data(data):
                 feature['_center'] = json.loads(polygon.geos.centroid.json)
                 feature['_proxy'] = token_id
                 feature['_metadata'] = metadata_name
+                feature['properties']['Fornitore']=proxy.request.owner.name
                 collection.insert(feature)
             
     return HttpResponse()

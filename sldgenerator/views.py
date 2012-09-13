@@ -13,6 +13,23 @@ from model_manager.views import *
 import sld
 
 def get_sld(request):
+    color_list = [
+                  '#ffa500',
+                  '#800000',
+                  '#008000',
+                  '#808000',
+                  '#000000',
+                  '#808080',
+                  '#c0c0c0',
+                  '#ff00ff',
+                  '#00ff00',
+                  '#ffff00',
+                  '#add8e6',
+                  '#0000a0',
+                  '#0000ff',
+                  '#00ffff',
+                  '#ff0000'
+                  ]
     
     m = request.REQUEST.get('model', "Duct")
     f = request.REQUEST.get('field', "Tipo")
@@ -39,20 +56,27 @@ def get_sld(request):
     
     ot = mod[m]['objtype']
     if ot == "LineString":
-        ot = sld.LineSymbolizer
+        ot = "Line"
     elif ot == "Point":
-        ot = sld.PointSymbolizer
+        ot = "Point"
     
+    i = 0
     
     sf = sld.StyledLayerDescriptor()
     
     nl = sf.create_namedlayer(m)
     ustyle = nl.create_userstyle()
     for v in fv:
-        ftstyle = ustyle.create_featuretypestyle()
-        ftsr = ftstyle.create_rule(f+"__"+v, ot)
-        ftsrf = ftsr.create_filter(f, '==', v)
+        color = color_list[i]
+        i = i+1
         
+        ftstyle = ustyle.create_featuretypestyle()
+        ftsr = ftstyle.create_rule(f+"__"+v)
+        ftsym  = ftsr.create_symbolizer(ot)
+        ftstroke = ftsym.create_stroke()
+        ftstroke.create_cssparameter("stroke",color)
+        ftsrf = ftsr.create_filter(f, '==', v)
+
     return HttpResponse(sf.as_sld())
-    
+
 

@@ -93,7 +93,7 @@ def do_get_model_secondary(models= []):
                               'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
-                                            'Proprietario': 'str',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
                                             'IDProprietario' : 'str',
                                             'IDInizio': 'str',
                                             'IDFine': 'str',
@@ -101,7 +101,7 @@ def do_get_model_secondary(models= []):
                                             'Tipo': ['Pubblica Illuminazione', 'Telecomunicazioni', 'Rete Elettrica', 'Fognatura', 'Teleriscaldamento', 'Rete Gas'],
                                             'Disponibilita': 'str',
                                             'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str',
+                                            'UltimoAggiornamento': 'str'
                                             }
                               },
                     'Duct1' : {
@@ -110,7 +110,7 @@ def do_get_model_secondary(models= []):
                               'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
-                                            'Proprietario': 'str',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
                                             'IDProprietario' : 'str',
                                             'IDInizio': 'str',
                                             'IDFine': 'str',
@@ -118,7 +118,7 @@ def do_get_model_secondary(models= []):
                                             'Tipo': ['Pubblica Illuminazione'],
                                             'Disponibilita': 'str',
                                             'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str',
+                                            'UltimoAggiornamento': 'str'
                                             }
                               },
                     'Duct2' : {
@@ -127,15 +127,15 @@ def do_get_model_secondary(models= []):
                               'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
-                                            'Owner': 'str',
-                                            'OwnerID' : 'str',
-                                            'StartID': 'str',
-                                            'EndID': 'str',
-                                            'Length': 'int',
-                                            'Type': ['Telecomunicazioni'],
-                                            'Availability': 'str',
-                                            'CreationDate': 'str',
-                                            'LastUpdate': 'str',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'IDInizio': 'str',
+                                            'IDFine': 'str',
+                                            'Lunghezza': 'int',
+                                            'Tipo': ['Telecomunicazioni'],
+                                            'Disponibilita': 'str',
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
                                             }
                               },
                     'Duct3' : {
@@ -144,15 +144,15 @@ def do_get_model_secondary(models= []):
                               'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
-                                            'Owner': 'str',
-                                            'OwnerID' : 'str',
-                                            'StartID': 'str',
-                                            'EndID': 'str',
-                                            'Length': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'IDInizio': 'str',
+                                            'IDFine': 'str',
+                                            'Lunghezza': 'int',
                                             'Type': ['Rete Elettrica'],
-                                            'Availability': 'str',
-                                            'CreationDate': 'str',
-                                            'LastUpdate': 'str',
+                                            'Disponibilita': 'str',
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
                                             }
                               },
                     'Well' :{
@@ -161,14 +161,105 @@ def do_get_model_secondary(models= []):
                               'super':'Well',
                               'properties':{
                                             'ID': 'int',
-                                            'Owner': 'str',
-                                            'OwnerID': 'str',
-                                            'Address': 'str',
-                                            'Type': 'str',
-                                            'CreationDate': 'str',
-                                            'LastUpdate': 'str',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': ['Pubblica Illuminazione', 'Telecomunicazioni', 'Rete Elettrica', 'Fognatura', 'Teleriscaldamento', 'Rete Gas'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
                                             }
                              },
+                    
+                    'Well1' :{
+                              'name':"Pozzetto Pubblica Illuminazione",
+                              'objtype':'Point',
+                              'super':'Well',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': ['Pubblica Illuminazione'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
+                                            }
+                             },
+                    
+                    'Well2' :{
+                              'name':"Pozzetto Telecomunicazioni",
+                              'objtype':'Point',
+                              'super':'Well',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': [ 'Telecomunicazioni'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
+                                            }
+                             },
+                    
+                    'Well3' :{
+                              'name':"Pozzetto Rete Elettrica",
+                              'objtype':'Point',
+                              'super':'Well',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': ['Rete Elettrica'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
+                                            }
+                             },
+                    
+                    'Well4' :{
+                              'name':"Pozzetto Fognatura",
+                              'objtype':'Point',
+                              'super':'Well',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': ['Fognatura'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
+                                            }
+                             },
+                    
+                    'Well5' :{
+                              'name':"Pozzetto Teleriscaldamento",
+                              'objtype':'Point',
+                              'super':'Well',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': ['Teleriscaldamento'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
+                                            }
+                             },
+                    
+                    'Well6' :{
+                              'name':"Pozzetto Rete Gas",
+                              'objtype':'Point',
+                              'super':'Well',
+                              'properties':{
+                                            'ID': 'int',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Indirizzo': 'str',
+                                            'Tipo': ['Rete Gas'],
+                                            'DataCreazione': 'str',
+                                            'UltimoAggiornamento': 'str'
+                                            }
+                             },
+                    
                     'Tube' :{
                               'name':"Tubazione",
                               'objtype':'LineString',
@@ -176,9 +267,10 @@ def do_get_model_secondary(models= []):
                               'super':'Tube',
                               'properties':{
                                             'ID': 'int',
-                                            'Owner': 'str',
-                                            'OwnerID': 'str',
-                                            'Type': 'str',
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Tipo': ['Telecomunicazioni'],
+                                            'Contenitore':'Tube',
                                             }
                              },
                     'SpliceEnclosure' :{
@@ -188,10 +280,10 @@ def do_get_model_secondary(models= []):
                               'super':'SpliceEnclosure',
                               'properties':{
                                             'ID': 'int',
-                                            'Owner': 'str',
-                                            'OwnerID': 'str',
-                                            'Type': 'str',
-                                            'Parent':'Well'
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'IDProprietario' : 'str',
+                                            'Tipo': ['Telecomunicazioni'],
+                                            'Contenitore':'Well',
                                             }
                              }
                     

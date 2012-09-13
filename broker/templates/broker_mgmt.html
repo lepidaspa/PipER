@@ -216,8 +216,11 @@
 			$('#home_btn').live('click', function(){
 				window.location = "/";
 			});
-			$('#home_btn').live('click', function(){
+			$('#rfrsh_btn').live('click', function(){
 				window.location = "/broker/refresh";
+			});
+			$('#clear_btn').live('click', function(){
+				window.location = "/broker/clear";
 			});
 			//run
 			$(function() {
@@ -242,6 +245,9 @@
 			</div>
 			<div class="nav_btn" id="rfrsh_btn">
 				<span>V</span>
+			</div>
+			<div class="nav_btn" id="clear_btn">
+				<span>X</span>
 			</div>
 		</nav>
 		<div id="content">

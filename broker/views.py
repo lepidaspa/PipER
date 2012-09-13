@@ -10,7 +10,7 @@ import urllib2
 from data.views import *
 
 def index(request):
-    return render_to_response('broker_mgmt.html', {'proxies':all_prox()})
+    return HttpResponse(json.dumps(all_prox()))
     
 def search(request):
     """
@@ -50,12 +50,26 @@ def show(request):
     jsr = {}
     jsr['type'] = "FeatureCollection"
     jsr['features'] = []
-    for meta in Metadata.objects.all():
+    for meta in Metadata.objects.filter(active=True):
         jf={}
         jf['type']='Feature'
-        jf['geometry']={'type':'Polygon', 'coordinates':[[[meta.BB_south, meta.BB_east],[meta.BB_south, meta.BB_west],[meta.BB_north, meta.BB_west],[meta.BB_north, meta.BB_east],[meta.BB_south, meta.BB_east]]]}
-        jf['properties']={"TYPE":"BBOX"}
+        jf['geometry']={
+                        'type':'Polygon', 
+                        'coordinates':[
+                                       [
+                                        [meta.BB_south, meta.BB_east],
+                                        [meta.BB_south, meta.BB_west],
+                                        [meta.BB_north, meta.BB_west],
+                                        [meta.BB_north, meta.BB_east],
+                                        [meta.BB_south, meta.BB_east]
+                                        ]
+                                       ]
+                        }
+        jf['properties']={
+                          "TYPE":"BBOX"
+        }
         jsr['features'].append(jf)
+        
     return HttpResponse(cbd+"("+json.dumps(jsr)+");")
         
 
@@ -91,9 +105,9 @@ def toggle(request, id):
     return HttpResponseRedirect('/broker')
     
 def force_refresh(request):
-    return HttpResponse(generate_response())
+    return HttpResponse(force_refresh_response())
 
-def generate_response():
+def force_refresh_response():
     yield "<div>starting</div>"
     for proxy in Proxy.objects.all():
         try:
@@ -107,6 +121,53 @@ def generate_response():
         except:
             yield "<div>error getting proxy %s</div>" % str(proxy.id)
     yield "<div>done</div>"
+
+
+def force_pull_remote(request):
+    return HttpResponse(force_pull_remote_response())
+
+def force_pull_remote_response():
+    yield "<div>starting</div>"
+    for proxy in Proxy.objects.all():
+        try:
+            yield "<div>pulling proxy %s</div>" % str(proxy.id)
+            call_command('pull_remote', str(proxy.id))
+            yield "<div>pulled proxy %s</div>" % str(proxy.id)
+        except:
+            yield "<div>error pulling proxy %s</div>" % str(proxy.id)
+    yield "<div>done</div>"
     
+
+def force_get_remote(request):
+    return HttpResponse(force_pull_remote_response())
+
+def force_get_remote_response():
+    yield "<div>starting</div>"
+    for proxy in Proxy.objects.all():
+        try:
+            yield "<div>getting proxy %s</div>" % str(proxy.id)
+            call_command('get_remote', str(proxy.id))
+            yield "<div>got proxy %s</div>" % str(proxy.id)
+        except:
+            yield "<div>error getting proxy %s</div>" % str(proxy.id)
+    yield "<div>done</div>"
+
+
+def clear_db(request):
+    return HttpResponse(clear_db_response())
+
+def clear_db_response():
+    yield "starting clear"
+    call_command('clear_db')
+    yield "cleared"
+
+
+
     
+def all_owners(request):
+    return HttpResponse(json.dumps([o.name for o in Owner.objects.all()]))
+    
+def delete(request, proxy_id):
+    ProxyRequest.objects.get(token = proxy_id).delete()
+    return HttpResponse()
     

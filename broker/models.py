@@ -16,8 +16,25 @@ def save_meta(metadata):
         pr = ProxyRequest.objects.get(token = tok)
     except:
         return False
+    try:
+        print "adding "+metadata['provider']
+        ow = Owner.objects.get(name=metadata['provider'])
+    except:
+        print "new "+metadata['provider']
+        try:
+            ow = Owner()
+            ow.name = metadata['provider']
+            g = Group()
+            g.name = metadata['provider']
+            g.save()
+            ow.group = g
+            ow.save()
+        except:
+            pass
     p = Proxy()
     p.request = pr
+    pr.owner = ow
+    pr.save()
     p.manifest = metadata
     p.mode_read = metadata['operations']['read'] if metadata['operations']['read'] != "none" else None
     p.mode_write = metadata['operations']['write'] if metadata['operations']['write'] != "none" else None
@@ -115,6 +132,33 @@ def all_prox():
             oj['data'].append(pj)
         
         ret.append(oj)   
+        
+    proxies = ProxyRequest.objects.filter(owner__isnull=True)
+    oj = {}
+    
+    oj['name']="NOT SET"
+    oj['data_count'] = proxies.count()
+    oj['global_count'] = 0
+    oj['data'] = []
+    for proxy in proxies:
+        pj = {}
+        pj['token']=proxy.token
+        pj['url']=proxy.url
+        pj['manifest']=proxy.data.manifest
+        pj['token']=proxy.token
+        
+        pj['meta_count']=proxy.data.metadata.count()
+        oj['global_count'] = oj['global_count'] + pj['meta_count']
+        pj['meta']=[]
+        for meta in proxy.data.metadata.all():
+            mj = {}
+            mj['id'] = meta.id
+            mj['name'] = meta.name
+            mj['active'] = meta.active
+            pj['meta'].append(mj)
+        oj['data'].append(pj)
+        
+    ret.append(oj)   
     return ret  
 
 class Owner(models.Model):

@@ -15,3 +15,4 @@ psycopg2==2.4.5
 pycurl==7.19.0
 pymongo==2.3
 restkit==4.2.0
+git://github.com/azavea/python-sld.git#egg=python-sld

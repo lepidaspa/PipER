@@ -75,10 +75,15 @@
 				font-size: x-large;
 				cursor: default;
 			}
+			
+			.content .tools_list{
+				
+			}
 			.nav_btn span {
 				position: relative;
 				top: 5px;
 				cursor: default;
+				text-shadow:1px 1px 3px black;
 			}
 			.nav_btn.selected {
 				background-color: #fc8;
@@ -155,6 +160,38 @@
 			input[type="checkbox"]{
 				display:none;
 			}
+			.tools_list{
+				width:95%;
+				margin-left:auto;
+				margin-right:auto;
+				height:30px;
+				background-color:#eee;
+				margin-bottom:5px;
+			}
+			.btn{
+				width:28px;
+				height:28px;
+				display:inline-block;
+				background-color:#ddd;
+				margin-top:1px;
+				font-family: "WebSymbolsRegular";
+				background-repeat: no-repeat;
+				text-align: center;
+				vertical-align: middle;
+				font-size: large;
+				cursor: default;
+				text-shadow:0px 0px 3px black;
+				
+			}
+			.btn:hover{
+				background-color:#ccc;
+				
+			}
+			
+			#sett_panel .content{
+				padding-top:10px;
+				padding-bottom:10px;
+			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
@@ -164,8 +201,12 @@
 		<script src="/fstatic/js/jquery.linq.min.js"></script>
 		<script src="/fstatic/js/ICanHaz.min.js"></script>
 		<script src="https://raw.github.com/flowersinthesand/jquery-stringifyJSON/master/jquery.stringifyjson.js"></script>
+		<script src="https://raw.github.com/marcosesperon/Messi/master/messi.min.js"></script>
+		<script src="/fstatic/js/jquery-ui-1.8.23.custom.min.js"></script>
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
+  		<link rel="stylesheet" href="https://raw.github.com/marcosesperon/Messi/master/messi.min.css" />
+  		<link rel="stylesheet" href="/fstatic/css/custom-themes/jquery-ui-1.8.23.custom.css" />
 
 		<script id="range" type="text/html">
 			<div class="line">
@@ -225,13 +266,17 @@
 			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
 			FIdER.start.extend(new OpenLayers.LonLat(12.7558364, 45.1395245).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
-			FIdER.sld_formatter = new OpenLayers.Format.SLD();
-			FIdER.style = new OpenLayers.StyleMap({
+			$.get('http://echo720.server4you.net/sld?model=Duct&field=Tipo', function(sld){
+					sld_reader = new OpenLayers.Format.SLD();
+					FIdER.sld = sld_reader.read(sld);
+					FIdER.ccstyle = FIdER.sld.namedLayers.Duct.userStyles[0]
+			});
+			FIdER.bbstyle = new OpenLayers.StyleMap({
 				'default':{
 					'fillColor':"Orange",
 					'strokeColor':"Orange",
 					'fillOpacity':0.1,
-					'strokeWidth':"1",
+					'strokeWidth':"2",
 					'pointRadius':'6'
 					
 				}
@@ -240,10 +285,10 @@
 			FIdER.status = {};
 
 			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
-				styleMap: FIdER.style
+				styleMap: FIdER.ccstyle
 			});
 			FIdER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
-				styleMap: FIdER.style
+				styleMap: FIdER.bbstyle
 			});
 			
 			
@@ -274,16 +319,14 @@
 	                	total_length = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
 	                	distinct_line_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
 	                	distinct_point_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
-	                	distinct_owners = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.IDProprietario").Select("$.attributes.IDProprietario").ToString(",");
+	                	distinct_owners = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(",");
+	                	distinct_data = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(",");
+	                	distinct_infra = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(",");
 	                	xxte = {
 	                		'attributes':[
 	                			{
 	                				'key':'Lunghezza totale tratte',
 	                				'value':total_length+"m"
-	                			},
-	                			{
-	                				'key':'Proprietari',
-	                				'value':distinct_owners,
 	                			},
 	                			{
 	                				'key':'Numero Tratte Distinte',
@@ -292,6 +335,18 @@
 	                			{
 	                				'key':'Numero Pozzetti Distinti',
 	                				'value':distinct_point_count,
+	                			},
+	                			{
+	                				'key':'Proprietari',
+	                				'value':distinct_owners,
+	                			},
+	                			{
+	                				'key':'Fornitori',
+	                				'value':distinct_data,
+	                			},
+	                			{
+	                				'key':'Infrastrutture',
+	                				'value':distinct_infra,
 	                			}
 	                		]
 	                	};
@@ -356,6 +411,31 @@
 			$('#home_btn').live('click', function(){
 					FIdER.map.zoomToExtent(FIdER.start);
 			});
+			
+			
+			$('#refresh_remotes').live('click', function(){
+					FIdER.map.zoomToExtent(FIdER.start);
+			});
+			$('#refresh_local').live('click', function(){
+					FIdER.map.zoomToExtent(FIdER.start);
+			});
+			$('#clear_db').live('click', function(){
+					$('<div>Desideri cancellare il contenuto del database?</div>').dialog({
+						title:"Cancellazione del DataBase",
+						buttons:{
+							'OK':function(){
+								$.get('/broker/clear', function(ddd){
+									console.log(ddd);
+								});
+								$( this ).dialog( "close" );
+							},
+							'Annulla':function(){
+								$( this ).dialog( "close" );
+							}
+						}
+					);	
+			});
+			
 			$('#properties_btn').live('click', function(){
 					FIdER.select_one_control.activate();
 					FIdER.select_multi_control.deactivate();
@@ -397,8 +477,12 @@
 			
 			//run
 			$(function() {
+				
+		
 
 				$('.panel .content').hide();
+				$('#sett_panel .content').show();
+				
 				FIdER.check_spinner();
 
 				FIdER.refresh();
@@ -416,20 +500,22 @@
 					});
 					
 					FIdER.map.events.register('moveend', FIdER.map, function(){
-							if (FIdER.map.getZoom() >= 15){
-								FIdER.vector_layer.display(true);
-								FIdER.bbox_layer.display(false);
-								FIdER.status.active_layer =FIdER.vector_layer; 
-								FIdER.status.url = "search";
-							}
-							else{
-								FIdER.vector_layer.display(false);
-								FIdER.bbox_layer.display(true);
-								FIdER.status.active_layer =FIdER.bbox_layer; 
-								FIdER.status.url = "proxies";
-								
-							}
-								$('#spinner').show();
+						$('.panel').hide();
+						$('.selected').removeClass('selected');
+						if (FIdER.map.getZoom() >= 15){
+							FIdER.vector_layer.display(true);
+							FIdER.bbox_layer.display(false);
+							FIdER.status.active_layer =FIdER.vector_layer; 
+							FIdER.status.url = "search";
+						}
+						else{
+							FIdER.vector_layer.display(false);
+							FIdER.bbox_layer.display(true);
+							FIdER.status.active_layer =FIdER.bbox_layer; 
+							FIdER.status.url = "proxies";
+							
+						}
+						$('#spinner').show();
 						FIdER.bbox_layer.destroyFeatures();
 						FIdER.vector_layer.destroyFeatures();
 						$.ajax({
@@ -525,12 +611,19 @@
 							table.cols = []
 							stuff = mdata[i].properties;
 							for (var col in stuff) {
-								if (stuff[col] != "str" && stuff[col] != "int") {
+								if (stuff[col] != "str")
+									if (stuff[col] != "int") {
 									col_obj = {}
 									col_obj.name = col;
 									col_obj.type = ["Tutti", 'Nessuno', "Non definito"].concat(stuff[col]);
 									table.cols.push(col_obj);
 								}
+								//else{
+								//	col_obj = {}
+								//	col_obj.name = col;
+								//	col_obj.type = stuff[col];
+								//	table.cols.push(col_obj);
+								//}
 							}
 							model.push(table);
 
@@ -570,6 +663,19 @@
 					}
 				});
 				
+				$.getJSON('/broker/getproxies', function(pdata){
+					
+					for (owner in pdata){
+						
+						alert( $.stringifyJSON(pdata[owner]));
+					}
+				});
+				
+				$.getJSON('/models/getmodels', function(mdata){
+					for (model in mdata){
+						alert( $.stringifyJSON(mdata[owner]));
+					}
+				});
 				
 				
 			});
@@ -651,6 +757,9 @@
 			<div class="nav_btn" id="info_btn">
 				<span>C</span>
 			</div>
+			<div class="nav_btn" id="settings_btn">
+				<span>S</span>
+			</div>
 		</nav>
 		<div id="map"> </div>
 		<div id="search_panel" class="panel search_btn">
@@ -684,7 +793,7 @@
 		<div id="properties_panel" class="panel properties_btn">
 			<div class="subpanel">
 				<div class="title">
-					<span>Propriet&agrave;:</span>
+					<span>Propriet&agrave;</span>
 				</div>
 				<div class="content">
 					
@@ -692,7 +801,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="bi_panel" class="large panel bi_btn">
+		<div id="bi_panel" class="panel bi_btn">
 			<div class="subpanel">
 				<div class="title">
 					<span>Business Intelligence</span>
@@ -704,16 +813,47 @@
 			</div>
 		</div>
 		<div id="vis_panel" class="panel info_btn">
-			<div class="subpanel" id="layers_panel">
-				<div id="proxy_list">
-					Proxies:
+			<div class="subpanel">
+				<div class="title">
+					<span>Proxy</span>
 				</div>
-				<div id="tools_list">
-					Tools:
-					<ul>
-						<li><a href="/models">Models</a></li>
-						<li><a href="/broker">Proxies</a></li>
-					</ul>
+				<div class="content">
+					<div id="user_proxies">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="sett_panel" class="panel settings_btn">
+			<div class="subpanel">
+				<div class="title">
+					<span>Impostazioni</span>
+				</div>
+					<div class="tools_list">
+						<span class="btn" id="add_owner" title="Aggiungi Fornitore">+</span>
+						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
+					</div>
+				<div class="content">
+					<a id="fwp_link" href="">Vai alla Piattaforma di Gesione dei Proxy</a>
+				</div>
+				<div class="title">
+					<span>Strumenti - Proxy</span>
+				</div>
+					<div class="tools_list">
+						<span class="btn" id="refresh_remotes" title="Forza Refresh Proxy">V</span>
+						<span class="btn" id="refresh_local" title="Forza Refresh Dati">V</span>
+						<span class="btn" id="clear_db" title="Svuota Database">'</span>					
+					</div>
+				<div class="content" id="admin_proxies">
+					
+				</div>
+				<div class="title">
+					<span>Strumenti - Modelli</span>
+				</div>
+					<div class="tools_list">
+						<span class="btn" id="add_model">+</span>		
+					</div>
+				<div class="content">
+					
 				</div>
 			</div>
 		</div>

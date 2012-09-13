@@ -13,5 +13,5 @@ class Command(BaseCommand):
         p = Proxy.objects.get(id=args[0])
         data = urllib2.urlopen("%sdata/%s" % (p.request.url, p.request.token))
         dd = data.read()
-        print dd
-        put_data(json.loads(dd))
+        #print dd
+        put_data(p,json.loads(dd))
