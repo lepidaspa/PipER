@@ -31,28 +31,28 @@ def get_sld(request):
                   '#ff0000'
                   ]
     
-    m = request.REQUEST.get('model', "Duct")
-    f = request.REQUEST.get('field', "Tipo")
+    m = "Duct"
+    f = "Tipo"
     
     mod = do_get_model_secondary([m])
     print json.dumps(mod)
     
     if mod =={}:
         print "no model"
-        return HttpResponse("ERROR")
+        #return HttpResponse("ERROR")
     
     props = mod[m]['properties']
     if not props.has_key(f):
         
         print "no prop"
-        return HttpResponse("ERROR")
+        #return HttpResponse("ERROR")
     
     fv = props[f]
     
     if not isinstance(fv, type([])):
         
         print "no instances"
-        return HttpResponse("ERROR")
+        #return HttpResponse("ERROR")
     
     ot = mod[m]['objtype']
     if ot == "LineString":
@@ -67,15 +67,32 @@ def get_sld(request):
     nl = sf.create_namedlayer("elements")
     ustyle = nl.create_userstyle()
     for v in fv:
+        
         color = color_list[i]
         i = i+1
         
         ftstyle = ustyle.create_featuretypestyle()
         ftsr = ftstyle.create_rule(f+"__"+v)
-        ftsym  = ftsr.create_symbolizer(ot)
+        #RULE
+        ftsrf = ftsr.create_filter(f, '==', v)
+        #SYMBOL
+        ftsym  = ftsr.create_symbolizer("Line")
         ftstroke = ftsym.create_stroke()
         ftstroke.create_cssparameter("stroke",color)
-        ftsrf = ftsr.create_filter(f, '==', v)
+        ftstroke.create_cssparameter("stroke-width","2")
+        
+        ftsymp  = ftsr.PointSymbolizer
+        gftpoint = sld.Graphic(ftsymp)
+        gftpoint.Size = "6"
+        mgftpoint = sld.Mark(gftpoint)
+        mgftpoint.WellKnownName="circle"
+        smgftpoint = mgftpoint.Stroke
+        smgftpoint.create_cssparameter('stroke', color)
+        
+        fmgftpoint = mgftpoit.Fill
+        fmgftpoint.create_cssparameter('fill', color)
+        fmgftpoint.create_cssparameter('fill-opacity', "0.1")   
+
 
     return HttpResponse(sf.as_sld())
 
