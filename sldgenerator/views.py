@@ -14,17 +14,17 @@ import sld
 
 def get_default_sld(request):
     color_list = [
-                  '#ffa500',
-                  '#800000',
-                  '#008000',
-                  '#808000',
-                  '#000000',
-                  '#808080',
-                  '#c0c0c0',
-                  '#ff00ff',
+                  '#FF7A00',
+                  '#F900FF',
+                  '#05FF00',
+                  '#0085FF',
+                  '#FFCE00',
+                  '#0085FF',
+                  '#00FFF9',
+                  '#7F7F7F',
                   '#00ff00',
                   '#ffff00',
-                  '#add8e6',
+                  '#0005FF',
                   '#0000a0',
                   '#0000ff',
                   '#00ffff',
@@ -86,7 +86,7 @@ def get_default_sld(request):
         
         dftsymp  = default_feature_type_style_rule.PointSymbolizer
         dgftpoint = dftsymp.Graphic
-        dgftpoint.Size = "6"
+        dgftpoint.Size = "15"
         dmgftpoint = dgftpoint.Mark
         dmgftpoint.WellKnownName="circle"
         dmgftpoint.create_stroke()
@@ -102,17 +102,17 @@ def get_default_sld(request):
       
 def get_selected_sld(request):
     color_list = [
-                  '#ffa500',
-                  '#800000',
-                  '#008000',
-                  '#808000',
-                  '#000000',
-                  '#808080',
-                  '#c0c0c0',
-                  '#ff00ff',
+                  '#FF7A00',
+                  '#F900FF',
+                  '#05FF00',
+                  '#0085FF',
+                  '#FFCE00',
+                  '#0085FF',
+                  '#00FFF9',
+                  '#7F7F7F',
                   '#00ff00',
                   '#ffff00',
-                  '#add8e6',
+                  '#0005FF',
                   '#0000a0',
                   '#0000ff',
                   '#00ffff',
@@ -174,7 +174,7 @@ def get_selected_sld(request):
         
         sftsymp  = slected_feature_type_style_rule.PointSymbolizer
         sgftpoint = sftsymp.Graphic
-        sgftpoint.Size = "6"
+        sgftpoint.Size = "15"
         smgftpoint = sgftpoint.Mark
         smgftpoint.WellKnownName="circle"
         smgftpoint.create_stroke()
