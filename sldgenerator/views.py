@@ -64,7 +64,7 @@ def get_sld(request):
     
     sf = sld.StyledLayerDescriptor()
     
-    nl = sf.create_namedlayer(elements)
+    nl = sf.create_namedlayer("elements")
     ustyle = nl.create_userstyle()
     for v in fv:
         color = color_list[i]
