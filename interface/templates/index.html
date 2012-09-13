@@ -661,16 +661,19 @@
 						el_sel = []
 						tt = FIdER.status.query[el]['column']
 						ps = FIdER.status.query[el]['params']
-						for(pp in ps){
-							lsit = ps[pp]
-							if (lsit!= "Tutti" && lsit !="Nessuno" && lsit!= "Non definito"){
-								vec = FIdER.vector_layer.getFeaturesByAttribute(tt, lsit )
-								for(feat in vec){
-									el_sel.push(vec[feat]);
+						if (ps != null){
+							
+							for(pp in ps){
+								lsit = ps[pp]
+								if (lsit!= "Tutti" && lsit !="Nessuno" && lsit!= "Non definito"){
+									vec = FIdER.vector_layer.getFeaturesByAttribute(tt, lsit )
+									for(feat in vec){
+										el_sel.push(vec[feat]);
+									}
 								}
 							}
+							FIdER.selectables.push(el_sel);
 						}
-						FIdER.selectables.push(el_sel);
 					}
 					if (FIdER.selectables.length > 1){
 						ee = FIdER.selectables[0]
