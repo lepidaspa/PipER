@@ -393,6 +393,26 @@
             	}
             }
             
+            function intersect_safe(a, b)
+			{
+			  var ai=0, bi=0;
+			  var result = new Array();
+			
+			  while( ai < a.length && bi < b.length )
+			  {
+			     if      (a[ai] < b[bi] ){ ai++; }
+			     else if (a[ai] > b[bi] ){ bi++; }
+			     else /* they're equal */
+			     {
+			       result.push(a[ai]);
+			       ai++;
+			       bi++;
+			     }
+			  }
+			
+			  return result;
+			}
+            
             function do_show_features(){
             		FIdER.block_selections = false;
             		pa = [];
@@ -631,13 +651,37 @@
 			FIdER.status.done_inner_query = true;
 			FIdER.status.done_outer_query = true;
 			
+			FIdER.selectables = [];
+			
 			FIdER.check_spinner= function(){
 				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
 					
 					$('#spinner').hide();
-					vec = FIdER.vector_layer.getFeaturesByAttribute("Tipo", "Telecomunicazioni")
-					for(feat in vec){
-						FIdER.select_multi_control.select(vec[feat]);
+					for (el in FIdER.status.query){
+						el_sel = []
+						tt = FIdER.status.query[el]['column']
+						ps = FIdER.status.query[el]['params']
+						for(pp in ps){
+							lsit = ps[pp]
+							if (lsit!= "Tutti" && lsit !="Nessuno" && lsit!= "Non definito"){
+								vec = FIdER.vector_layer.getFeaturesByAttribute(tt, lsit )
+								for(feat in vec){
+									el_sel.push(vec[feat]);
+								}
+							}
+						}
+						FIdER.selectables.push(el_sel);
+					}
+					if (FIdER.selectables.length > 1){
+						ee = FIdER.selectables[0]
+						for (a = 0; a < FIdER.selectables.length-1; a++){
+							ee = intersect_safe(ee,FIdER.selectables[a+1])					
+						}
+						FIdER.selectables = ee
+					}
+					
+					for (a in FIdER.selectables){
+						FIdER.select_multi_control.select(FIdER.selectables[a])
 					}
 				}
 				else 
@@ -698,7 +742,7 @@
 								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
 								cbd:"show_data",
 								cbq:"get_queries",
-								q:FIdER.status.query
+								q:$.stringifyJSON(FIdER.status.query)
 							}
 						});
 						
@@ -759,19 +803,8 @@
 					FIdER.map.addControl(FIdER.select_one_control);
 					FIdER.map.addControl(FIdER.select_multi_control);
 					
-					
-
 					FIdER.map.zoomToExtent(FIdER.start);
 					
-					
-					
-					/*$.get('/sld?model=Duct&field=Tipo', function(els){
-						FIdER.style = FIdER.sld_formatter.read(els);
-						FIdER.vector_layer.styleMap.styles['default'] = FIdER.style.namedLayers['Duct'].userStyles[0];
-						FIdER.vector_layer.redraw();
-					});*/
-					
-
 					//prepare_gui
 					$.getJSON($.urls.get_model + "?models=Duct", function(mdata) {
 
@@ -832,23 +865,19 @@
 						move_to_geo();
 					}
 					else{
-						FIdER.status.query = $.stringifyJSON(prepare_query());
+						FIdER.status.query = prepare_query();
 					}
 				});
 				
 				$.getJSON('/broker/getproxies', function(pdata){
-					
 					for (owner in pdata){
-						
 						$('#admin_proxies').append(ich.aproxy(pdata[owner]));
 						$('#user_proxies').append(ich.uproxy(pdata[owner]));
-					
 					}
 				});
 				
 				$.getJSON('/models/getmodels', function(mdata){
 					for (model in mdata){
-						
 						$('#admin_models').append(ich.amodel(mdata[model]));
 					}
 				});
