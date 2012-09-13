@@ -926,10 +926,10 @@
 							alert(layer.properties.errors);
 						else{
 							//var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
-						    FIdER.vector_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(layer)));				
+						    FIdER.vector_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(layer)));		
+							FIdER.status.done_outer_query = true;
+							FIdER.check_spinner();		
     					}
-						FIdER.status.done_outer_query = true;
-						FIdER.check_spinner();
 					}
 				});
 			}
