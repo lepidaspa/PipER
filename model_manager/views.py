@@ -88,6 +88,7 @@ def get_model (request):
 def do_get_model_secondary(models= []):
     fields_table = {
                     'Duct' : {
+                              'federated':True,
                               'name':"Cavidotto",
                               'objtype':'LineString',
                               'super':'Duct',
@@ -104,58 +105,8 @@ def do_get_model_secondary(models= []):
                                             'UltimoAggiornamento': 'str'
                                             }
                               },
-                    'Duct1' : {
-                              'name':"Cavidotto Pubblica Illuminazione",
-                              'objtype':'LineString',
-                              'super':'Duct',
-                              'properties':{
-                                            'ID' : 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'IDInizio': 'str',
-                                            'IDFine': 'str',
-                                            'Lunghezza': 'int',
-                                            'Tipo': ['Pubblica Illuminazione'],
-                                            'Disponibilita': 'str',
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                              },
-                    'Duct2' : {
-                              'name':"Cavidotto TLC",
-                              'objtype':'LineString',
-                              'super':'Duct',
-                              'properties':{
-                                            'ID' : 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'IDInizio': 'str',
-                                            'IDFine': 'str',
-                                            'Lunghezza': 'int',
-                                            'Tipo': ['Telecomunicazioni'],
-                                            'Disponibilita': 'str',
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                              },
-                    'Duct3' : {
-                              'name':"Cavidotto Rete Elettrica",
-                              'objtype':'LineString',
-                              'super':'Duct',
-                              'properties':{
-                                            'ID' : 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'IDInizio': 'str',
-                                            'IDFine': 'str',
-                                            'Lunghezza': 'int',
-                                            'Type': ['Rete Elettrica'],
-                                            'Disponibilita': 'str',
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                              },
                     'Well' :{
+                              'federated':True,
                               'name':"Pozzetto",
                               'objtype':'Point',
                               'super':'Well',
@@ -170,97 +121,8 @@ def do_get_model_secondary(models= []):
                                             }
                              },
                     
-                    'Well1' :{
-                              'name':"Pozzetto Pubblica Illuminazione",
-                              'objtype':'Point',
-                              'super':'Well',
-                              'properties':{
-                                            'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'Indirizzo': 'str',
-                                            'Tipo': ['Pubblica Illuminazione'],
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                             },
-                    
-                    'Well2' :{
-                              'name':"Pozzetto Telecomunicazioni",
-                              'objtype':'Point',
-                              'super':'Well',
-                              'properties':{
-                                            'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'Indirizzo': 'str',
-                                            'Tipo': [ 'Telecomunicazioni'],
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                             },
-                    
-                    'Well3' :{
-                              'name':"Pozzetto Rete Elettrica",
-                              'objtype':'Point',
-                              'super':'Well',
-                              'properties':{
-                                            'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'Indirizzo': 'str',
-                                            'Tipo': ['Rete Elettrica'],
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                             },
-                    
-                    'Well4' :{
-                              'name':"Pozzetto Fognatura",
-                              'objtype':'Point',
-                              'super':'Well',
-                              'properties':{
-                                            'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'Indirizzo': 'str',
-                                            'Tipo': ['Fognatura'],
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                             },
-                    
-                    'Well5' :{
-                              'name':"Pozzetto Teleriscaldamento",
-                              'objtype':'Point',
-                              'super':'Well',
-                              'properties':{
-                                            'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'Indirizzo': 'str',
-                                            'Tipo': ['Teleriscaldamento'],
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                             },
-                    
-                    'Well6' :{
-                              'name':"Pozzetto Rete Gas",
-                              'objtype':'Point',
-                              'super':'Well',
-                              'properties':{
-                                            'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
-                                            'IDProprietario' : 'str',
-                                            'Indirizzo': 'str',
-                                            'Tipo': ['Rete Gas'],
-                                            'DataCreazione': 'str',
-                                            'UltimoAggiornamento': 'str'
-                                            }
-                             },
-                    
                     'Tube' :{
+                              'federated':False,
                               'name':"Tubazione",
                               'objtype':'LineString',
                               'container':'Duct',
@@ -274,6 +136,7 @@ def do_get_model_secondary(models= []):
                                             }
                              },
                     'SpliceEnclosure' :{
+                              'federated':False,
                               'name':"Muffola",
                               'objtype':'Point',
                               'container':'Well',

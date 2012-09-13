@@ -100,6 +100,7 @@
 				top: 10px;
 				text-align: justify;
 				position: relative;
+				overflow:auto;
 			}
 			.panel {
 				position: absolute;
@@ -192,6 +193,13 @@
 				padding-top:10px;
 				padding-bottom:10px;
 			}
+			
+			.aproxy, .uproxy{
+				border-bottom:1px solid #f80;
+			}
+			.p_name{
+				font-weight:bold;
+			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
@@ -206,7 +214,54 @@
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
   		<link rel="stylesheet" href="https://raw.github.com/marcosesperon/Messi/master/messi.min.css" />
-  		<link rel="stylesheet" href="/fstatic/css/custom-themes/jquery-ui-1.8.23.custom.css" />
+  		<link rel="stylesheet" href="/fstatic/css/custom-theme/jquery-ui-1.8.23.custom.css" />
+
+
+
+		<script id="amodel" type="text/html">
+			<div class="model">
+				<div class="model_header">
+					{% templatetag openvariable %}name{% templatetag closevariable %}</div>
+				<table class="model_content">
+					{% templatetag openvariable %}#attribs{% templatetag closevariable %}
+					<tr>
+						<td>{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+						<td>{% templatetag openvariable %}type{% templatetag closevariable %}</td>
+					</tr>
+					{% templatetag openvariable %}/attribs{% templatetag closevariable %}
+				</table>
+			</div>
+		</script>
+		<script id="aproxy" type="text/html">
+			<div class="aproxy">
+				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
+				{% templatetag openvariable %}#data{% templatetag closevariable %}
+					<table data-token="{% templatetag openvariable %}data.token{% templatetag closevariable %}">
+					{% templatetag openvariable %}#meta{% templatetag closevariable %}
+						<tr>
+							<td>{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+							<td>{% templatetag openvariable %}id{% templatetag closevariable %}</td>
+							<td>{% templatetag openvariable %}active{% templatetag closevariable %}</td>
+						</tr>
+					{% templatetag openvariable %}/meta{% templatetag closevariable %}
+					</table>
+				{% templatetag openvariable %}/data{% templatetag closevariable %}
+			</div>
+		</script>
+		<script id="uproxy" type="text/html">
+			<div class="uproxy">
+				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
+				{% templatetag openvariable %}#data{% templatetag closevariable %}
+					<table data-token="{% templatetag openvariable %}data.token{% templatetag closevariable %}">
+					{% templatetag openvariable %}#meta{% templatetag closevariable %}
+						<tr><td>{% templatetag openvariable %}name{% templatetag closevariable %}</td><td></td><td></td></tr>
+					{% templatetag openvariable %}/meta{% templatetag closevariable %}
+					</table>
+				{% templatetag openvariable %}/data{% templatetag closevariable %}
+			</div>
+		</script>
+
+
 
 		<script id="range" type="text/html">
 			<div class="line">
@@ -254,6 +309,7 @@
 				$('#map').height(height);
 				$('.panel').height(height);
 				$('footer').css('top', $(window).height() - $('header').height() - 10 - $('footer').height());
+				$('.subpanel').css('max-height', $(window).height()-$('footer').height()-1-$('header').height()-40);
 			};
 			//projections
 			FIdER.projections = {};
@@ -412,28 +468,62 @@
 					FIdER.map.zoomToExtent(FIdER.start);
 			});
 			
-			
 			$('#refresh_remotes').live('click', function(){
-					FIdER.map.zoomToExtent(FIdER.start);
+				$('<div>Desideri forzare il refresh dei proxy?</div>').dialog({
+					title:"Forzare il refresh dei proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/pull', function(ddd){
+								console.log(ddd);
+								$( this ).dialog( "destroy" );
+							});
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
 			});
 			$('#refresh_local').live('click', function(){
-					FIdER.map.zoomToExtent(FIdER.start);
+				$('<div>Desideri scaricare i dati dai proxy?</div>').dialog({
+					title:"Scaricamento dati dai proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/get', function(ddd){
+								console.log(ddd);
+								$( this ).dialog( "destroy" );
+							});
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
 			});
 			$('#clear_db').live('click', function(){
 					$('<div>Desideri cancellare il contenuto del database?</div>').dialog({
 						title:"Cancellazione del DataBase",
+						modal:true,
 						buttons:{
 							'OK':function(){
 								$.get('/broker/clear', function(ddd){
 									console.log(ddd);
+									$( this ).dialog( "destroy" );
 								});
-								$( this ).dialog( "close" );
 							},
 							'Annulla':function(){
-								$( this ).dialog( "close" );
+								$( this ).dialog( "destroy" );
 							}
 						}
-					);	
+					});	
+			});
+			
+			$('#add_infrastructure').live('click', function(){
+					$('<div>Infrastrutture</div>').dialog({
+						title:"Aggiungi Infrastruttur"
+					});	
 			});
 			
 			$('#properties_btn').live('click', function(){
@@ -482,6 +572,7 @@
 
 				$('.panel .content').hide();
 				$('#sett_panel .content').show();
+				$('#vis_panel .content').show();
 				
 				FIdER.check_spinner();
 
@@ -667,13 +758,16 @@
 					
 					for (owner in pdata){
 						
-						alert( $.stringifyJSON(pdata[owner]));
+						$('#admin_proxies').append(ich.aproxy(pdata[owner]));
+						$('#user_proxies').append(ich.uproxy(pdata[owner]));
+					
 					}
 				});
 				
 				$.getJSON('/models/getmodels', function(mdata){
 					for (model in mdata){
-						alert( $.stringifyJSON(mdata[owner]));
+						
+						$('#admin_models').append(ich.amodel(mdata[model]));
 					}
 				});
 				
@@ -829,7 +923,6 @@
 					<span>Impostazioni</span>
 				</div>
 					<div class="tools_list">
-						<span class="btn" id="add_owner" title="Aggiungi Fornitore">+</span>
 						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
 					</div>
 				<div class="content">
@@ -852,13 +945,13 @@
 					<div class="tools_list">
 						<span class="btn" id="add_model">+</span>		
 					</div>
-				<div class="content">
+				<div class="content" id="admin_models">
 					
 				</div>
 			</div>
 		</div>
 		<footer>
-			<a href="#">PipER</a> - <a href="">Laboratori Guglielmo Marconi S.p.A.</a> &amp; <a href="">Italtel S.p.A.</a> per <a href="">Lepida S.p.A.</a>
+			<a href="#">PipER</a> - <a href="https://www.labs.it/">Laboratori Guglielmo Marconi S.p.A.</a> &amp; <a href="http://www.italtel.com">Italtel S.p.A.</a> per <a href="http://www.lepida.it">Lepida S.p.A.</a>
 		</footer>
 	</body>
 </html>
