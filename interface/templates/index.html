@@ -339,7 +339,7 @@
 			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
 			FIdER.start.extend(new OpenLayers.LonLat(12.7558364, 45.1395245).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
-			$.get('http://echo720.server4you.net/sld?model=Duct&field=Tipo', function(sld){
+			$.get('/sld?model=Duct&field=Tipo', function(sld){
 					sld_reader = new OpenLayers.Format.SLD();
 					FIdER.sld = sld_reader.read(sld);
 					FIdER.ccstyle = new OpenLayers.StyleMap();
@@ -389,11 +389,11 @@
             		FIdER.block_selections = false;
             		pa = [];
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
-	                	for (var e in feature.feature.attributes)
-	                		pa.push({'key':e, 'value':feature.feature.attributes[e]});
+	                	for (var e in FIdER.vector_layer.selectedFeatures[0].attributes)
+	                		pa.push({'key':e, 'value':FIdER.vector_layer.selectedFeatures[0].attributes[e]});
 	                		
-	                	pa.push({'key':'Lunghezza', "value":feature.feature.geometry.getLength()})
-	                	xxte =  {"attributes":pa, "id":feature.feature.id.replace(/\./g,'_')};
+	                	pa.push({'key':'Lunghezza', "value":FIdER.vector_layer.selectedFeatures[0].geometry.getLength()})
+	                	xxte =  {"attributes":pa, "id":FIdER.vector_layer.selectedFeatures[0].id.replace(/\./g,'_')};
 	                    $('#properties_panel .subpanel .content').empty();
 	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#properties_panel .subpanel .content').show();
@@ -480,6 +480,8 @@
 				FIdER.select_one_control.deactivate();
 				FIdER.slect_multi_control.unselectAll();
 				FIdER.select_multi_control.deactivate();
+				$('#bi_panel .subpanel .content').empty();
+				$('#properties_panel .subpanel .content').empty();
 				} else {
 					$('.nav_btn').removeClass('selected');
 					$(this).addClass('selected');
@@ -597,6 +599,7 @@
 				FIdER.slect_multi_control.unselectAll();
 				FIdER.select_multi_control.deactivate();
 				$('#bi_panel .subpanel .content').empty();
+				$('#properties_panel .subpanel .content').empty();
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -965,7 +968,7 @@
 					<span>Business Intelligence</span>
 				</div>
 					<div class="tools_list">
-						<span class="btn" id="clear_selection">'</span>		
+						<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
 					</div>
 				<div class="content">
 					
