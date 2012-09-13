@@ -344,6 +344,7 @@
 					FIdER.sld = sld_reader.read(sld);
 					FIdER.ccstyle = new OpenLayers.StyleMap();
 					FIdER.ccstyle.styles['default']=FIdER.sld.namedLayers.Duct.userStyles[0]
+					
 			});
 			FIdER.bbstyle = new OpenLayers.StyleMap({
 				'default':{
@@ -357,10 +358,11 @@
 			});
 			
 			FIdER.status = {};
-
+			
 			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
 				styleMap: FIdER.ccstyle
 			});
+			
 			FIdER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
 				styleMap: FIdER.bbstyle
 			});
@@ -838,7 +840,7 @@
 					}
 				});
 				
-				
+				FIdER.vector_layer.redraw();
 			});
 			
 			function prepare_query(){
