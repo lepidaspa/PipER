@@ -43,6 +43,7 @@ urlpatterns = patterns('',
     url(r'^interface/s$', 'broker.views.do_search'),
     url(r'^interface/proxies$', 'broker.views.show'),
     
-    url(r'^sld$', 'sldgenerator.views.get_sld'),
+    url(r'^sld/default$', 'sldgenerator.views.get_default_sld'),
+    url(r'^sld/selected$', 'sldgenerator.views.get_selected_sld'),
     url(r'^external/(?P<path>.*)$', 'interface.views.proxy')
 )
