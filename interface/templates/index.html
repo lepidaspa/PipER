@@ -376,7 +376,16 @@
                 'featureunselected': show_features
             });
             
+            FIdER.block_selections = false;
             function show_features(feature){
+            	if (!FIdER.block_selections){
+            		setTimeout(do_show_features,500);
+            		FIdER.block_selections = true;
+            	}
+            }
+            
+            function do_show_features(){
+            		FIdER.block_selections = false;
             		pa = [];
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 	                	for (var e in feature.feature.attributes)
@@ -579,6 +588,13 @@
 			$('#bi_btn').live('click', function(){
 					FIdER.select_one_control.deactivate();
 					FIdER.select_multi_control.activate();
+			});
+			$('#clear_selection').live('click', function(){
+				
+				FIdER.select_one_control.unselectAll();
+				FIdER.select_one_control.deactivate();
+				FIdER.slect_multi_control.unselectAll();
+				FIdER.select_multi_control.deactivate();
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -946,6 +962,9 @@
 				<div class="title">
 					<span>Business Intelligence</span>
 				</div>
+					<div class="tools_list">
+						<span class="btn" id="clear_selection">'</span>		
+					</div>
 				<div class="content">
 					
 				
