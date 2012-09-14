@@ -714,7 +714,7 @@
 				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
 					
 					$('#spinner').hide();
-					//refresh_sight();
+					refresh_sight();
 				}
 				else 
 				$('#spinner').show();
@@ -809,7 +809,6 @@
 							}
 						});
 						
-						refresh_sight();
 					});
 
 					FIdER.map.setOptions({restrictedExtent: FIdER.start});
