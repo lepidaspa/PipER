@@ -668,8 +668,8 @@
 				$('#spinner').show();
 			}
 			function refresh_sight(){
-				
-				FIdER.select_multi_control.unselectAll();
+				if (FIdER.select_multi_control !== "undefined") 
+					FIdER.select_multi_control.unselectAll();
 				FIdER.selectables = [];
 				for (el in FIdER.status.query){
 						el_sel = []
