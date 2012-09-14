@@ -362,10 +362,23 @@
 					'pointRadius':'6'
 					
 				}
+			});			
+			FIdER.bgstyle = new OpenLayers.StyleMap({
+				'default':{
+					'fillColor':"White",
+					'strokeColor':"White",
+					'fillOpacity':0,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				}
 			});
 			
 			FIdER.status = {};
 			
+			FIdER.bg_layer = new OpenLayers.Layer.Vector("elements",{
+				styleMap: FIdER.bgstyle
+			});			
 			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
 				styleMap: FIdER.ccstyle
 			});
@@ -655,6 +668,7 @@
 			});
 			$('#bi_btn').live('click', function(){
 					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.activate();
 			});
 			$('#clear_selection').live('click', function(){
@@ -662,9 +676,7 @@
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
 				FIdER.select_one_control.unselectAll();
-				FIdER.select_one_control.deactivate();
 				FIdER.select_multi_control.unselectAll();
-				FIdER.select_multi_control.deactivate();
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -731,7 +743,7 @@
 					FIdER.selectables = ee;
 					
 					for (a in FIdER.selectables){
-						FIdER.select_multi_control.select(FIdER.selectables[a])
+						FIdER.vector_layer.addFeature(FIdER.selectables[a]);
 					}
 			}
 			//run
@@ -767,12 +779,14 @@
 						FIdER.vector_layer.redraw();
 						if (FIdER.map.getZoom() >= 15){
 							FIdER.vector_layer.display(true);
+							FIdER.bg_layer.display(true);
 							FIdER.bbox_layer.display(false);
-							FIdER.status.active_layer =FIdER.vector_layer; 
+							FIdER.status.active_layer =FIdER.bg_layer; 
 							FIdER.status.url = "search";
 						}
 						else{
 							FIdER.vector_layer.display(false);
+							FIdER.bg_layer.display(false);
 							FIdER.bbox_layer.display(true);
 							FIdER.status.active_layer =FIdER.bbox_layer; 
 							FIdER.status.url = "proxies";
@@ -780,6 +794,7 @@
 						}
 						$('#spinner').show();
 						FIdER.bbox_layer.destroyFeatures();
+						FIdER.bg_layer.destroyFeatures();
 						FIdER.vector_layer.destroyFeatures();
 						$.ajax({
 							url:'/interface/'+FIdER.status.url,
@@ -818,6 +833,7 @@
 					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
 
 					FIdER.map.addLayer(FIdER.vector_layer);
+					FIdER.map.addLayer(FIdER.bg_layer);
 					FIdER.map.addLayer(FIdER.bbox_layer);
 
 					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
@@ -892,6 +908,7 @@
 							}
 						}
 						$('.all_multi').click();
+						
 						FIdER.status.query = prepare_query();
 					});
 					
@@ -959,7 +976,7 @@
 			FIdER.geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
 			
 			function show_data(datas){
-		 		FIdER.status.active_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(datas)));	
+		 		FIdER.bg_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(datas)));	
 				FIdER.status.done_inner_query = true;
 		 		FIdER.check_spinner();
 			}
@@ -974,7 +991,7 @@
 							alert(layer.properties.errors);
 						else{
 							//var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
-						    FIdER.vector_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(layer)));		
+						    FIdER.bg_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(layer)));		
 							FIdER.status.done_outer_query = true;
 							FIdER.check_spinner();		
     					}
