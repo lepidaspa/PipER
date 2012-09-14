@@ -841,7 +841,7 @@
 					FIdER.map.setLayerIndex(FIdER.bg_layer, 1000);
 					FIdER.map.setLayerIndex(FIdER.vector_layer,1100);
 
-					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.bg_layer, {
+					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: false, toggle: false,
                         multiple: true, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
@@ -849,7 +849,7 @@
                         box: true
                     });
                     
-                    FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.bg_layer, {
+                    FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: true, toggle: true,
                         multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
