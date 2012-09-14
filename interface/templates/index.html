@@ -832,9 +832,14 @@
 					}));
 					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
 
+					
 					FIdER.map.addLayer(FIdER.bg_layer);
 					FIdER.map.addLayer(FIdER.vector_layer);
 					FIdER.map.addLayer(FIdER.bbox_layer);
+
+					FIdER.map.setLayerIndex(FIdER.bbox_layer, 100);
+					FIdER.map.setLayerIndex(FIdER.bg_layer, 1000);
+					FIdER.map.setLayerIndex(FIdER.vector_layer,1100);
 
 					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.bg_layer, {
                         clickout: false, toggle: false,
