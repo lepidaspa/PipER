@@ -402,7 +402,7 @@
 			};
 			
 			
-			FIdER.bg_layer.events.on({
+			FIdER.vector_layer.events.on({
                 'featureselected': show_features,
                 'featureunselected': show_features
             });
@@ -438,23 +438,23 @@
             function do_show_features(){
             		FIdER.block_selections = false;
             		pa = [];
-                	if (FIdER.bg_layer.selectedFeatures.length == 1){
+                	if (FIdER.vector_layer.selectedFeatures.length == 1){
 	                	for (var e in FIdER.vector_layer.selectedFeatures[0].attributes)
 	                		pa.push({'key':e, 'value':FIdER.vector_layer.selectedFeatures[0].attributes[e]});
 	                		
-	                	pa.push({'key':'Lunghezza', "value":FIdER.bg_layer.selectedFeatures[0].geometry.getLength()})
-	                	xxte =  {"attributes":pa, "id":FIdER.bg_layer.selectedFeatures[0].id.replace(/\./g,'_')};
+	                	pa.push({'key':'Lunghezza', "value":FIdER.vector_layer.selectedFeatures[0].geometry.getLength()})
+	                	xxte =  {"attributes":pa, "id":FIdER.vector_layer.selectedFeatures[0].id.replace(/\./g,'_')};
 	                    $('#properties_panel .subpanel .content').empty();
 	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#properties_panel .subpanel .content').show();
 	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
 	                	
-	                	total_length = Enumerable.From(FIdER.bg_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
-	                	distinct_line_count = Enumerable.From(FIdER.bg_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
-	                	distinct_point_count = Enumerable.From(FIdER.bg_layer.selectedFeatures).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
-	                	distinct_owners = Enumerable.From(FIdER.bg_layer.selectedFeatures).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(",");
-	                	distinct_data = Enumerable.From(FIdER.bg_layer.selectedFeatures).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(",");
-	                	distinct_infra = Enumerable.From(FIdER.bg_layer.selectedFeatures).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(",");
+	                	total_length = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
+	                	distinct_line_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
+	                	distinct_point_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
+	                	distinct_owners = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(",");
+	                	distinct_data = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(",");
+	                	distinct_infra = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(",");
 	                	xxte = {
 	                		'attributes':[
 	                			{
@@ -489,7 +489,7 @@
 	                    $('#bi_panel .subpanel .content').show();
 	                }
 	                FIdER.vector_layer.removeAllFeatures();
-	                for(e in FIdER.bg_layer.selectedFeatures){
+	                for(e in FIdER.vector_layer.selectedFeatures){
 	                	
 	                	FIdER.vector_layer.addFeature(FIdER.bg_layer.selectedFeatures[e]);
 	                }
@@ -754,10 +754,8 @@
 						}
 					}
 					FIdER.selectables = ee;
-					
-					for (a in FIdER.selectables){
-						FIdER.vector_layer.addFeature(FIdER.selectables[a]);
-					}
+					FIdER.vector_layer.addFeatures(FIdER.selectables);
+				
 			}
 			//run
 			$(function() {
