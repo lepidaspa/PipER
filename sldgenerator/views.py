@@ -82,7 +82,7 @@ def get_default_sld(request):
         dftsym = default_feature_type_style_rule.LineSymbolizer
         dftstroke = dftsym.create_stroke()
         dftstroke.create_cssparameter("stroke",color)
-        dftstroke.create_cssparameter("stroke-width","1")
+        dftstroke.create_cssparameter("stroke-width","2")
         
         dftsymp  = default_feature_type_style_rule.PointSymbolizer
         dgftpoint = dftsymp.Graphic
@@ -92,7 +92,7 @@ def get_default_sld(request):
         dmgftpoint.create_stroke()
         dsmgftpoint = dmgftpoint.Stroke
         dsmgftpoint.create_cssparameter('stroke', color)
-        dsmgftpoint.create_cssparameter("stroke-width","1")
+        dsmgftpoint.create_cssparameter("stroke-width","2")
         
         #dmgftpoint.create_fill()
         dfmgftpoint = dmgftpoint.Fill
@@ -169,7 +169,7 @@ def get_selected_sld(request):
         sftsym = slected_feature_type_style_rule.LineSymbolizer
         sftstroke = sftsym.create_stroke()
         sftstroke.create_cssparameter("stroke",color)
-        sftstroke.create_cssparameter("stroke-width","4")
+        sftstroke.create_cssparameter("stroke-width","5")
         
         
         sftsymp  = slected_feature_type_style_rule.PointSymbolizer
@@ -180,7 +180,7 @@ def get_selected_sld(request):
         smgftpoint.create_stroke()
         ssmgftpoint = smgftpoint.Stroke
         ssmgftpoint.create_cssparameter('stroke', color)
-        ssmgftpoint.create_cssparameter("stroke-width","4")
+        ssmgftpoint.create_cssparameter("stroke-width","5")
         
         #dmgftpoint.create_fill()
         sfmgftpoint = smgftpoint.Fill
