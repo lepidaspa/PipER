@@ -724,37 +724,38 @@
 				else 
 				$('#spinner').show();
 			}
+			FIdER.selectables = [];
 			function refresh_sight(){
 				if (FIdER.select_multi_control !== undefined) 
 					FIdER.select_multi_control.unselectAll();
 				FIdER.selectables = [];
 				for (el in FIdER.status.query){
-						el_sel = []
-						tt = FIdER.status.query[el]['column']
-						ps = FIdER.status.query[el]['params']
-						if (ps != null){
-							
-							for(pp in ps){
-								lsit = ps[pp]
-								if (lsit== "Non definito")
-									lsit = "";
-								vec = FIdER.vector_layer.getFeaturesByAttribute(tt, lsit )
-								for(feat in vec){
-									el_sel.push(vec[feat]);
-									
-								}
+					el_sel = []
+					tt = FIdER.status.query[el]['column']
+					ps = FIdER.status.query[el]['params']
+					if (ps != null){
+						
+						for(pp in ps){
+							lsit = ps[pp]
+							if (lsit== "Non definito")
+								lsit = "";
+							vec = FIdER.vector_layer.getFeaturesByAttribute(tt, lsit )
+							for(feat in vec){
+								el_sel.push(vec[feat]);
+								
 							}
-							FIdER.selectables.push(el_sel);
 						}
+						FIdER.selectables.push(el_sel);
 					}
-					ee = FIdER.selectables[0];
-					if (FIdER.selectables.length > 1){
-						for (a = 0; a < FIdER.selectables.length-1; a++){
-							ee = intersect_safe(ee,FIdER.selectables[a+1])					
-						}
+				}
+				ee = FIdER.selectables[0];
+				if (FIdER.selectables.length > 1){
+					for (a = 0; a < FIdER.selectables.length-1; a++){
+						ee = intersect_safe(ee,FIdER.selectables[a+1])					
 					}
-					FIdER.selectables = ee;
-					FIdER.vector_layer.addFeatures(FIdER.selectables);
+				}
+				FIdER.selectables = ee;
+				FIdER.vector_layer.addFeatures(FIdER.selectables);
 				
 			}
 			//run
