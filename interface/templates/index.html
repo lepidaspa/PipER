@@ -297,7 +297,7 @@
 		<script id="multi" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
-				<label class="q_el label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="in" for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}:</label>
+				<label class="q_el label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="in" for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}: <span class="fake_link clear_multi">Nessuno</span> <span class="fake_link all_multi">Tutti</span></label>
 				<select class="query_element params" name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}" multiple="true">
 					{% templatetag openvariable %}#type{% templatetag closevariable %}
 					<option value="{% templatetag openvariable %}.{% templatetag closevariable %}">{% templatetag openvariable %}.{% templatetag closevariable %}</option>
@@ -611,7 +611,12 @@
 						}
 					});	
 			});
-			
+			$('.clear_multi').live('click', function(){
+				$(this).parent().find('option').removeAttr('selected');
+			});
+			$('.all_multi').live('click', function(){
+				$(this).parent().find('option').attr('selected', 'selected');
+			});
 			$('#properties_btn').live('click', function(){
 					FIdER.select_one_control.activate();
 					FIdER.select_multi_control.deactivate();
@@ -657,7 +662,13 @@
 				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
 					
 					$('#spinner').hide();
-					for (el in FIdER.status.query){
+					refresh_sight();
+				}
+				else 
+				$('#spinner').show();
+			}
+			function refresh_sight(){
+				for (el in FIdER.status.query){
 						el_sel = []
 						tt = FIdER.status.query[el]['column']
 						ps = FIdER.status.query[el]['params']
@@ -686,11 +697,7 @@
 					for (a in FIdER.selectables){
 						FIdER.select_multi_control.select(FIdER.selectables[a])
 					}
-				}
-				else 
-				$('#spinner').show();
 			}
-			
 			//run
 			$(function() {
 				
@@ -869,6 +876,7 @@
 					}
 					else{
 						FIdER.status.query = prepare_query();
+						refresh_sight();
 					}
 				});
 				
