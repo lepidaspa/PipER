@@ -415,6 +415,8 @@
             	}
             }
             
+            FIdER.selected_items = [];
+            
             function intersect_safe(a, b)
 			{
 			  var ai=0, bi=0;
@@ -488,6 +490,7 @@
 	                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#bi_panel .subpanel .content').show();
 	                }
+	                FIdER.selected_items = FIdER.vector_layer.selectedFeatures;
             }
 			
 			//FIdER.features = new OpenLayers.
@@ -672,6 +675,7 @@
 			});
 			$('#properties_btn').live('click', function(){
 					FIdER.select_one_control.activate();
+					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.deactivate();
 			});
 			$('#bi_btn').live('click', function(){
@@ -766,7 +770,7 @@
 				$('.panel').hide();
 				
 				$.getJSON('/interface/urls', function(data) {
-						$.urls = data;
+					$.urls = data;
 
 					FIdER.map = new OpenLayers.Map("map", {
 						sphericalMercator : true,
@@ -808,6 +812,14 @@
 								q:"[]"
 							}
 						});
+						
+						for (fid in FIdER.selected_items)
+							for (fed in FIdER.vector_layer.features)
+								if (FIdER.selected_items[fid].geometry == FIdER.vector_layer.features[fed].geometry)
+									if (FIdER.selected_items.length == 1)
+										FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
+									else
+										FIdER.select_multi_control.select(FIdER.vector_layer.features[fed]);	
 						
 					});
 
