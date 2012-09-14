@@ -246,10 +246,10 @@
 				{% templatetag openvariable %}#data{% templatetag closevariable %}
 					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
 					{% templatetag openvariable %}#meta{% templatetag closevariable %}
-						<tr>
-							<td width="33%">{% templatetag openvariable %}name{% templatetag closevariable %}</td>
-							<td width="33%">{% templatetag openvariable %}id{% templatetag closevariable %}</td>
-							<td width="33%">
+						<tr data-id="{% templatetag openvariable %}id{% templatetag closevariable %}" data-name="{% templatetag openvariable %}name{% templatetag closevariable %}">
+							<td width="25%">{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+							<td width="25%">{% templatetag openvariable %}id{% templatetag closevariable %}</td>
+							<td width="25%">
 								{% templatetag openvariable %}#active{% templatetag closevariable %}
 								<span class="fake_link ref_proxy" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}">DISATTIVA</span>
 								{% templatetag openvariable %}/active{% templatetag closevariable %}
@@ -257,6 +257,7 @@
 								<span class="fake_link ref_proxy" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}">ATTIVA</span>
 								{% templatetag openvariable %}/active{% templatetag closevariable %}
 							</td>
+							<td width="25%"><span class="fake_link p_settings">Impostazioni</span></td>
 						</tr>
 					{% templatetag openvariable %}/meta{% templatetag closevariable %}
 					</table>
@@ -611,6 +612,37 @@
 						}
 					});	
 			});
+			
+			$('#add_model').live('click', function(){
+					$('<div><div class="m_head">Nome Modello Dati: <input id="model_name" type="text"></div><div class="m_content"></div></div>').dialog({
+						title:"Definizione Modello",
+						buttons:{
+							'OK':function(){
+								$.get('/data', function(ddd){
+									console.log(ddd);
+									$( this ).dialog( "destroy" );
+								});
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			});
+			$('.p_settings').live('click', function(){
+					$('<div>Nome</div>').dialog({
+						title:"Impostazioni proxy",
+						buttons:{
+							'OK':function(){
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			});
+			
+			
 			$('.clear_multi').live('click', function(){
 				$(this).parent().parent().find('option').prop("selected", false);
 			});
@@ -1056,7 +1088,7 @@
 						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
 					</div>
 				<div class="content">
-					<a id="fwp_link" href="">Vai alla Piattaforma di Gesione dei Proxy</a>
+					<a id="fwp_link" href="//62.101.95.229:9000/fwp">Vai alla Piattaforma di Gesione dei Proxy</a>
 				</div>
 				<div class="title">
 					<span>Strumenti - Proxy</span>
