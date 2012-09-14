@@ -92,7 +92,7 @@ def get_default_sld(request):
         dmgftpoint.create_stroke()
         dsmgftpoint = dmgftpoint.Stroke
         dsmgftpoint.create_cssparameter('stroke', color)
-        dsmgftpoint.create_cssparameter("stroke-width","2")
+        dsmgftpoint.create_cssparameter("stroke-width","1")
         
         #dmgftpoint.create_fill()
         dfmgftpoint = dmgftpoint.Fill
@@ -185,7 +185,7 @@ def get_selected_sld(request):
         #dmgftpoint.create_fill()
         sfmgftpoint = smgftpoint.Fill
         sfmgftpoint.CssParameters[0].Value = color
-        sfmgftpoint.create_cssparameter('fill-opacity', "0.1")   
+        sfmgftpoint.create_cssparameter('fill-opacity', "0.2")   
     return HttpResponse(sf.as_sld(), mimetype="text/xml")
 
 
