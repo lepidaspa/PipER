@@ -757,15 +757,20 @@
 				for (a in FIdER.selectables) 
 					FIdER.vector_layer.addFeatures(FIdER.selectables[a].clone());
 				
-				for (fid in FIdER.selected_items)
-					for (fed in FIdER.vector_layer.features)
+				setTimeout(reselect,500);	
+				
+			}
+			
+			function reselect(){
+				for (fed in FIdER.vector_layer.features)
+					for (fid in FIdER.selected_items)
 						if (FIdER.selected_items[fid].geometry == FIdER.vector_layer.features[fed].geometry)
 							if (FIdER.selected_items.length == 1)
 								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
 							else
-								FIdER.select_multi_control.select(FIdER.vector_layer.features[fed]);	
-				
+								FIdER.select_multi_control.select(FIdER.vector_layer.features[fed]);
 			}
+			
 			//run
 			$(function() {
 				$('.panel .content').hide();
