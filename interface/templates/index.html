@@ -612,7 +612,7 @@
 					});	
 			});
 			$('.clear_multi').live('click', function(){
-				$(this).parent().parent().find('option').removeAttr('selected');
+				$(this).parent().parent().find('option').prop("selected", false);
 			});
 			$('.all_multi').live('click', function(){
 				$(this).parent().parent().find('option').attr('selected', 'selected');
