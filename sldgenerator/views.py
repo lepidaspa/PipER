@@ -82,11 +82,11 @@ def get_default_sld(request):
         dftsym = default_feature_type_style_rule.LineSymbolizer
         dftstroke = dftsym.create_stroke()
         dftstroke.create_cssparameter("stroke",color)
-        dftstroke.create_cssparameter("stroke-width","2")
+        dftstroke.create_cssparameter("stroke-width","1")
         
         dftsymp  = default_feature_type_style_rule.PointSymbolizer
         dgftpoint = dftsymp.Graphic
-        dgftpoint.Size = "15"
+        dgftpoint.Size = "10"
         dmgftpoint = dgftpoint.Mark
         dmgftpoint.WellKnownName="circle"
         dmgftpoint.create_stroke()
