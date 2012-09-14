@@ -506,7 +506,7 @@
 					
 				FIdER.select_one_control.unselectAll();
 				FIdER.select_one_control.deactivate();
-				FIdER.slect_multi_control.unselectAll();
+				FIdER.select_multi_control.unselectAll();
 				FIdER.select_multi_control.deactivate();
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
@@ -612,10 +612,10 @@
 					});	
 			});
 			$('.clear_multi').live('click', function(){
-				$(this).parent().find('option').removeAttr('selected');
+				$(this).parent().parent().find('option').removeAttr('selected');
 			});
 			$('.all_multi').live('click', function(){
-				$(this).parent().find('option').attr('selected', 'selected');
+				$(this).parent().parent().find('option').attr('selected', 'selected');
 			});
 			$('#properties_btn').live('click', function(){
 					FIdER.select_one_control.activate();
@@ -668,6 +668,7 @@
 				$('#spinner').show();
 			}
 			function refresh_sight(){
+				FIdER.selectables = [];
 				for (el in FIdER.status.query){
 						el_sel = []
 						tt = FIdER.status.query[el]['column']
@@ -831,7 +832,7 @@
 									if (stuff[col] != "int") {
 									col_obj = {}
 									col_obj.name = col;
-									col_obj.type = ["Tutti", 'Nessuno', "Non definito"].concat(stuff[col]);
+									col_obj.type = ["Non definito"].concat(stuff[col]);
 									table.cols.push(col_obj);
 								}
 								//else{
@@ -875,6 +876,8 @@
 						move_to_geo();
 					}
 					else{
+						
+						FIdER.select_multi_control.unselectAll();
 						FIdER.status.query = prepare_query();
 						refresh_sight();
 					}
