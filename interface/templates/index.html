@@ -765,9 +765,27 @@
 				for (fed in FIdER.vector_layer.features)
 					for (fid in FIdER.selected_items){
 						same = true;
-						for (a in FIdER.selected_items[fid].attributes)
-							if (FIdER.selected_items[fid].attributes[a] != FIdER.vector_layer.features[fed].attributes[a])
+						try{
+							for (a in FIdER.selected_items[fid].attributes)
+								if (same && FIdER.selected_items[fid].attributes[a] != FIdER.vector_layer.features[fed].attributes[a])
+									same = false;
+							if (same && FIdER.selected_items[fid].geometry.CLASS_NAME != FIdER.vector_layer.features[fed].geometry.CLASS_NAME)
 								same = false;
+							if (same && FIdER.selected_items[fid].geometry.CLASS_NAME == "OpenLayers.Geometry.LineString"){
+								for (c in FIdER.selected_items[fid].geometry.components){
+									if (same && FIdER.selected_items[fid].geometry.components[c] != FIdER.vector_layer.features[fed].geometry.components[c])
+										same = false;
+								}
+							}
+							if(same && FIdER.selected_items[fid].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
+								if (same && FIdER.selected_items[fid].geometry.x != FIdER.vector_layer.features[fed].geometry.x)
+									same = false;
+								if (same && FIdER.selected_items[fid].geometry.y != FIdER.vector_layer.features[fed].geometry.y)
+									same = false;
+							} 
+						}catch (err){    
+							same=false;
+						}
 						if (same)
 							if (FIdER.selected_items.length == 1)
 								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
