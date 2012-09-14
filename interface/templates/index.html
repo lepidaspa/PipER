@@ -764,7 +764,7 @@
 			function reselect(){
 				for (fed in FIdER.vector_layer.features)
 					for (fid in FIdER.selected_items)
-						if (FIdER.selected_items[fid].geometry == FIdER.vector_layer.features[fed].geometry)
+						if (FIdER.selected_items[fid].attributes == FIdER.vector_layer.features[fed].attributes)
 							if (FIdER.selected_items.length == 1)
 								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
 							else
