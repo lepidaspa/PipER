@@ -750,7 +750,8 @@
 				}
 				FIdER.selectables = ee;
 				if (FIdER.selectables !== undefined) 
-				FIdER.vector_layer.addFeatures(FIdER.selectables);
+				for (a in FIdER.selectables) 
+					FIdER.vector_layer.addFeatures(FIdER.selectables[a].clone());
 				
 			}
 			//run
