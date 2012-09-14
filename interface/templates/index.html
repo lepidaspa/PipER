@@ -627,12 +627,12 @@
 			});
 			$('#clear_selection').live('click', function(){
 				
-				FIdER.select_one_control.unselectAll();
-				FIdER.select_one_control.deactivate();
-				FIdER.slect_multi_control.unselectAll();
-				FIdER.select_multi_control.deactivate();
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
+				FIdER.select_one_control.unselectAll();
+				FIdER.select_one_control.deactivate();
+				FIdER.select_multi_control.unselectAll();
+				FIdER.select_multi_control.deactivate();
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
