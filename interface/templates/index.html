@@ -763,12 +763,17 @@
 			
 			function reselect(){
 				for (fed in FIdER.vector_layer.features)
-					for (fid in FIdER.selected_items)
-						if (FIdER.selected_items[fid].attributes == FIdER.vector_layer.features[fed].attributes)
+					for (fid in FIdER.selected_items){
+						same = true;
+						for (a in FIdER.selected_items[fid].attributes)
+							if (FIdER.selected_items[fid].attributes[a] != FIdER.vector_layer.features[fed].attributes[a])
+								same = false;
+						if (same)
 							if (FIdER.selected_items.length == 1)
 								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
 							else
 								FIdER.select_multi_control.select(FIdER.vector_layer.features[fed]);
+					}
 			}
 			
 			//run
