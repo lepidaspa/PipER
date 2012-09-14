@@ -714,15 +714,14 @@
 				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
 					
 					$('#spinner').hide();
-					refresh_sight();
+					//refresh_sight();
 				}
 				else 
 				$('#spinner').show();
 			}
 			FIdER.selectables = [];
 			function refresh_sight(){
-				if (FIdER.select_multi_control !== undefined) 
-					FIdER.select_multi_control.unselectAll();
+				FIdER.vector_layer.removeAllFeatures();
 				FIdER.selectables = [];
 				for (el in FIdER.status.query){
 					el_sel = []
