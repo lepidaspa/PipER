@@ -763,7 +763,7 @@
 				
 
 				$.getJSON('/interface/urls', function(data) {
-					$.urls = data;
+						$.urls = data;
 
 					FIdER.map = new OpenLayers.Map("map", {
 						sphericalMercator : true,
@@ -976,7 +976,7 @@
 			FIdER.geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
 			
 			function show_data(datas){
-		 		FIdER.bg_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(datas)));	
+		 		FIdER.status.active_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(datas)));	
 				FIdER.status.done_inner_query = true;
 		 		FIdER.check_spinner();
 			}
