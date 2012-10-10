@@ -163,7 +163,7 @@ def all_prox():
 
 
 class OwnerData(models.Model):
-    owner = models.OneToOneField(Owner)
+    owner = models.OneToOneField('Owner')
     referral_name = models.CharField(max_length=250)
     referral_email = models.CharField(max_length=250)
     

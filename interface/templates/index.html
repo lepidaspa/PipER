@@ -153,7 +153,7 @@
 				width:20%;
 			}
 			
-			select{
+			select[multiple="true"]{
 				display:block;
 				width:100%;
 				height:200px;
@@ -207,6 +207,13 @@
 			.fake_link:hover{
 				cursor:hand;
 				
+			}
+			
+			.c_red {
+				color:red;
+			}
+			.c_gre{
+				color:green;
 			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
@@ -278,9 +285,39 @@
 				{% templatetag openvariable %}/data{% templatetag closevariable %}
 			</div>
 		</script>
-
-
-
+		
+		
+		<script id="addmodelform" type="text/html">
+			<div>
+				<div class="m_head">Nome Modello Dati: <input id="model_name" type="text" value="{{typename}}"></div>
+				<div class="m_toolbar tools_list btn">
+					<div class="add_row">+</div>
+				</div>
+				<div class="m_content">
+				{% templatetag openvariable %}#fields{% templatetag closevariable %}
+					{% templatetag openvariable %}> editable_rowelement{% templatetag closevariable %}
+				{% templatetag openvariable %}/fields{% templatetag closevariable %}
+				</div>
+			</div>
+		</script>
+		<script id="addinfrastructureform" type="text/html">
+			<div>Nome Infrastruttura: <input id="create_infra" type="text"></div>
+		</script>
+		<script id="editable_rowelement" type="text/html">
+			<div class="row">
+				<span>Nome:</span><input class="field_name" type="text" value="
+					{% templatetag openvariable %}naaem{% templatetag closevariable %}"></input>
+				<span>Valore:</span> <input class="values" type="text"></input>
+				<span>Tipo:</span> <select class="type">
+					<option value="list">Valore da lista</option>	
+					<option value="str">Stringa</option>
+					<option value="int">Intero</option>	
+					<option value="data_fornitore">Fornitore</option>
+					<option value="data_infrastruttura">Infrastruttura</option>
+					<option value="data_fornitore">Proprietario</option>				
+				</select>
+			</div>
+		</script>
 		<script id="range" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
@@ -295,6 +332,7 @@
 				</span>
 			</div>
 		</script>
+		
 		<script id="multi" type="text/html">
 			<div class="line">
 				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
@@ -362,7 +400,27 @@
 					'pointRadius':'6'
 					
 				}
-			});			
+			});	
+			
+			FIdER.tr_style = new OpenLayers.StyleMap();
+			FIdER.tr_style.addUniqueValueRules("default", "type", {
+				'start':{
+					'fillColor':"#44ff44",
+					'strokeColor':"#44ff44   ",
+					'fillOpacity':0.5,
+					'strokeWidth':"3",
+					'pointRadius':'8'
+					
+				},
+				'end':{
+					'fillColor':"Red",
+					'strokeColor':"Red",
+					'fillOpacity':0.5,
+					'strokeWidth':"3",
+					'pointRadius':'8'
+					
+				},
+			});
 			FIdER.bgstyle = new OpenLayers.StyleMap({
 				'default':{
 					'fillColor':"White",
@@ -393,6 +451,10 @@
 			
 			FIdER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
 				styleMap: FIdER.bbstyle
+			});
+			
+			FIdER.track_layer = new OpenLayers.Layer.Vector("tracks",{
+				styleMap: FIdER.tr_style
 			});
 			
 			
@@ -523,6 +585,10 @@
 			$('.nav_btn').live('mouseout', function() {
 				$(this).removeClass('hover');
 			});
+			
+			$('.add_row').live('click', function(){
+				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
+			});
 
 			$('.nav_btn:not("#home_btn")' ).live('click', function() {
 				if ($(this).hasClass('selected')) {
@@ -620,8 +686,15 @@
 					});	
 			});
 			
+			$('.type').live('change', function(){
+				if($(this).val() != "list")
+					$(this).parent().children('.values').attr("disabled", "disabled");
+				else
+					$(this).parent().children('.values').removeAttr("disabled");
+			});
+			
 			$('#add_infrastructure').live('click', function(){
-					$('<div>Nome Infrastruttura: <input id="create_infra" type="text"></div>').dialog({
+					ich.addinfrastructureform().dialog({
 						title:"Aggiungi Infrastruttura",
 						buttons:{
 							'OK':function(){
@@ -638,7 +711,8 @@
 			});
 			
 			$('#add_model').live('click', function(){
-					$('<div><div class="m_head">Nome Modello Dati: <input id="model_name" type="text"></div><div class="m_content"></div></div>').dialog({
+					ich.addmodelform().dialog({
+						width:650,
 						title:"Definizione Modello",
 						buttons:{
 							'OK':function(){
@@ -677,11 +751,20 @@
 					FIdER.select_one_control.activate();
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.deactivate();
+					FIdER.select_multi_control_track.deactivate();
 			});
 			$('#bi_btn').live('click', function(){
 					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control_track.deactivate();
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.activate();
+			});
+			$('#track_btn').live('click', function(){
+					FIdER.select_multi_control_track.activate();
+					FIdER.select_one_control.unselectAll();
+					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control.unselectAll();
+					FIdER.select_multi_control.deactivate();
 			});
 			$('#clear_selection').live('click', function(){
 				
@@ -689,6 +772,25 @@
 				$('#properties_panel .subpanel .content').empty();
 				FIdER.select_one_control.unselectAll();
 				FIdER.select_multi_control.unselectAll();
+			});
+			
+			$('#clear_selection_t').live('click', function(){
+				FIdER.track_layer.removeAllFeatures();
+				$('#bi_panel .subpanel .content').empty();
+				$('#properties_panel .subpanel .content').empty();
+				FIdER.select_one_control.unselectAll();
+				FIdER.select_multi_control.unselectAll();
+			});
+			
+			$('#add_start').live('click', function(){
+				start = FIdER.track_layer.getFeaturesByAttribute('type', 'start');
+				FIdER.track_layer.removeFeatures(start);
+				FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(FIdER.map.center.lon, FIdER.map.center.lat),  {'type':'start'})]);
+			});
+			$('#add_end').live('click', function(){
+				end = FIdER.track_layer.getFeaturesByAttribute('type', 'end');
+				FIdER.track_layer.removeFeatures(end);
+				FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(FIdER.map.center.lon, FIdER.map.center.lat), {'type':'end'})]);
 			});
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -879,7 +981,9 @@
 					FIdER.map.addLayer(FIdER.bg_layer);
 					FIdER.map.addLayer(FIdER.vector_layer);
 					FIdER.map.addLayer(FIdER.bbox_layer);
+					FIdER.map.addLayer(FIdER.track_layer);
 
+					FIdER.map.setLayerIndex(FIdER.track_layer, 90);
 					FIdER.map.setLayerIndex(FIdER.bbox_layer, 100);
 					FIdER.map.setLayerIndex(FIdER.bg_layer, 1000);
 					FIdER.map.setLayerIndex(FIdER.vector_layer,1100);
@@ -887,6 +991,13 @@
 					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: false, toggle: false,
                         multiple: true, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
+                        multipleKey: "shiftKey", // shift key adds to selection
+                        box: true
+                    });
+            		FIdER.select_multi_control_track = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+                        clickout: false, toggle: true,
+                        multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: true
@@ -1070,6 +1181,9 @@
 			<div class="nav_btn" id="bi_btn">
 				<span>u</span>
 			</div>
+			<div class="nav_btn" id="track_btn">
+				<span>?</span>
+			</div>
 			<div class="nav_btn" id="info_btn">
 				<span>C</span>
 			</div>
@@ -1105,6 +1219,23 @@
 			<button id="do_clear_btn">
 				Annulla
 			</button>
+		</div>
+		
+		<div id="track_panel" class="panel track_btn">
+			<div class="subpanel">
+				<div class="title">
+					<span>Traccia</span>
+				</div>
+					<div class="tools_list">
+						<span class="btn c_gre" id="add_start" title="Crea Partenza">?</span>	
+						<span class="btn c_red" id="add_end" title="Crea Fine">?</span>	
+						<span class="btn" id="clear_selection_t" title="Annulla Selezione">'</span>		
+					</div>
+				<div class="content">
+					
+				
+				</div>
+			</div>
 		</div>
 		<div id="properties_panel" class="panel properties_btn">
 			<div class="subpanel">
