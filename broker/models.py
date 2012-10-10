@@ -161,6 +161,16 @@ def all_prox():
     ret.append(oj)   
     return ret  
 
+
+class OwnerData(models.Model):
+    owner = models.OneToOneField(Owner)
+    referral_name = models.CharField(max_length=250)
+    referral_email = models.CharField(max_length=250)
+    
+    def __str__(self):
+        return self.owner + ": " + self.referral_name
+
+
 class Owner(models.Model):
     name = models.CharField(max_length=250)
     group = models.ForeignKey(Group)
