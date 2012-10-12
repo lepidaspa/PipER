@@ -225,7 +225,7 @@
 		<script src="/fstatic/js/ICanHaz.min.js"></script>
 		<script src="https://raw.github.com/flowersinthesand/jquery-stringifyJSON/master/jquery.stringifyjson.js"></script>
 		<script src="https://raw.github.com/marcosesperon/Messi/master/messi.min.js"></script>
-		<script src="/fstatic/js/jquery-ui-1.8.23.custom.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
   		<link rel="stylesheet" href="https://raw.github.com/marcosesperon/Messi/master/messi.min.css" />
@@ -590,7 +590,7 @@
 				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
 			});
 
-			$('.nav_btn:not("#home_btn")' ).live('click', function() {
+			$('.nav_btn:not("#home_btn"):not("#track_btn")' ).live('click', function() {
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
@@ -751,21 +751,18 @@
 					FIdER.select_one_control.activate();
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.deactivate();
-					FIdER.select_multi_control_track.deactivate();
 			});
 			$('#bi_btn').live('click', function(){
 					FIdER.select_one_control.deactivate();
-					FIdER.select_multi_control_track.deactivate();
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.activate();
 			});
 			$('#track_btn').live('click', function(){
-					FIdER.select_multi_control_track.activate();
-					FIdER.select_one_control.unselectAll();
-					FIdER.select_one_control.deactivate();
-					FIdER.select_multi_control.unselectAll();
-					FIdER.select_multi_control.deactivate();
+				FIdER.track_layer.removeAllFeatures();
+				
 			});
+			
+			$('#track_btn'),
 			$('#clear_selection').live('click', function(){
 				
 				$('#bi_panel .subpanel .content').empty();
@@ -782,16 +779,7 @@
 				FIdER.select_multi_control.unselectAll();
 			});
 			
-			$('#add_start').live('click', function(){
-				start = FIdER.track_layer.getFeaturesByAttribute('type', 'start');
-				FIdER.track_layer.removeFeatures(start);
-				FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(FIdER.map.center.lon, FIdER.map.center.lat),  {'type':'start'})]);
-			});
-			$('#add_end').live('click', function(){
-				end = FIdER.track_layer.getFeaturesByAttribute('type', 'end');
-				FIdER.track_layer.removeFeatures(end);
-				FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(FIdER.map.center.lon, FIdER.map.center.lat), {'type':'end'})]);
-			});
+			
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
 							console.log(gqdata);
@@ -901,7 +889,29 @@
 				$('.panel .content').hide();
 				$('#sett_panel .content').show();
 				$('#vis_panel .content').show();
+				//$( document ).tooltip();
 				
+				var drag_offset_x = 0;
+				var drag_offset_y = 0;
+				$( "#track_btn" ).draggable({
+					zindex:1000000,
+					helper:"clone",
+					start:function(event, ui){
+						console.log(event);
+						drag_offset_x = ui.helper.width()-event.offsetX;
+						drag_offset_y = ui.helper.height()-event.offsetY;
+					}
+				});
+				$( "#map" ).droppable({
+					tolerance:"pointer",
+					drop:function(event, ui){
+						console.log(ui);
+						console.log(event);						lonlat = FIdER.map.getLonLatFromPixel(new OpenLayers.Pixel(ui.position.left-drag_offset_x, ui.position.top+drag_offset_y));
+						FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),  {'type':'start'})]);
+						drag_offset_x = 0;
+						drag_offset_y = 0;
+					}
+				});
 				FIdER.check_spinner();
 
 				FIdER.refresh();
@@ -995,13 +1005,6 @@
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: true
                     });
-            		FIdER.select_multi_control_track = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
-                        clickout: false, toggle: true,
-                        multiple: false, hover: false,
-                        toggleKey: "ctrlKey", // ctrl key removes from selection
-                        multipleKey: "shiftKey", // shift key adds to selection
-                        box: true
-                    });
                     
                     FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
                         clickout: true, toggle: true,
@@ -1040,17 +1043,11 @@
 							for (var col in stuff) {
 								if (stuff[col] != "str")
 									if (stuff[col] != "int") {
-									col_obj = {}
+									col_obj = {};
 									col_obj.name = col;
 									col_obj.type = ["Non definito"].concat(stuff[col]);
 									table.cols.push(col_obj);
 								}
-								//else{
-								//	col_obj = {}
-								//	col_obj.name = col;
-								//	col_obj.type = stuff[col];
-								//	table.cols.push(col_obj);
-								//}
 							}
 							model.push(table);
 
@@ -1169,25 +1166,25 @@
 			</div>
 		</header>
 		<nav>
-			<div class="nav_btn" id="home_btn">
+			<div class="nav_btn" id="home_btn" title="Home">
 				<span>h</span>
 			</div>
-			<div class="nav_btn" id="search_btn">
-				<span>L</span>
-			</div>
-			<div class="nav_btn" id="properties_btn">
-				<span>,</span>
-			</div>
-			<div class="nav_btn" id="bi_btn">
-				<span>u</span>
-			</div>
-			<div class="nav_btn" id="track_btn">
+			<div class="nav_btn" id="track_btn" title="Punti di interesse">
 				<span>?</span>
 			</div>
-			<div class="nav_btn" id="info_btn">
+			<div class="nav_btn" id="search_btn" title="Ricerca">
+				<span>L</span>
+			</div>
+			<div class="nav_btn" id="properties_btn" title="Propriet&agrave;">
+				<span>,</span>
+			</div>
+			<div class="nav_btn" id="bi_btn" title="Business Intelligence">
+				<span>u</span>
+			</div>
+			<div class="nav_btn" id="info_btn" title="Informazioni sui Fornitori di dati">
 				<span>C</span>
 			</div>
-			<div class="nav_btn" id="settings_btn">
+			<div class="nav_btn" id="settings_btn" title="Impostazioni del sistema">
 				<span>S</span>
 			</div>
 		</nav>
@@ -1253,9 +1250,9 @@
 				<div class="title">
 					<span>Business Intelligence</span>
 				</div>
-					<div class="tools_list">
-						<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
-					</div>
+				<div class="tools_list">
+					<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
+				</div>
 				<div class="content">
 					
 				
