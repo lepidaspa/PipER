@@ -189,6 +189,10 @@
 				
 			}
 			
+			.nav_btn.disabled{
+				color:gray;
+			}
+			
 			#sett_panel .content{
 				padding-top:10px;
 				padding-bottom:10px;
@@ -477,6 +481,39 @@
             	}
             }
             
+            OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
+                defaultHandlerOptions: {
+                    'single': true,
+                    'double': false,
+                    'pixelTolerance': 0,
+                    'stopSingle': false,
+                    'stopDouble': false
+                },
+
+                initialize: function(options) {
+                    this.handlerOptions = OpenLayers.Util.extend(
+                        {}, this.defaultHandlerOptions
+                    );
+                    OpenLayers.Control.prototype.initialize.apply(
+                        this, arguments
+                    ); 
+                    this.handler = new OpenLayers.Handler.Click(
+                        this, {
+                            'click': this.trigger
+                        }, this.handlerOptions
+                    );
+                }, 
+
+                trigger: function(e) {
+                    lonlat = FIdER.map.getLonLatFromPixel(e.xy);
+					FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),  {'type':'start'})]);
+					FIdER.interestclick.deactivate();
+                }
+
+            });
+            
+            FIdER.interestclick = new OpenLayers.Control.Click();
+            
             FIdER.selected_items = [];
             
             function intersect_safe(a, b)
@@ -590,7 +627,7 @@
 				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
 			});
 
-			$('.nav_btn:not("#home_btn"):not("#track_btn")' ).live('click', function() {
+			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled")' ).live('click', function() {
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
@@ -757,12 +794,7 @@
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.activate();
 			});
-			$('#track_btn').live('click', function(){
-				FIdER.track_layer.removeAllFeatures();
-				
-			});
 			
-			$('#track_btn'),
 			$('#clear_selection').live('click', function(){
 				
 				$('#bi_panel .subpanel .content').empty();
@@ -779,6 +811,14 @@
 				FIdER.select_multi_control.unselectAll();
 			});
 			
+			FIdER.status.add_point = false;
+			$( "#track_btn" ).live('click', function(event, ui){
+				FIdER.status.add_point = true;
+				FIdER.interestclick.activate();
+			});
+			$( "#track_btn" ).live('dblclick', function(event, ui){
+				FIdER.track_layer.removeAllFeatures();
+			});
 			
 			move_to_geo = function(){
 					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
@@ -893,25 +933,6 @@
 				
 				var drag_offset_x = 0;
 				var drag_offset_y = 0;
-				$( "#track_btn" ).draggable({
-					zindex:1000000,
-					helper:"clone",
-					start:function(event, ui){
-						console.log(event);
-						drag_offset_x = ui.helper.width()-event.offsetX;
-						drag_offset_y = ui.helper.height()-event.offsetY;
-					}
-				});
-				$( "#map" ).droppable({
-					tolerance:"pointer",
-					drop:function(event, ui){
-						console.log(ui);
-						console.log(event);						lonlat = FIdER.map.getLonLatFromPixel(new OpenLayers.Pixel(ui.position.left-drag_offset_x, ui.position.top+drag_offset_y));
-						FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),  {'type':'start'})]);
-						drag_offset_x = 0;
-						drag_offset_y = 0;
-					}
-				});
 				FIdER.check_spinner();
 
 				FIdER.refresh();
@@ -938,6 +959,8 @@
 							FIdER.bbox_layer.display(false);
 							FIdER.status.active_layer =FIdER.bg_layer; 
 							FIdER.status.url = "search";
+							$('#properties_btn').removeClass('disabled')
+							$('#bi_btn').removeClass('disabled')
 						}
 						else{
 							FIdER.vector_layer.display(false);
@@ -945,6 +968,8 @@
 							FIdER.bbox_layer.display(true);
 							FIdER.status.active_layer =FIdER.bbox_layer; 
 							FIdER.status.url = "proxies";
+							$('#properties_btn').addClass('disabled')
+							$('#bi_btn').addClass('disabled')
 						}
 						$('#spinner').show();
 						FIdER.bbox_layer.destroyFeatures();
@@ -1026,6 +1051,7 @@
 					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
 					FIdER.map.addControl(FIdER.select_one_control);
 					FIdER.map.addControl(FIdER.select_multi_control);
+					FIdER.map.addControl(FIdER.interestclick);
 					
 					FIdER.map.zoomToExtent(FIdER.start);
 					
