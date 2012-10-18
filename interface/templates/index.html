@@ -632,13 +632,13 @@
     					for (i in xxte.attributes)
     						glob_row.push(xxte.attributes[i].key);
     					glob_csv+=glob_row.join(',');
-    					glob_csv+"\n";
+    					glob_csv+"\n\r";
     					glob_row = [];    					
     					for (i in xxte.attributes)
     						glob_row.push(xxte.attributes[i].value);
     					glob_csv+=glob_row.join(',');
     					
-    					zip.add("general.csv", glob_csv);
+    					zip.file("general.csv", glob_csv);
     					
     					
     					linear_csv = "";
@@ -653,13 +653,13 @@
     						}
     						row = row.join(',');
     						if (feat.geometry.toString().split('(')[0] == "POINT")
-    							punctual_csv+=row+"\n";
+    							punctual_csv+=row+"\n\r";
     						else
-    							linear_csv += row + "\n";
+    							linear_csv += row + "\n\r";
     					}
     					
-    					zip.add("linear.csv", linear_csv);
-    					zip.add("punctual.csv", punctual_csv);
+    					zip.file("linear.csv", linear_csv);
+    					zip.file("punctual.csv", punctual_csv);
     					content = zip.generate();
     					console.log(content);
     					$('#export_csv').removeClass('disabled');
