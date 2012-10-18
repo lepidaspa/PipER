@@ -124,41 +124,57 @@ def force_refresh_response():
 
 
 def force_pull_remote(request):
+    proxy = request.REQUEST.get('id', None)
     return HttpResponse(force_pull_remote_response())
 
-def force_pull_remote_response():
+def force_pull_remote_response(proxy):
     yield "<div>starting</div>"
-    for proxy in Proxy.objects.all():
-        try:
-            yield "<div>pulling proxy %s</div>" % str(proxy.id)
-            call_command('pull_remote', str(proxy.id))
-            yield "<div>pulled proxy %s</div>" % str(proxy.id)
-        except:
-            yield "<div>error pulling proxy %s</div>" % str(proxy.id)
-    yield "<div>done</div>"
+    if proxy is None:
+        for proxy in Proxy.objects.all():
+            try:
+                yield "<div>pulling proxy %s</div>" % str(proxy.id)
+                call_command('pull_remote', str(proxy.id))
+                yield "<div>pulled proxy %s</div>" % str(proxy.id)
+            except:
+                yield "<div>error pulling proxy %s</div>" % str(proxy.id)
+        yield "<div>done</div>"
+    else:
+        yield "<div>getting proxy %s</div>" % str(proxy)
+        call_command('pull_remote', str(proxy))
+        yield "<div>got proxy %s</div>" % str(proxy)
     
 
 def force_get_remote(request):
-    return HttpResponse(force_pull_remote_response())
+    proxy = request.REQUEST.get('id', None)
+    return HttpResponse(force_pull_remote_response(proxy))
 
-def force_get_remote_response():
+def force_get_remote_response(proxy):
     yield "<div>starting</div>"
-    for proxy in Proxy.objects.all():
-        try:
-            yield "<div>getting proxy %s</div>" % str(proxy.id)
-            call_command('get_remote', str(proxy.id))
-            yield "<div>got proxy %s</div>" % str(proxy.id)
-        except:
-            yield "<div>error getting proxy %s</div>" % str(proxy.id)
-    yield "<div>done</div>"
+    if proxy is None:
+        for proxy in Proxy.objects.all():
+            try:
+                yield "<div>getting proxy %s</div>" % str(proxy.id)
+                call_command('get_remote', str(proxy.id))
+                yield "<div>got proxy %s</div>" % str(proxy.id)
+            except:
+                yield "<div>error getting proxy %s</div>" % str(proxy.id)
+        yield "<div>done</div>"
+    else:
+        yield "<div>getting proxy %s</div>" % str(proxy)
+        call_command('get_remote', str(proxy))
+        yield "<div>got proxy %s</div>" % str(proxy)
+        
+        
 
 
 def clear_db(request):
-    return HttpResponse(clear_db_response())
+    tok = request.REQUEST.get('token')
+    meta = request.REQUEST.get('meta')
+    return HttpResponse(clear_db_response(tok,meta))
 
-def clear_db_response():
+def clear_db_response(token=None, metadata=None):
     yield "starting clear"
-    call_command('clear_db')
+    call_command('clear_db', token, metadata)
     yield "cleared"
 
 

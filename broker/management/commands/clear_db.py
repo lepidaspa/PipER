@@ -7,10 +7,11 @@ import json
 import urllib2
 from pymongo import Connection, GEO2D
 
+
 class Command(BaseCommand):
     help = 'Gets data from the remotes'
 
     def handle(self, *args, **options):
-        connection = Connection()
-        db = connection.data
-        db.elements.drop()
+        tok = args[0]
+        meta = args[1]
+        clear_db(tok, meta)

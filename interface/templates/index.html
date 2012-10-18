@@ -170,6 +170,7 @@
 				margin-bottom:5px;
 			}
 			.btn{
+				text-decoration:none;
 				width:28px;
 				height:28px;
 				display:inline-block;
@@ -190,6 +191,11 @@
 			}
 			
 			.nav_btn.disabled{
+				color:gray;
+				text-shadow:1px 1px 3px gray;
+			}
+			
+			.btn.disabled{
 				color:gray;
 			}
 			
@@ -219,6 +225,29 @@
 			.c_gre{
 				color:green;
 			}
+			.c_grey{
+				color:gray;
+			}
+			
+			
+			.fake_link {
+				background-color: #f80;
+				padding-left:2px;
+				padding-right:2px;
+			}
+			.fake_link:hover{
+				background-color: white;
+				padding-left:1px;
+				padding-right:1px;
+				border:#f80 1px solid;
+				cursor: hand;
+			}
+			.model_header{
+				height:29px;
+			}
+			.olControlPanZoomBar {
+				rigth:5%;
+			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
@@ -230,6 +259,7 @@
 		<script src="https://raw.github.com/flowersinthesand/jquery-stringifyJSON/master/jquery.stringifyjson.js"></script>
 		<script src="https://raw.github.com/marcosesperon/Messi/master/messi.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+		<script src="https://raw.github.com/Stuk/jszip/master/jszip.js"></script>
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
 		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
   		<link rel="stylesheet" href="https://raw.github.com/marcosesperon/Messi/master/messi.min.css" />
@@ -239,16 +269,10 @@
 
 		<script id="amodel" type="text/html">
 			<div class="model">
-				<div class="model_header">
-					{% templatetag openvariable %}name{% templatetag closevariable %}</div>
-				<table class="model_content">
-					{% templatetag openvariable %}#attribs{% templatetag closevariable %}
-					<tr>
-						<td>{% templatetag openvariable %}name{% templatetag closevariable %}</td>
-						<td>{% templatetag openvariable %}type{% templatetag closevariable %}</td>
-					</tr>
-					{% templatetag openvariable %}/attribs{% templatetag closevariable %}
-				</table>
+				<div class="model_header" data-content="{% templatetag openvariable %}ddata{% templatetag closevariable %}">
+					<span class="name">{% templatetag openvariable %}name{% templatetag closevariable %}</span>
+					<span class="right icon btn show_model">d</span>
+				</div>
 			</div>
 		</script>
 		<script id="aproxy" type="text/html">
@@ -258,17 +282,23 @@
 					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
 					{% templatetag openvariable %}#meta{% templatetag closevariable %}
 						<tr data-id="{% templatetag openvariable %}id{% templatetag closevariable %}" data-name="{% templatetag openvariable %}name{% templatetag closevariable %}">
-							<td width="25%">{% templatetag openvariable %}name{% templatetag closevariable %}</td>
-							<td width="25%">{% templatetag openvariable %}id{% templatetag closevariable %}</td>
-							<td width="25%">
+							<td width="*">{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+							
+							<td width="84px">
+								
+								<span class="btn right clear_db" title="Cancella Metadato dal Database">'</span>	
+								<span class="btn right refresh_local" title="Forza Refresh Metadato">V</span>
+								<span class="btn right refresh_remotes" title="Forza Refresh Metadato (lato Proxy)">V</span>
+							</td>
+							<td width="28px">
 								{% templatetag openvariable %}#active{% templatetag closevariable %}
-								<span class="fake_link ref_proxy" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}">DISATTIVA</span>
+								<span class=" ref_proxy right btn c_red" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}" title="Disattiva">-</span>
 								{% templatetag openvariable %}/active{% templatetag closevariable %}
 								{% templatetag openvariable %}^active{% templatetag closevariable %}
-								<span class="fake_link ref_proxy" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}">ATTIVA</span>
+								<span class="ref_proxy btn right  c_gre" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %} " title="Attiva">+</span>
 								{% templatetag openvariable %}/active{% templatetag closevariable %}
 							</td>
-							<td width="25%"><span class="fake_link p_settings">Impostazioni</span></td>
+							<td width="28px"><span class="p_settings btn right c_grey" title="Impostazioni">S</span></td>
 						</tr>
 					{% templatetag openvariable %}/meta{% templatetag closevariable %}
 					</table>
@@ -293,14 +323,14 @@
 		
 		<script id="addmodelform" type="text/html">
 			<div>
-				<div class="m_head">Nome Modello Dati: <input id="model_name" type="text" value="{{typename}}"></div>
+				<div class="m_head">Nome Modello Dati: <input id="model_name" type="text" value="{% templatetag openvariable %}name{% templatetag closevariable %}"></div>
 				<div class="m_toolbar tools_list btn">
 					<div class="add_row">+</div>
 				</div>
 				<div class="m_content">
-				{% templatetag openvariable %}#fields{% templatetag closevariable %}
+				{% templatetag openvariable %}#nprops{% templatetag closevariable %}
 					{% templatetag openvariable %}> editable_rowelement{% templatetag closevariable %}
-				{% templatetag openvariable %}/fields{% templatetag closevariable %}
+				{% templatetag openvariable %}/nprops{% templatetag closevariable %}
 				</div>
 			</div>
 		</script>
@@ -308,9 +338,8 @@
 			<div>Nome Infrastruttura: <input id="create_infra" type="text"></div>
 		</script>
 		<script id="editable_rowelement" type="text/html">
-			<div class="row">
-				<span>Nome:</span><input class="field_name" type="text" value="
-					{% templatetag openvariable %}naaem{% templatetag closevariable %}"></input>
+			<div class="row" id="__{% templatetag openvariable %}pname{% templatetag closevariable %}" >
+				<span>Nome:</span><input class="field_name" type="text" value="{% templatetag openvariable %}pname{% templatetag closevariable %}"></input>
 				<span>Valore:</span> <input class="values" type="text"></input>
 				<span>Tipo:</span> <select class="type">
 					<option value="list">Valore da lista</option>	
@@ -355,7 +384,11 @@
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
     		</ul>
 		</script>
-
+		<script id="proxysettings" type="text/html">
+			<div data-id="{% templatetag openvariable %}id{% templatetag closevariable %}">
+				<span>Cron di aggiornamento:</span><input type="text" value="{% templatetag openvariable %}crondata{% templatetag closevariable %}"></input>
+			</div>
+		</script>
 		<script>
 			FIdER = {};
 			OpenLayers.ImgPath = "https://github.com/sirmmo/openlayers_themes/raw/master/dark/";
@@ -370,6 +403,8 @@
 				$('.panel').height(height);
 				$('footer').css('top', $(window).height() - $('header').height() - 10 - $('footer').height());
 				$('.subpanel').css('max-height', $(window).height()-$('footer').height()-1-$('header').height()-40);
+				$('.bottom').css('top', $(window).height() - $('header').height() - 10 -40 - $('footer').height());
+				$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
 			};
 			//projections
 			FIdER.projections = {};
@@ -588,6 +623,47 @@
 	                	$('#bi_panel .subpanel .content').empty();
 	                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#bi_panel .subpanel .content').show();
+	                    
+	                   
+    					var zip = new JSZip();
+    					glob_csv = "";
+    					
+    					glob_row = [];    					
+    					for (i in xxte.attributes)
+    						glob_row.push(xxte.attributes[i].key);
+    					glob_csv+=glob_row.join(',');
+    					glob_csv+"\n";
+    					glob_row = [];    					
+    					for (i in xxte.attributes)
+    						glob_row.push(xxte.attributes[i].value);
+    					glob_csv+=glob_row.join(',');
+    					
+    					zip.add("general.csv", glob_csv);
+    					
+    					
+    					linear_csv = "";
+    					punctual_csv = "";
+    					
+    					for (i in FIdER.vector_layer.selectedFeatures){
+    						row = [];
+    						feat = FIdER.vector_layer.selectedFeatures[i];
+    						for(k in feat.attributes){
+    							v = feat.attributes[k];
+    							row.push(v);
+    						}
+    						row = row.join(',');
+    						if (feat.geometry.toString().split('(')[0] == "POINT")
+    							punctual_csv+=row+"\n";
+    						else
+    							linear_csv += row + "\n";
+    					}
+    					
+    					zip.add("linear.csv", linear_csv);
+    					zip.add("punctual.csv", punctual_csv);
+    					content = zip.generate();
+    					console.log(content);
+    					$('#export_csv').removeClass('disabled');
+    					$('#export_csv').attr('href', "data:application/zip;base64," + content);
 	                }
 	                FIdER.selected_items = FIdER.vector_layer.selectedFeatures;
             }
@@ -671,6 +747,11 @@
 					FIdER.map.zoomToExtent(FIdER.start);
 			});
 			
+			$('.show_model').live('click', function(){
+				content = $(this).parent().data('content');
+				show_models(content);
+			});
+			
 			$('#refresh_remotes').live('click', function(){
 				$('<div>Desideri forzare il refresh dei proxy?</div>').dialog({
 					title:"Forzare il refresh dei proxy",
@@ -723,6 +804,63 @@
 					});	
 			});
 			
+			
+			$('.refresh_remotes').live('click', function(){
+				id= $(this).parent('tr').data('id');
+				$('<div>Desideri forzare il refresh del proxy?</div>').dialog({
+					title:"Forzare il refresh dei proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/pull?id='+id, function(ddd){
+								console.log(ddd);
+								$( this ).dialog( "destroy" );
+							});
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			$('.refresh_local').live('click', function(){
+				id= $(this).parent('tr').data('id');
+				$('<div>Desideri scaricare i dati dal proxy?</div>').dialog({
+					title:"Scaricamento dati dai proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/get?id='+id, function(ddd){
+								console.log(ddd);
+								$( this ).dialog( "destroy" );
+							});
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			$('.clear_db').live('click', function(){
+				id= $(this).parent('tr').data('id');
+					$('<div>Desideri cancellare il contenuto del database relativo al proxy slezionato?</div>').dialog({
+						title:"Cancellazione del DataBase",
+						modal:true,
+						buttons:{
+							'OK':function(){
+								$.get('/broker/clear?id='+id, function(ddd){
+									console.log(ddd);
+									$( this ).dialog( "destroy" );
+								});
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			});
+			
+			
 			$('.type').live('change', function(){
 				if($(this).val() != "list")
 					$(this).parent().children('.values').attr("disabled", "disabled");
@@ -747,8 +885,24 @@
 					});	
 			});
 			
-			$('#add_model').live('click', function(){
-					ich.addmodelform().dialog({
+			function show_models(data){
+				if (data == null)
+					ff = ich.addmodelform();
+				else{
+					ff = ich.addmodelform(data);
+					for (d in data.nprops){
+						ss = data.nprops[d];
+						if (typeof(ss.ptype) == "string"){
+							ff.find('#__'+ss.pname).find('.type').val(ss.ptype);
+							ff.find('#__'+ss.pname).find('.values').attr("disabled","disabled");
+						}
+						else{
+							ff.find('#__'+ss.pname).find('.type').val("list");
+							ff.find('#__'+ss.pname).find('.values').val(ss.ptype);
+						}
+					}
+				}
+				ff.dialog({
 						width:650,
 						title:"Definizione Modello",
 						buttons:{
@@ -763,10 +917,16 @@
 							}
 						}
 					});	
+			}
+			
+			$('#add_model').live('click', function(){
+				show_models(null);
 			});
 			$('.p_settings').live('click', function(){
-					$('<div>Nome</div>').dialog({
+					ich.proxysettings().dialog({
 						title:"Impostazioni proxy",
+						resizable:false,
+						width:350,
 						buttons:{
 							'OK':function(){
 							},
@@ -784,15 +944,32 @@
 			$('.all_multi').live('click', function(){
 				$(this).parent().parent().find('option').attr('selected', 'selected');
 			});
+			
+			FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
-					FIdER.select_one_control.activate();
+				FIdER.status.propopen = !FIdER.status.propopen;
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.deactivate();
-			});
-			$('#bi_btn').live('click', function(){
+
+				if (FIdER.status.propopen){
+					FIdER.select_one_control.activate();
+				}
+				else{
 					FIdER.select_one_control.deactivate();
-					FIdER.select_multi_control.unselectAll();
+				}
+			});
+			FIdER.status.biopen = false;
+			$('#bi_btn').live('click', function(){
+				FIdER.status.biopen = !FIdER.status.biopen;
+					FIdER.select_one_control.deactivate();
+					FIdER.select_one_control.unselectAll();
+					
+				if (FIdER.status.biopen){
 					FIdER.select_multi_control.activate();
+				}
+				else{
+					FIdER.select_multi_control.deactivate();
+				}
 			});
 			
 			$('#clear_selection').live('click', function(){
@@ -801,6 +978,8 @@
 				$('#properties_panel .subpanel .content').empty();
 				FIdER.select_one_control.unselectAll();
 				FIdER.select_multi_control.unselectAll();
+				
+    					$('#export_csv').addClass('disabled');
 			});
 			
 			$('#clear_selection_t').live('click', function(){
@@ -818,6 +997,8 @@
 			});
 			$( "#track_btn" ).live('dblclick', function(event, ui){
 				FIdER.track_layer.removeAllFeatures();
+				FIdER.interestclick.deactivate();
+				setTimeout('FIdER.interestclick.deactivate();',500);
 			});
 			
 			move_to_geo = function(){
@@ -849,11 +1030,26 @@
 					
 					$('#spinner').hide();
 					refresh_sight();
+					prepare_export();
 				}
 				else 
 				$('#spinner').show();
 			}
 			FIdER.selectables = [];
+			
+			function prepare_export(){
+				pp = FIdER.geojson_format.write(FIdER.vector_layer.features);
+				window.URL = window.webkitURL || window.URL;
+  				window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
+                       window.MozBlobBuilder;
+
+				  var bb = new BlobBuilder();
+				  bb.append(pp);
+				
+				  var a = $('#export_vector');
+				  a.attr('href',window.URL.createObjectURL(bb.getBlob("text/json")));
+			}
+			
 			function refresh_sight(){
 				FIdER.vector_layer.removeAllFeatures();
 				FIdER.selectables = [];
@@ -946,6 +1142,8 @@
 						projection : "EPSG:900913",
 						controls : []
 					});
+					
+					FIdER.status.dl_vector= {};
 					
 					FIdER.map.events.register('moveend', FIdER.map, function(){
 						$('.panel').hide();
@@ -1093,6 +1291,7 @@
 						
 						FIdER.status.query = prepare_query();
 					});
+				$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
 				});
 				
 				
@@ -1123,7 +1322,12 @@
 				
 				$.getJSON('/models/getmodels', function(mdata){
 					for (model in mdata){
-						$('#admin_models').append(ich.amodel(mdata[model]));
+						rmodel = mdata[model];
+						rmodel.nprops = []
+						for (p in rmodel.properties)
+							rmodel.nprops.push({pname:p, 'ptype':rmodel.properties[p]});
+						rmodel.ddata = $.stringifyJSON(rmodel);
+						$('#admin_models').append(ich.amodel(rmodel));
 					}
 				});
 				
@@ -1210,7 +1414,7 @@
 			<div class="nav_btn" id="info_btn" title="Informazioni sui Fornitori di dati">
 				<span>C</span>
 			</div>
-			<div class="nav_btn" id="settings_btn" title="Impostazioni del sistema">
+			<div class="nav_btn bottom" id="settings_btn" title="Impostazioni del sistema">
 				<span>S</span>
 			</div>
 		</nav>
@@ -1278,6 +1482,7 @@
 				</div>
 				<div class="tools_list">
 					<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
+					<a class="btn disabled" id="export_csv" href="" title="Download CSV" download="BI">X</a>		
 				</div>
 				<div class="content">
 					
@@ -1298,6 +1503,14 @@
 		</div>
 		<div id="sett_panel" class="panel settings_btn">
 			<div class="subpanel">
+				
+				<div class="title">
+					<span>Esportazione</span>
+				</div>
+				<div class="tools_list">
+					<a class="btn" id="export_vector" title="Esporta Vettoriale" href="#" download="Export">?</a>
+					<a class="btn disabled" id="export_image" title="Esporta Immagine" download="Export">I</a>	
+				</div>
 				<div class="title">
 					<span>Impostazioni</span>
 				</div>
@@ -1322,7 +1535,7 @@
 					<span>Strumenti - Modelli</span>
 				</div>
 					<div class="tools_list">
-						<span class="btn" id="add_model">+</span>		
+						<span class="btn" id="add_model" title="Crea nuovo Modello">+</span>		
 					</div>
 				<div class="content" id="admin_models">
 					

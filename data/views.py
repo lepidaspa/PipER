@@ -38,6 +38,7 @@ def put_data(proxy, data):
     collection = db['elements']
     
     db.elements.create_index([('_center.coordinates',GEO2D)])
+    db.elements.create_index([('_metadata')])
     
     #do coorections on data wwith specific elements...
     #avoid duplicates
@@ -51,8 +52,18 @@ def put_data(proxy, data):
                 feature['_metadata'] = metadata_name
                 feature['properties']['Fornitore']=proxy.request.owner.name
                 collection.insert(feature)
-            
-    return HttpResponse()
+    return
+
+def clear_db(token=None, metadata=None):
+    connection = Connection()
+    db = connection.data
+        
+    if token is None and metadata is None:
+        db.elements.drop()
+    elif token is not None and metadata is not None:
+        collection = db['elements']
+        collection.remove({'_token':token, '_metadata':metadata})
+    return 
             
 def run_query(bb, query):
     connection = Connection()
