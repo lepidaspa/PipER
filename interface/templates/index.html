@@ -631,7 +631,7 @@
     					glob_row = [];    					
     					for (i in xxte.attributes)
     						glob_row.push(xxte.attributes[i].key);
-    					glob_csv+=glob_row.join(';') + "\n\r";
+    					glob_csv+=glob_row.join(';') + "\n";
     					glob_row = [];    					
     					for (i in xxte.attributes)
     						glob_row.push(xxte.attributes[i].value);
@@ -652,9 +652,9 @@
     						}
     						row = row.join(';');
     						if (feat.geometry.toString().split('(')[0] == "POINT")
-    							punctual_csv+=row+"\n\r";
+    							punctual_csv+=row+"\n";
     						else
-    							linear_csv += row + "\n\r";
+    							linear_csv += row + "\n";
     					}
     					
     					zip.file("linear.csv", linear_csv);
