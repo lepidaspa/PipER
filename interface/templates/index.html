@@ -1005,6 +1005,7 @@
 				var zip = new JSZip();
 										
 				for (i in FIdER.vector_layer.features){
+					feat = FIdER.vector_layer.features[i];
 					if (feat.geometry.toString().split('(')[0] == "POINT")
 						points.push(feat);
 					else
