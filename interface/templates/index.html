@@ -631,12 +631,11 @@
     					glob_row = [];    					
     					for (i in xxte.attributes)
     						glob_row.push(xxte.attributes[i].key);
-    					glob_csv+=glob_row.join(',');
-    					glob_csv+"\n\r";
+    					glob_csv+=glob_row.join(';') + "\n\r";
     					glob_row = [];    					
     					for (i in xxte.attributes)
     						glob_row.push(xxte.attributes[i].value);
-    					glob_csv+=glob_row.join(',');
+    					glob_csv+=glob_row.join(';');
     					
     					zip.file("general.csv", glob_csv);
     					
@@ -651,7 +650,7 @@
     							v = feat.attributes[k];
     							row.push(v);
     						}
-    						row = row.join(',');
+    						row = row.join(';');
     						if (feat.geometry.toString().split('(')[0] == "POINT")
     							punctual_csv+=row+"\n\r";
     						else
