@@ -625,44 +625,7 @@
 	                    $('#bi_panel .subpanel .content').show();
 	                    
 	                   
-    					var zip = new JSZip();
-    					glob_csv = "";
-    					
-    					glob_row = [];    					
-    					for (i in xxte.attributes)
-    						glob_row.push(xxte.attributes[i].key);
-    					glob_csv+=glob_row.join(';') + "\n";
-    					glob_row = [];    					
-    					for (i in xxte.attributes)
-    						glob_row.push(xxte.attributes[i].value);
-    					glob_csv+=glob_row.join(';');
-    					
-    					zip.file("general.csv", glob_csv);
-    					
-    					
-    					linear_csv = "";
-    					punctual_csv = "";
-    					
-    					for (i in FIdER.vector_layer.selectedFeatures){
-    						row = [];
-    						feat = FIdER.vector_layer.selectedFeatures[i];
-    						for(k in feat.attributes){
-    							v = feat.attributes[k];
-    							row.push(v);
-    						}
-    						row = row.join(';');
-    						if (feat.geometry.toString().split('(')[0] == "POINT")
-    							punctual_csv+=row+"\n";
-    						else
-    							linear_csv += row + "\n";
-    					}
-    					
-    					zip.file("linear.csv", linear_csv);
-    					zip.file("punctual.csv", punctual_csv);
-    					content = zip.generate();
-    					console.log(content);
-    					$('#export_csv').removeClass('disabled');
-    					$('#export_csv').attr('href', "data:application/zip;base64," + content);
+    					 
 	                }
 	                FIdER.selected_items = FIdER.vector_layer.selectedFeatures;
             }
@@ -1037,16 +1000,34 @@
 			FIdER.selectables = [];
 			
 			function prepare_export(){
-				pp = FIdER.geojson_format.write(FIdER.vector_layer.features);
+				lines = [];
+				points = [];
+				var zip = new JSZip();
+										
+				for (i in FIdER.vector_layer.features){
+					if (feat.geometry.toString().split('(')[0] == "POINT")
+						points.push(feat);
+					else
+						lines.push(feat);
+				}
+				
+				lines = FIdER.geojson_format.write(lines);
+				points = FIdER.geojson_format.write(points);
+				
+				zip.file("linear.geojson", lines);
+				zip.file("punctual.geojson", points);
+				content = zip.generate();
+				console.log(content);
+				var a = $('#export_vector');
+				//a.attr('href', "data:application/zip;base64," + content);
 				window.URL = window.webkitURL || window.URL;
   				window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
                        window.MozBlobBuilder;
 
 				  var bb = new BlobBuilder();
-				  bb.append(pp);
+				  bb.append(content);
 				
-				  var a = $('#export_vector');
-				  a.attr('href',window.URL.createObjectURL(bb.getBlob("text/json")));
+				  a.attr('href',window.URL.createObjectURL(bb.getBlob("application/zip")));
 			}
 			
 			function refresh_sight(){
