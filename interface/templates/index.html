@@ -1019,15 +1019,7 @@
 				content = zip.generate();
 				console.log(content);
 				var a = $('#export_vector');
-				//a.attr('href', "data:application/zip;base64," + content);
-				window.URL = window.webkitURL || window.URL;
-  				window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
-                       window.MozBlobBuilder;
-
-				  var bb = new BlobBuilder();
-				  bb.append(content);
-				
-				  a.attr('href',window.URL.createObjectURL(bb.getBlob("application/zip")));
+				a.attr('href', "data:application/zip;base64," + content);				
 			}
 			
 			function refresh_sight(){
