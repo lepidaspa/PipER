@@ -39,7 +39,7 @@
 				top: 50px;
 			}
 			#map {
-				left: 40px;
+				left: 390px;
 				position: absolute;
 			}
 			#fider-logo {
@@ -160,6 +160,9 @@
 			}
 			input[type="checkbox"]{
 				display:none;
+			}
+			input.proxy_check[type="checkbox"]{
+				display:inline-block;
 			}
 			.tools_list{
 				width:95%;
@@ -324,6 +327,7 @@
 		</script>
 		<script id="uproxy" type="text/html">
 			<div class="uproxy">
+				<input class="proxy_check" type="checkbox" checked="checked">
 				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
 				{% templatetag openvariable %}#data{% templatetag closevariable %}
 					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
@@ -448,7 +452,7 @@
 
 			//refresh function for resize and startup
 			FIdER.refresh = function() {
-				var width = $(window).width() - $('nav').width();
+				var width = $(window).width() - $('nav').width()-$('.panel').width();
 				var height = $(window).height() - $('header').height() - $('footer').height() - 10;
 				$('#map').width(width);
 				$('nav').height(height);
@@ -457,7 +461,7 @@
 				$('footer').css('top', $(window).height() - $('header').height() - 10 - $('footer').height());
 				$('.subpanel').css('max-height', $(window).height()-$('footer').height()-1-$('header').height()-40);
 				$('.bottom').css('top', $(window).height() - $('header').height() - 10 -40 - $('footer').height());
-				$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
+				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
 			};
 			//projections
 			FIdER.projections = {};
@@ -727,7 +731,7 @@
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
-					
+					$('#info_btn').click();
 				FIdER.select_one_control.unselectAll();
 				FIdER.select_one_control.deactivate();
 				FIdER.select_multi_control.unselectAll();
@@ -761,6 +765,10 @@
 				content = $(this).parent().data('content');
 				show_models(content);
 			});
+			
+			$('.proxy_check').live('click', function(){
+				
+			})
 			
 			$('#refresh_remotes').live('click', function(){
 				$('<div>Desideri forzare il refresh dei proxy?</div>').dialog({
@@ -1172,6 +1180,7 @@
 						FIdER.vector_layer.styleMap.styles.default = FIdER.ccstyle.styles.default;
 						FIdER.vector_layer.styleMap.styles.select = FIdER.ccstyle.styles.select;
 						FIdER.vector_layer.redraw();
+						$('#info_btn').click();
 						if (FIdER.map.getZoom() >= 15){
 							FIdER.vector_layer.display(true);
 							FIdER.bg_layer.display(true);
@@ -1313,6 +1322,8 @@
 						FIdER.status.query = prepare_query();
 					});
 				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
+				
+					$('#info_btn').click();
 				});
 				
 				
@@ -1451,7 +1462,6 @@
 		<div id="search_panel" class="panel search_btn">
 			<div class="subpanel" data-type="inventory">
 				<div class="title">
-					<img src="http://www.freeiconsweb.com/Icons-show/cc_mono_icon_set_png/box.png">
 					<span>Inventario</span>
 				</div>
 				<div class="content" id="inventory_q">
