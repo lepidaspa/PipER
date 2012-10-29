@@ -504,6 +504,14 @@
 					'strokeWidth':"1",
 					'pointRadius':'6'
 					
+				},
+				'dead':{
+					'fillColor':"White",
+					'strokeColor':"White",
+					'fillOpacity':0.1,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
 				}
 			});	
 			
@@ -1161,19 +1169,39 @@
 			
 			$('.uproxy').live('mouseenter', function(){
 				val = $(this).find('input[type=checkbox]').val();
-				feats = FIdER.bbox_layer.getFeaturesByAttribute('owner', val)
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
-					feat = feats[i];
-					feat.attributes['highlight']='true';
+					if (feat.attributes['highlight'] != "dead"){
+						feat = feats[i];
+						feat.attributes['highlight']='true';
+					}
 				}
 				var has_ = FIdER.bbox_layer.redraw();
 			}).live('mouseleave', function(){
 				val = $(this).find('input[type=checkbox]').val();
 				
-				feats = FIdER.bbox_layer.getFeaturesByAttribute('owner', val)
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
-					feat = feats[i];
-					feat.attributes['highlight']='false';
+					if (feat.attributes['highlight'] != "dead"){
+						feat = feats[i];
+						feat.attributes['highlight']='false';
+					}
+				}
+				var has_ = FIdER.bbox_layer.redraw();
+			});
+			$('.proxy_check').live('click', function(){
+				c = $(this).is(':checked');
+				val = $(this).val();
+				
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				for (i in feats){
+					if (!c){
+						feat = feats[i];
+						feat.attributes['highlight']='dead';
+					}else{
+						feat = feats[i];
+						feat.attributes['highlight']='true';
+					}
 				}
 				var has_ = FIdER.bbox_layer.redraw();
 			});
@@ -1204,12 +1232,12 @@
 					FIdER.status.dl_vector= {};
 					
 					FIdER.map.events.register('moveend', FIdER.map, function(){
-						$('.panel').hide();
-						$('.selected').removeClass('selected');
+						//$('.panel').hide();
+						//$('.selected').removeClass('selected');
 						FIdER.vector_layer.styleMap.styles.default = FIdER.ccstyle.styles.default;
 						FIdER.vector_layer.styleMap.styles.select = FIdER.ccstyle.styles.select;
-						FIdER.vector_layer.redraw();
-						$('#info_btn').click();
+						//FIdER.vector_layer.redraw();
+						//$('#info_btn').click();
 						if (FIdER.map.getZoom() >= 15){
 							FIdER.vector_layer.display(true);
 							FIdER.bg_layer.display(true);
@@ -1415,6 +1443,12 @@
 								prepared_query.push(qqq);
 							});
 						});
+						vals = []
+						$('#user_proxies').find('.proxy_check:checked').each(function(a,b){
+							vals.push($(b).val());
+						});
+						
+						prepared_query.push({'column':"Fornitore","operator":"in", "params":vals});
 						return prepared_query;
 			}
 			
@@ -1473,7 +1507,10 @@
 			<div class="nav_btn" id="track_btn" title="Punti di interesse">
 				<span>?</span>
 			</div>
-			<div class="nav_btn" id="search_btn" title="Ricerca">
+			<div class="nav_btn" id="info_btn" title="Informazioni sui Fornitori di dati">
+				<span>C</span>
+			</div>
+			<div class="nav_btn" id="search_btn" title="Filtro">
 				<span>L</span>
 			</div>
 			<div class="nav_btn" id="properties_btn" title="Propriet&agrave;">
@@ -1481,9 +1518,6 @@
 			</div>
 			<div class="nav_btn" id="bi_btn" title="Business Intelligence">
 				<span>u</span>
-			</div>
-			<div class="nav_btn" id="info_btn" title="Informazioni sui Fornitori di dati">
-				<span>C</span>
 			</div>
 			<div class="nav_btn bottom" id="settings_btn" title="Impostazioni del sistema">
 				<span>S</span>
@@ -1493,7 +1527,7 @@
 		<div id="search_panel" class="panel search_btn">
 			<div class="subpanel" data-type="inventory">
 				<div class="title">
-					<span>Inventario</span>
+					<span>Filtro</span>
 				</div>
 				<div class="content" id="inventory_q">
 			

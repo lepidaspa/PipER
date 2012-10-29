@@ -67,7 +67,7 @@ def show(request):
                         }
         jf['properties']={
                           "TYPE":"BBOX",
-                          'owner':str(meta.proxy.request.owner),
+                          'Fornitore':str(meta.proxy.request.owner),
                           "highlight":"false"
         }
         jsr['features'].append(jf)
