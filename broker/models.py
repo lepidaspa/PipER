@@ -130,8 +130,8 @@ def all_prox():
                 mj['active'] = meta.active
                 pj['meta'].append(mj)
             oj['data'].append(pj)
-        
-        ret.append(oj)   
+        if oj['global_count'] != 0 :
+            ret.append(oj)   
     return ret  
 
 
