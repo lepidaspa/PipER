@@ -114,7 +114,7 @@
 			.title {
 				height: 40px;
 				display: block;
-				font-size: 14px;
+				font-size: 16px;
 				padding-left: 4px;
 			}
 			.title span {
@@ -327,7 +327,7 @@
 		</script>
 		<script id="uproxy" type="text/html">
 			<div class="uproxy">
-				<input class="proxy_check" type="checkbox" checked="checked">
+				<input class="proxy_check" type="checkbox" checked="checked" value="{% templatetag openvariable %}name{% templatetag closevariable %}">
 				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
 				{% templatetag openvariable %}#data{% templatetag closevariable %}
 					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
@@ -487,10 +487,19 @@
 					FIdER.ccstyle.styles['select']=FIdER.sld.namedLayers.selected_elements.userStyles[0]
 					
 			});
-			FIdER.bbstyle = new OpenLayers.StyleMap({
-				'default':{
+			FIdER.bbstyle = new OpenLayers.StyleMap();
+			FIdER.bbstyle.addUniqueValueRules("default", "highlight",{
+				'false':{
 					'fillColor':"Orange",
 					'strokeColor':"Orange",
+					'fillOpacity':0.1,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				},
+				'true':{
+					'fillColor':"Blue",
+					'strokeColor':"Blue",
 					'fillOpacity':0.1,
 					'strokeWidth':"1",
 					'pointRadius':'6'
@@ -709,7 +718,8 @@
 					for (owner in pdata){
 						
 						$('#admin_proxies').append(ich.aproxy(pdata[owner]));
-						$('#user_proxies').append(ich.uproxy(pdata[owner]));
+						up = ich.uproxy(pdata[owner]);
+						$('#user_proxies').append(up);
 					
 					}
 				});
@@ -1149,6 +1159,25 @@
 					}
 			}
 			
+			$('.uproxy').live('mouseenter', function(){
+				val = $(this).find('input[type=checkbox]').val();
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('owner', val)
+				for (i in feats){
+					feat = feats[i];
+					feat.attributes['highlight']='true';
+				}
+				var has_ = FIdER.bbox_layer.redraw();
+			}).live('mouseleave', function(){
+				val = $(this).find('input[type=checkbox]').val();
+				
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('owner', val)
+				for (i in feats){
+					feat = feats[i];
+					feat.attributes['highlight']='false';
+				}
+				var has_ = FIdER.bbox_layer.redraw();
+			});
+			
 			//run
 			$(function() {
 				//$('.panel .content').hide();
@@ -1362,6 +1391,8 @@
 				});
 				
 				FIdER.vector_layer.redraw();
+				
+				
 			});
 			
 			function prepare_query(){
@@ -1424,7 +1455,7 @@
 			
 			
 			<div class="search_geo">
-				<label for="search_geo_address">Cerca:</label>
+				<label for="search_geo_address">Vai a:</label>
 				<input type="text" id="search_geo_address" />
 				<button id="do_search_geo">
 					Cerca
@@ -1547,7 +1578,7 @@
 						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
 					</div>
 				<div class="content">
-					<a id="fwp_link" href="//62.101.95.229:9000/fwp">Vai alla Piattaforma di Gesione dei Proxy</a>
+					<a id="fwp_link" href="//5.144.184.146/fwp/">Vai alla Piattaforma di Gestione dei Proxy</a>
 				</div>
 				<div class="title">
 					<span>Strumenti - Proxy</span>
