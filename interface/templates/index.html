@@ -1171,8 +1171,8 @@
 				val = $(this).find('input[type=checkbox]').val();
 				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
-					if (feat.attributes['highlight'] != "dead"){
-						feat = feats[i];
+					feat = feats[i];
+					if (feat.attributes['highlight'] != "dead"){	
 						feat.attributes['highlight']='true';
 					}
 				}
@@ -1182,8 +1182,9 @@
 				
 				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
+					feat = feats[i];
 					if (feat.attributes['highlight'] != "dead"){
-						feat = feats[i];
+						
 						feat.attributes['highlight']='false';
 					}
 				}
@@ -1195,8 +1196,8 @@
 				
 				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
+					feat = feats[i];
 					if (!c){
-						feat = feats[i];
 						feat.attributes['highlight']='dead';
 					}else{
 						feat = feats[i];
