@@ -94,12 +94,12 @@ def do_get_model_secondary(models= []):
                               'super':'Duct',
                               'properties':{
                                             'ID' : 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN', 'Comune di Reggio Emilia'],
                                             'IDProprietario' : 'str',
                                             'IDInizio': 'str',
                                             'IDFine': 'str',
                                             'Lunghezza': 'int',
-                                            'Tipo': ['Pubblica Illuminazione', 'Telecomunicazioni', 'Rete Elettrica', 'Fognatura', 'Teleriscaldamento', 'Rete Gas'],
+                                            'Tipo': ['Pubblica Illuminazione', 'Telecomunicazioni', 'Rete Elettrica', 'Fognatura', 'Teleriscaldamento', 'Rete Gas', 'Rete Semaforica'],
                                             'Disponibilita': 'str',
                                             'DataCreazione': 'str',
                                             'UltimoAggiornamento': 'str'
@@ -112,10 +112,10 @@ def do_get_model_secondary(models= []):
                               'super':'Well',
                               'properties':{
                                             'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN', 'Comune di Reggio Emilia'],
                                             'IDProprietario' : 'str',
                                             'Indirizzo': 'str',
-                                            'Tipo': ['Pubblica Illuminazione', 'Telecomunicazioni', 'Rete Elettrica', 'Fognatura', 'Teleriscaldamento', 'Rete Gas'],
+                                            'Tipo': ['Pubblica Illuminazione', 'Telecomunicazioni', 'Rete Elettrica', 'Fognatura', 'Teleriscaldamento', 'Rete Gas', 'Rete Semaforica'],
                                             'DataCreazione': 'str',
                                             'UltimoAggiornamento': 'str'
                                             }
@@ -129,7 +129,7 @@ def do_get_model_secondary(models= []):
                               'super':'Tube',
                               'properties':{
                                             'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN', 'Comune di Reggio Emilia'],
                                             'IDProprietario' : 'str',
                                             'Tipo': ['Telecomunicazioni'],
                                             'Contenitore':'Tube',
@@ -143,7 +143,7 @@ def do_get_model_secondary(models= []):
                               'super':'SpliceEnclosure',
                               'properties':{
                                             'ID': 'int',
-                                            'Proprietario': ['Lepida S.p.A.', 'IREN'],
+                                            'Proprietario': ['Lepida S.p.A.', 'IREN', 'Comune di Reggio Emilia'],
                                             'IDProprietario' : 'str',
                                             'Tipo': ['Telecomunicazioni'],
                                             'Contenitore':'Well',
