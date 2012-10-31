@@ -42,33 +42,14 @@ class DataModel(models.Model):
         return j
 
 
-class DataModelAttributeTable(models.Model):
-    name = models.TextField()
-    def __str__(self):
-        return self.name
-    
-class DataModelAttributeValues(models.Model):
-    table = models.ForeignKey(DataModelAttributeTable, related_name="values")
-    value = models.CharField(max_length = 255)
-    super = models.ForeignKey('DataModelAttributeValues', related_name="children", null=True, blank=True)
-    def __str__(self):
-        return "%s - %s" % (self.table, self.value, )
-
-
-class DataModelAttributeSemantic(models.Model):
-    name = models.CharField(max_length = 255)
-    filter = models.CharField(max_length = 255, null=True, blank=True)
-    related_table_name = models.ForeignKey(DataModelAttributeTable, null=True, blank=True)
-    
-    def __str__(self):
-        return self.name
+class Infrastructure(models.Model):
+    name=models.CharField(max_length=255)
     
 class DataModelAttribute(models.Model):
     data_model = models.ForeignKey('DataModel', related_name="attributes")
     name = models.CharField(max_length=255)
-    type = models.CharField(max_length=255, choices=(("int","Integer"),("str","String"),("float","Float"),("bool","Boolean"),("list", "List")) )
+    type = models.CharField(max_length=255, choices=(("int","Integer"),("str","String"),("float","Float"),("bool","Boolean"),("owner", "Owner"),("infrastructure", "Infrastructure")) )
     private = models.BooleanField(default=False)
-    semantic = models.ForeignKey(DataModelAttributeSemantic, null=True, blank=True)
     
     
     def __str__(self):
