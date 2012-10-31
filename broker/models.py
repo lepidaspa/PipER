@@ -185,7 +185,7 @@ class Metadata(models.Model):
         return str(self.proxy) + ":"+ self.name
 
 class MetadataRefreshTime(models.Model):
-    metadata = models.ForeignKey(Proxy)
+    metadata = models.ForeignKey(Proxy, related_name="timing")
     crontab = models.TextField(default="0 1 * * SAT")
     
     def __str__(self):

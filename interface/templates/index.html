@@ -32,14 +32,14 @@
 			}
 			nav {
 				display: block;
-				width: 40px;
+				width: 30px;
 				background-color: #f80;
 				left: 0;
 				position: absolute;
 				top: 50px;
 			}
 			#map {
-				left: 390px;
+				left: 380px;
 				position: absolute;
 			}
 			#fider-logo {
@@ -66,13 +66,13 @@
 			.nav_btn {
 				font-family: "WebSymbolsRegular";
 				display: block;
-				width: 40px;
-				height: 40px;
+				width: 30px;
+				height: 30px;
 				float: left;
 				background-repeat: no-repeat;
 				text-align: center;
 				vertical-align: middle;
-				font-size: x-large;
+				font-size: large;
 				cursor: default;
 			}
 			
@@ -81,9 +81,9 @@
 			}
 			.nav_btn span {
 				position: relative;
-				top: 5px;
+				top: 2px;
 				cursor: default;
-				text-shadow:1px 1px 3px black;
+				text-shadow:1px 1px 1px black;
 			}
 			.nav_btn.selected {
 				background-color: #fc8;
@@ -104,7 +104,7 @@
 			}
 			.panel {
 				position: absolute;
-				left: 40px;
+				left: 30px;
 				top: 50px;
 				width: 350px;
 				display: block;
@@ -112,9 +112,9 @@
 				background-color: #FFC887;
 			}
 			.title {
-				height: 40px;
+				height: 48px;
 				display: block;
-				font-size: 16px;
+				font-size: 23px;
 				padding-left: 4px;
 			}
 			.title span {
@@ -152,7 +152,9 @@
 			.small_in{
 				width:20%;
 			}
-			
+			.filter_active{
+				color:red;
+			}
 			select[multiple="true"]{
 				display:block;
 				width:100%;
@@ -455,8 +457,8 @@
 				var width = $(window).width() - $('nav').width()-$('.panel').width();
 				var height = $(window).height() - $('header').height() - $('footer').height() - 10;
 				$('#map').width(width);
-				$('nav').height(height);
 				$('#map').height(height);
+				$('nav').height(height);
 				$('.panel').height(height);
 				$('footer').css('top', $(window).height() - $('header').height() - 10 - $('footer').height());
 				$('.subpanel').css('max-height', $(window).height()-$('footer').height()-1-$('header').height()-40);
@@ -762,6 +764,8 @@
 					$('.panel').hide();
 					$('.panel.' + $(this).attr('id')).show();
 				}
+				FIdER.status.propopen = false;
+				FIdER.status.biopen = false;
 				
 				FIdER.select_multi_control.deactivate();
 				FIdER.select_one_control.deactivate();
@@ -1378,6 +1382,8 @@
 						$('.all_multi').click();
 						
 						FIdER.status.query = prepare_query();
+						FIdER.status.old_query = prepare_query();
+						
 					});
 				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
 				
@@ -1394,6 +1400,10 @@
 				$('#do_search_btn').click(function(){
 						
 						FIdER.status.query = prepare_query();
+						if ($.stringifyJSON(FIdER.status.query) == $.stringifyJSON(FIdER.status.old_query))
+							$('#search_btn').removeClass('filter_active');
+						else
+							$('#search_btn').addClass('filter_active');
 						refresh_sight();
 						FIdER.vector_layer.redraw();
 				});
@@ -1512,7 +1522,7 @@
 				<span>C</span>
 			</div>
 			<div class="nav_btn" id="search_btn" title="Filtro">
-				<span>L</span>
+				<span>&sup1;</span>
 			</div>
 			<div class="nav_btn" id="properties_btn" title="Propriet&agrave;">
 				<span>,</span>
