@@ -12,6 +12,9 @@ class Command(BaseCommand):
     help = 'Gets data from the remotes'
 
     def handle(self, *args, **options):
-        tok = args[0]
-        meta = args[1]
+        tok = None
+        meta = None
+        if len(args) > 0:
+            tok = args[0]
+            meta = args[1]
         clear_db(tok, meta)
