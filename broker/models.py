@@ -128,7 +128,7 @@ def all_prox():
                 mj['id'] = meta.id
                 mj['name'] = meta.name
                 mj['active'] = meta.active
-                mj['crondata'] = meta.timing.crontab
+                mj['crondata'] = meta.proxy.timing.crontab
                 pj['meta'].append(mj)
             oj['data'].append(pj)
         if oj['global_count'] != 0 :
