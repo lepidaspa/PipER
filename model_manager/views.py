@@ -36,7 +36,7 @@ def _get_model_secondary(request):
             data[model.name]['objtype'] = model.geo_type
             data[model.name]['federated'] = model.federated 
             
-            data[model.name]['super'] = model.container.name if model.container is not None else model.name 
+            data[model.name]['super'] = model.name  
             if model.within is not None:
                 data[model.name]['container'] = model.within.name
                 
