@@ -1,14 +1,10 @@
 from django.db import models
     
-class DataModelContainer(models.Model):
-    
-    def __str__(self):
-        return str(self.id)
 
 class DataModel(models.Model):
     #type = models.CharField(max_length=50, choices=[('point', 'Point'),(''),()])
     name = models.CharField(max_length=255)
-    container = models.ForeignKey('DataModelContainer', related_name="models")
+    container = models.ForeignKey('DataModel', related_name="models", blank=True, null=True)
     federated = models.BooleanField(default=False)
     within = models.ForeignKey('DataModel', related_name="contains", null=True, blank=True)
     geo_type = models.CharField(max_length=255, choices=(("Point","Punctual"),("LineString","Linear")))
