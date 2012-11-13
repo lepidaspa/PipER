@@ -27,9 +27,15 @@ def _get_model(request):
         
 
 def _get_model_secondary(request):
+    models = request.REQUEST.get('models', [])
+    if models == []:
+        models = DataModel.objects.all()
+    else:
+        models = models.split('|')
+        models = DataModel.objects.filter(name__in=models)
     data = {}
     m = request.REQUEST.get('m', None)
-    for model in DataModel.objects.all():
+    for model in models:
         if (m is not None and m == model.name) or m is None:
             data[model.name] = {}
             data[model.name]['name'] = model.name
