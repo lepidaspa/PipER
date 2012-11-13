@@ -998,16 +998,17 @@
 			});
 
 			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled")' ).live('click', function() {
+				
+        		$('#properties_panel .subpanel .content').empty();
+                $('#bi_panel .subpanel .content').empty();
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
 					//$('.panel').hide();
 					$('#info_btn').click();
-				FIdER.select_one_control.unselectAll();
-				FIdER.select_one_control.deactivate();
-				FIdER.select_multi_control.unselectAll();
-				FIdER.select_multi_control.deactivate();
-				$('#bi_panel .subpanel .content').empty();
-				$('#properties_panel .subpanel .content').empty();
+					FIdER.select_one_control.unselectAll();
+					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control.unselectAll();
+					FIdER.select_multi_control.deactivate();
 				} else {
 					$('.nav_btn').removeClass('selected');
 					$(this).addClass('selected');
