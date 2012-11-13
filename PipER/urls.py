@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^request/Tmodel$', 'model_manager.views._get_model'),
     url(r'^request/Tgetmodel$', 'model_manager.views.get_model_secondary'),
     url(r'^request/getmodel$', 'model_manager.views._get_model_secondary'),
+    url(r'^request/getinfrastructures$', 'model_manager.views.get_infrastructures'),
+    url(r'^request/addinfrastructures$', 'model_manager.views.add_infrastructure'),
     url(r'^submit/manifest', 'interface.views.approve_manifest'),
     url(r'^federation/new/helo', 'interface.views.start_token'),
     
