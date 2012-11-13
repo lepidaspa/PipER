@@ -701,7 +701,7 @@
 			+','+coords.lon+'&sensor=false';
 			
 			
-			
+				gdata = "";
 			    $.ajax({
 			    	method:"GET",
 			    	url:path, 
@@ -715,13 +715,13 @@
 					            {
 					
 					                //console.log("Results found");
-					                var locstring = gqdata['results'][0]['formatted_address'];
+					                gdata = gqdata['results'][0]['formatted_address'];
 					                
-					                array[attname ] =locstring;
 					            }
 					        }
 					    }
 			    });
+			    return gdata;
 			}
 			
 			 function ConvertToCSV(objArray) {
