@@ -685,8 +685,7 @@
 			     */
 			
 			    var coords = new OpenLayers.LonLat(featuregeom.x,
-			featuregeom.y).transform(mapview.getProjectionObject(), new
-			OpenLayers.Projection(proj_WGS84));
+			featuregeom.y).transform(FIdER.map.getProjectionObject(), FIdER.projections.wgs84);
 			
 			
 			    //console.log("Trying reverse geocoding for coordinates");
