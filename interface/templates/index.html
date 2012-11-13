@@ -969,16 +969,24 @@
 				$.get(d, function(data){
 					$.getJSON('/broker/getproxies', function(pdata){
 					
-					$('#admin_proxies').empty();
-					$('#user_proxies').empty();
-					for (owner in pdata){
+						$('#admin_proxies').empty();
+						$('#user_proxies').empty();
+						for (owner in pdata){
+							
+							$('#admin_proxies').append(ich.aproxy(pdata[owner]));
+							up = ich.uproxy(pdata[owner]);
+							$('#user_proxies').append(up);
 						
-						$('#admin_proxies').append(ich.aproxy(pdata[owner]));
-						up = ich.uproxy(pdata[owner]);
-						$('#user_proxies').append(up);
+						}
+					});
 					
-					}
-				});
+					$.getJSON('/request/getinfrastructures',function(idata){
+						itm = $('<div></div>');
+						for (i in idata){
+							$('#infras_list').append(itm.clone().text(idata[i]));	
+						}
+						
+					})
 				});
 			});
 			
@@ -1849,8 +1857,11 @@
 					<div class="tools_list">
 						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
 					</div>
+				<div class="content" id="infras_list">
+					
+				</div>
 				<div class="content">
-					<a id="fwp_link" href="//5.144.184.146/fwp/">Vai alla Piattaforma di Gestione dei Proxy</a>
+					<a id="fwp_link" href="//5.144.184.146/fwp/selng/">Vai alla Piattaforma di Gestione dei Proxy</a>
 				</div>
 				<div class="title">
 					<span>Strumenti - Proxy</span>
