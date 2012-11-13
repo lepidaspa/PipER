@@ -32,7 +32,7 @@ def _get_model_secondary(request):
         if (m is not None and m == model.name) or m is None:
             data[model.name] = {}
             data[model.name]['name'] = model.name
-            data[model.name]['objtype'] = model.type
+            data[model.name]['objtype'] = model.geo_type
             data[model.name]['properties'] = {}
             for attribute in model.attributes:
                 data[model.name]['properties'][str(attribute)] = attribute.type
