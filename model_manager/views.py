@@ -35,7 +35,12 @@ def _get_model_secondary(request):
             data[model.name]['objtype'] = model.geo_type
             data[model.name]['properties'] = {}
             for attribute in model.attributes.all():
-                data[model.name]['properties'][str(attribute)] = attribute.type
+                if attribute.type == 'owner':
+                    data[model.name]['properties'][str(attribute)] = str([ str(o) for o in Owner.objects.all()])
+                elif attribute.type == 'infrastructure':
+                    data[model.name]['properties'][str(attribute)] = str([ str(o) for o in Infrastructure.objects.all()])
+                else:
+                    data[model.name]['properties'][str(attribute)] = attribute.type
     return HttpResponse(json.dumps(data), mimetype="application/json")
         
     
