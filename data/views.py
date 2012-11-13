@@ -77,7 +77,7 @@ def run_query(bb, query):
     elements = collection.find({ "_center.coordinates" : { "$within" : { "$polygon" : poly } } })
     els = []
     for el in elements:
-        del el['_id']
+        el['_id'] = str(el['_id'])
         els.append(el)
     response = {
         "type": "FeatureCollection",

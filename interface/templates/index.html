@@ -413,44 +413,58 @@
 			</div>
 		</script>
 		<script>
-		jQuery.extend({
-    stringifyJSON  : function stringify(obj) {         
-        if ("JSON" in window) {
-            return JSON.stringify(obj);
-        }
-
-        var t = typeof (obj);
-        if (t != "object" || obj === null) {
-            // simple data type
-            if (t == "string") obj = '"' + obj + '"';
-
-            return String(obj);
-        } else {
-            // recurse array or object
-            var n, v, json = [], arr = (obj && obj.constructor == Array);
-
-            for (n in obj) {
-                v = obj[n];
-                t = typeof(v);
-                if (obj.hasOwnProperty(n)) {
-                    if (t == "string") {
-                        v = '"' + v + '"';
-                    } else if (t == "object" && v !== null){
-                        v = jQuery.stringify(v);
-                    }
-
-                    json.push((arr ? "" : '"' + n + '":') + String(v));
-                }
-            }
-
-            return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
-        }
-    }
-});
+			jQuery.extend({
+			    stringifyJSON  : function stringify(obj) {         
+			        if ("JSON" in window) {
+			            return JSON.stringify(obj);
+			        }
+			
+			        var t = typeof (obj);
+			        if (t != "object" || obj === null) {
+			            // simple data type
+			            if (t == "string") obj = '"' + obj + '"';
+			
+			            return String(obj);
+			        } else {
+			            // recurse array or object
+			            var n, v, json = [], arr = (obj && obj.constructor == Array);
+			
+			            for (n in obj) {
+			                v = obj[n];
+			                t = typeof(v);
+			                if (obj.hasOwnProperty(n)) {
+			                    if (t == "string") {
+			                        v = '"' + v + '"';
+			                    } else if (t == "object" && v !== null){
+			                        v = jQuery.stringify(v);
+			                    }
+			
+			                    json.push((arr ? "" : '"' + n + '":') + String(v));
+			                }
+			            }
+			
+			            return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+			        }
+			    }
+			});
+		</script>
+		<script>
+		    $.extend($.fn.disableTextSelect = function() {
+		        return this.each(function(){
+		            if($.browser.mozilla){
+		                $(this).css('MozUserSelect','none');
+		            }else if($.browser.msie){
+		                $(this).bind('selectstart',function(){return false;});
+		            }else{
+		                $(this).mousedown(function(){return false;});
+		            }
+		        });
+		    });
 		</script>
 		<script>
 			FIdER = {};
 			OpenLayers.ImgPath = "https://github.com/sirmmo/openlayers_themes/raw/master/dark/";
+			OpenLayers.ProxyHost = "/external/";
 
 			//refresh function for resize and startup
 			FIdER.refresh = function() {
@@ -470,7 +484,7 @@
 			FIdER.projections.google = new OpenLayers.Projection("EPSG:900913");
 			FIdER.projections.wgs84 = new OpenLayers.Projection("EPSG:4326");
 			FIdER.projections.ed50 = new OpenLayers.Projection("EPSG:900913");
-
+	
 			//starting point
 			FIdER.start = new OpenLayers.Bounds();
 			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
@@ -652,6 +666,67 @@
 			  return result;
 			}
             
+            
+            
+			function reverseGeoSearch (featuregeom, writetoid)
+			{
+			    /*
+			
+			http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true_or_false
+			     */
+			
+			    var coords = new OpenLayers.LonLat(featuregeom.x,
+			featuregeom.y).transform(mapview.getProjectionObject(), new
+			OpenLayers.Projection(proj_WGS84));
+			
+			
+			    //console.log("Trying reverse geocoding for coordinates");
+			    //console.log(coords);
+			
+			    //console.log("Writing result to ID");
+			    //console.log(writetoid);
+			
+			    var dest = $("#"+writetoid);
+			    //console.log(dest);
+			
+			    var path =
+			'/external/maps.googleapis.com/maps/api/geocode/json?latlng='+coords.lat
+			+','+coords.lon+'&sensor=false';
+			
+			
+			
+			    $.getJSON(path, function(gqdata)
+			    {
+			        //console.log(gqdata);
+			        if(gqdata.status == "OK")
+			        {
+			            if (gqdata.results.length > 0)
+			            {
+			
+			                //console.log("Results found");
+			                var locstring =
+			gqdata['results'][0]['formatted_address'];
+			                dest.append(locstring);
+			            }
+			            else
+			            {
+			                //console.log("No results found");
+			                dest.html("(posizione sconosciuta)");
+			            }
+			        }
+			        else
+			        {
+			            //console.log("Transmission error");
+			            dest.html("(posizione non disponibile)");
+			        }
+			    });
+			
+			
+			
+			}
+
+            
+            
             function do_show_features(){
             		FIdER.block_selections = false;
             		pa = [];
@@ -659,19 +734,21 @@
 	                	for (var e in FIdER.vector_layer.selectedFeatures[0].attributes)
 	                		pa.push({'key':e, 'value':FIdER.vector_layer.selectedFeatures[0].attributes[e]});
 	                		
-	                	pa.push({'key':'Lunghezza', "value":FIdER.vector_layer.selectedFeatures[0].geometry.getLength()})
-	                	xxte =  {"attributes":pa, "id":FIdER.vector_layer.selectedFeatures[0].id.replace(/\./g,'_')};
-	                    $('#properties_panel .subpanel .content').empty();
-	                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
-	                    $('#properties_panel .subpanel .content').show();
+		                	pa.push({'key':'Lunghezza', "value":FIdER.vector_layer.selectedFeatures[0].geometry.getLength()})
+		                	xxte =  {"attributes":pa, "id":FIdER.vector_layer.selectedFeatures[0].id.replace(/\./g,'_')};
+		                    $('#properties_panel .subpanel .content').empty();
+		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
+		                    $('#properties_panel .subpanel .content').show();
+		                    
+	                    
 	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
 	                	
 	                	total_length = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
 	                	distinct_line_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
 	                	distinct_point_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
-	                	distinct_owners = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(",");
-	                	distinct_data = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(",");
-	                	distinct_infra = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(",");
+	                	distinct_owners = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(", ");
+	                	distinct_data = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(", ");
+	                	distinct_infra = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(", ");
 	                	xxte = {
 	                		'attributes':[
 	                			{
@@ -705,19 +782,13 @@
 	                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#bi_panel .subpanel .content').show();
 	                    
-	                   
-    					 
 	                }
 	                FIdER.selected_items = FIdER.vector_layer.selectedFeatures;
             }
 			
-			//FIdER.features = new OpenLayers.
 
-			//global events
 			$(window).resize(FIdER.refresh);		
 
-			//ux events
-			
 			$('.ref_proxy').live('click', function(){
 				d = $(this).data('toggle_url');
 				$.get(d, function(data){
@@ -750,7 +821,7 @@
 			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled")' ).live('click', function() {
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
-					$('.panel').hide();
+					//$('.panel').hide();
 					$('#info_btn').click();
 				FIdER.select_one_control.unselectAll();
 				FIdER.select_one_control.deactivate();
@@ -770,6 +841,8 @@
 				FIdER.select_multi_control.deactivate();
 				FIdER.select_one_control.deactivate();
 			});
+			
+			$('.nav_btn').disableTextSelect();//No text selection on elements with a class of 'noSelect'
 
 			
 			$('.query_element').live('change', function(){

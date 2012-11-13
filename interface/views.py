@@ -164,15 +164,23 @@ def proxy(request, path):
         import httplib2
         conn = httplib2.Http()
 
+        ssl = False
         
         url = path
+        limit = 7
+        if(url[0:4] == "http" and url[6] == "/"):
+            if(url[4] == "s"):
+                ssl = True
+                limit = 8
+            url = url[limit:]
+                
 
         if request.method == 'GET':
                 url_ending = '%s?%s' % (url, request.GET.urlencode())
-                url = "http://" + url_ending
+                url = "http://" if not ssl else "https://" + url_ending
                 response, content = conn.request(url, request.method)
         elif request.method == 'POST':
-                url = "http://" + url
+                url = "http://" if not ssl else "https://" + url
                 data = request.POST.urlencode()
                 response, content = conn.request(url, request.method, data)
         return HttpResponse(content, status = int(response['status']), mimetype = response['content-type'])
