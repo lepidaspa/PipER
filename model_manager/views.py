@@ -34,6 +34,12 @@ def _get_model_secondary(request):
             data[model.name] = {}
             data[model.name]['name'] = model.name
             data[model.name]['objtype'] = model.geo_type
+            data[model.name]['federated'] = model.federated 
+            
+            data[model.name]['super'] = model.container.name if model.container is not None else model.name 
+            if model.within is not None:
+                data[model.name]['container'] = model.within.name
+                
             data[model.name]['properties'] = {}
             for attribute in model.attributes.all():
                 if attribute.type == 'owner':
