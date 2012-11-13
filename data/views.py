@@ -38,7 +38,7 @@ def put_data(proxy, data):
     collection = db['elements']
     
     db.elements.create_index([('_center.coordinates',GEO2D)])
-    db.elements.create_index([('_metadata')])
+    db.elements.create_index('_metadata')
     
     #do coorections on data wwith specific elements...
     #avoid duplicates
