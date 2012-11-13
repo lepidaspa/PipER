@@ -895,6 +895,8 @@
             function do_show_features(){
             		FIdER.block_selections = false;
             		pa = [];
+            		$('#properties_panel .subpanel .content').empty();
+	                $('#bi_panel .subpanel .content').empty();
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 	                	for (var e in FIdER.vector_layer.selectedFeatures[0].attributes)
 	                		if (!e.startsWith('_')){
@@ -1847,6 +1849,9 @@
 		<div id="sett_panel" class="panel settings_btn">
 			<div class="subpanel">
 				
+				<div class="content">
+					<a id="fwp_link" href="//5.144.184.146/fwp/selng/">Vai alla Piattaforma di Gestione dei Proxy</a>
+				</div>
 				<div class="title">
 					<span>Esportazione</span>
 				</div>
@@ -1855,16 +1860,13 @@
 					<a class="btn disabled" id="export_image" title="Esporta Immagine" download="Export">I</a>	
 				</div>
 				<div class="title">
-					<span>Impostazioni</span>
+					<span>Strumenti - Infastrutture</span>
 				</div>
 					<div class="tools_list">
 						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
 					</div>
 				<div class="content" id="infras_list">
 					
-				</div>
-				<div class="content">
-					<a id="fwp_link" href="//5.144.184.146/fwp/selng/">Vai alla Piattaforma di Gestione dei Proxy</a>
 				</div>
 				<div class="title">
 					<span>Strumenti - Proxy</span>
