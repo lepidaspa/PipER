@@ -78,6 +78,7 @@ def run_query(bb, query):
     els = []
     for el in elements:
         el['properties']['_id'] = str(el['_id'])
+        del el['_id']
         els.append(el)
     response = {
         "type": "FeatureCollection",
