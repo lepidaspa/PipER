@@ -601,12 +601,7 @@
 					$('.panel').hide();
 			};
 			
-			$(document).keydown(function(e) {
-			    // ESCAPE key pressed
-			    if (e.keyCode == 27) {
-			    	alert('ESC!');
-			    }
-			});
+
 			FIdER.vector_layer.events.on({
                 'featureselected': show_features,
                 'featureunselected': show_features
@@ -1393,6 +1388,7 @@
 			}
 			
 			function reselect(){
+				FIdER.selected_items = Enumerable.From(FIdER.selected_items).Distinct().ToArray();
 				for (fed in FIdER.vector_layer.features)
 					for (fid in FIdER.selected_items){
 						if (FIdER.selected_items[fid].attributes._id == FIdER.vector_layer.features[fed].attributes._id)
