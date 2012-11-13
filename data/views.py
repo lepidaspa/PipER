@@ -38,7 +38,7 @@ def put_data(proxy, data):
     collection = db['elements']
     
     db.elements.create_index([('_center.coordinates',GEO2D)])
-    db.elements.create_index([('_metadata')])
+    db.elements.create_index('_metadata')
     
     #do coorections on data wwith specific elements...
     #avoid duplicates
@@ -77,7 +77,7 @@ def run_query(bb, query):
     elements = collection.find({ "_center.coordinates" : { "$within" : { "$polygon" : poly } } })
     els = []
     for el in elements:
-        del el['_id']
+        el['_id'] = str(el['_id'])
         els.append(el)
     response = {
         "type": "FeatureCollection",
