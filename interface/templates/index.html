@@ -980,13 +980,7 @@
 						}
 					});
 					
-					$.getJSON('/request/getinfrastructures',function(idata){
-						itm = $('<div></div>');
-						for (i in idata){
-							$('#infras_list').append(itm.clone().text(idata[i]));	
-						}
-						
-					});
+					
 				});
 			});
 			
@@ -1622,7 +1616,15 @@
 						
 					});
 				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
-				
+					
+					$.getJSON('/request/getinfrastructures',function(idata){
+						itm = $('<div></div>');
+						for (i in idata){
+							$('#infras_list').append(itm.clone().text(idata[i]));	
+						}
+						
+					});
+					
 					$('#info_btn').click();
 				});
 				
