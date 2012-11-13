@@ -720,9 +720,6 @@
 			            dest.html("(posizione non disponibile)");
 			        }
 			    });
-			
-			
-			
 			}
 			
 			 function ConvertToCSV(objArray) {
@@ -770,6 +767,7 @@
 				content = zip.generate();
 				console.log(content);
 				var a = $('#export_csv');
+				a.removeClass('disabled')
 				a.attr('href', "data:application/zip;base64," + content);				
 			}
             
