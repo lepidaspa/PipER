@@ -20,7 +20,7 @@ def _get_model(request):
         if (m is not None and m == model.name) or m is None:
             data[model.name] = {}
             #data[model.name]['_type'] = model.type
-            for attribute in model.attributes:
+            for attribute in model.attributes.all():
                 data[model.name][str(attribute)] = attribute.type
     return HttpResponse(json.dumps(data), mimetype="application/json")
         
@@ -34,7 +34,7 @@ def _get_model_secondary(request):
             data[model.name]['name'] = model.name
             data[model.name]['objtype'] = model.geo_type
             data[model.name]['properties'] = {}
-            for attribute in model.attributes:
+            for attribute in model.attributes.all():
                 data[model.name]['properties'][str(attribute)] = attribute.type
     return HttpResponse(json.dumps(data), mimetype="application/json")
         
