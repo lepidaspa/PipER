@@ -724,8 +724,54 @@
 			
 			
 			}
+			
+			 function ConvertToCSV(objArray) {
+	            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+	            var str = '';
+	
+	            for (var i = 0; i < array.length; i++) {
+	                var line = '';
+	                for (var index in array[i]) {
+	                    if (line != '') line += ','
+	
+	                    line += array[i][index];
+	                }
+	
+	                str += line + '\r\n';
+	            }
+	
+	            return str;
+	        }
 
-            
+            function prepare_csv_export(bi_data){
+				lines = [];
+				points = [];
+				var zip = new JSZip();
+				
+				points_csv = [];
+				lines_csv = [];
+				bi = []
+										
+				for (i in FIdER.vector_layer.selectedFeatures){
+					feat = FIdER.vector_layer.selectedFeatures[i];
+					if (feat.geometry.toString().split('(')[0] == "POINT")
+						lines_csv.push(feat.attributes);
+					else
+						points_csv.push(feat.attributes);
+				}
+				
+				lines = ConvertToCSV(lines_csv);
+				points = ConvetToCSV(points_csv);
+				bi = ConvertToCSV(bi_data);
+				zip.file("linear.csv", lines);
+				zip.file("punctual.csv", points);
+				zip.file("BI.csv", bi);
+				
+				content = zip.generate();
+				console.log(content);
+				var a = $('#export_csv');
+				a.attr('href', "data:application/zip;base64," + content);				
+			}
             
             function do_show_features(){
             		FIdER.block_selections = false;
@@ -782,6 +828,8 @@
 	                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#bi_panel .subpanel .content').show();
 	                    
+	                    
+	                    prepare_csv_export(xxte.attributes)
 	                }
 	                FIdER.selected_items = FIdER.vector_layer.selectedFeatures;
             }
