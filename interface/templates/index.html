@@ -1213,8 +1213,8 @@
 				show_models(null);
 			});
 			$('.p_settings').live('click', function(){
-				
-				ich.proxysettings().dialog({
+				data = $(this).data('settings');
+				ich.proxysettings({'crondata':data}).dialog({
 					title:"Impostazioni proxy",
 					resizable:false,
 					width:350,
