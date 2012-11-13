@@ -462,6 +462,15 @@
 		    });
 		</script>
 		<script>
+			if (typeof String.prototype.startsWith != 'function') {
+			  // see below for better implementation!
+			  String.prototype.startsWith = function (str){
+			    return this.indexOf(str) == 0;
+			  };
+			}
+			
+		</script>
+		<script>
 			FIdER = {};
 			OpenLayers.ImgPath = "https://github.com/sirmmo/openlayers_themes/raw/master/dark/";
 			OpenLayers.ProxyHost = "external/";
@@ -900,8 +909,9 @@
             		pa = [];
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 	                	for (var e in FIdER.vector_layer.selectedFeatures[0].attributes)
-	                		pa.push({'key':e, 'value':FIdER.vector_layer.selectedFeatures[0].attributes[e]});
-	                		
+	                		if (!e.startsWith('_')){
+	                			pa.push({'key':e, 'value':FIdER.vector_layer.selectedFeatures[0].attributes[e]});
+	                		}
 		                	pa.push({'key':'Lunghezza', "value":FIdER.vector_layer.selectedFeatures[0].geometry.getLength()})
 		                	xxte =  {"attributes":pa, "id":FIdER.vector_layer.selectedFeatures[0].id.replace(/\./g,'_')};
 		                    $('#properties_panel .subpanel .content').empty();
