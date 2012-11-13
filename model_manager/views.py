@@ -9,6 +9,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
 from model_manager.models import *
+from broker.models import *
 
 def index(request):
     return render_to_response('model_index.html')
