@@ -320,7 +320,7 @@
 								<span class="ref_proxy btn right  c_gre" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %} " title="Attiva">+</span>
 								{% templatetag openvariable %}/active{% templatetag closevariable %}
 							</td>
-							<td width="28px"><span class="p_settings btn right c_grey" title="Impostazioni">S</span></td>
+							<td width="28px"><span data-settings="{% templatetag openvariable %}crondata{% templatetag closevariable %}" class="p_settings btn right c_grey" title="Impostazioni">S</span></td>
 						</tr>
 					{% templatetag openvariable %}/meta{% templatetag closevariable %}
 					</table>
@@ -1213,18 +1213,19 @@
 				show_models(null);
 			});
 			$('.p_settings').live('click', function(){
-					ich.proxysettings().dialog({
-						title:"Impostazioni proxy",
-						resizable:false,
-						width:350,
-						buttons:{
-							'OK':function(){
-							},
-							'Annulla':function(){
-								$( this ).dialog( "destroy" );
-							}
+				
+				ich.proxysettings().dialog({
+					title:"Impostazioni proxy",
+					resizable:false,
+					width:350,
+					buttons:{
+						'OK':function(){
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
 						}
-					});	
+					}
+				});	
 			});
 			
 			
