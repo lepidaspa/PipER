@@ -185,7 +185,7 @@ def get_model_secondary (request):
 def get_infrastructures(request):
     return HttpResponse(json.dumps([str(i) for i in Infrastructure.objects.all()]), mimetype="application/json")
 
-def add_infrastructures(request):
+def add_infrastructure(request):
     ii = request.REQUEST.get('i')
     i = Infrastructure()
     i.name = ii
