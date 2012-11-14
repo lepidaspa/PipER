@@ -1565,7 +1565,7 @@
 					//Base Maps
 					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
 						type : google.maps.MapTypeId.SATELLITE,
-						numZoomLevels : 22
+						numZoomLevels : 20
 					}));
 					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Physical", {
 						type : google.maps.MapTypeId.TERRAIN,
@@ -1577,7 +1577,7 @@
 					}));
 					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Hybrid", {
 						type : google.maps.MapTypeId.HYBRID,
-						numZoomLevels : 22,
+						numZoomLevels : 20,
 						visibility : false
 					}));
 					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
@@ -1587,7 +1587,8 @@
 					FIdER.map.addLayer(FIdER.vector_layer);
 					FIdER.map.addLayer(FIdER.bbox_layer);
 					FIdER.map.addLayer(FIdER.track_layer);
-
+					FIdER.map.addLayer(FIdER.hover_layer);
+					
 					FIdER.map.setLayerIndex(FIdER.track_layer, 90);
 					FIdER.map.setLayerIndex(FIdER.bbox_layer, 100);
 					FIdER.map.setLayerIndex(FIdER.bg_layer, 1000);
