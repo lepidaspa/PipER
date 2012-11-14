@@ -897,20 +897,21 @@
             		pa = [];
             		$('#properties_panel .subpanel .content').empty();
 	                $('#bi_panel .subpanel .content').empty();
+	                ss = Enumerator.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
-	                	for (var e in FIdER.vector_layer.selectedFeatures[0].attributes)
+	                	for (var e in ss[0].attributes)
 	                		if (!e.startsWith('_')){
-	                			pa.push({'key':e, 'value':FIdER.vector_layer.selectedFeatures[0].attributes[e]});
+	                			pa.push({'key':e, 'value':ss[0].attributes[e]});
 	                		}
-		                	pa.push({'key':'Lunghezza', "value":FIdER.vector_layer.selectedFeatures[0].geometry.getLength()});
-		                	if (FIdER.vector_layer.selectedFeatures[0].geometry.getLength() == 0)
-		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(FIdER.vector_layer.selectedFeatures[0].geometry)});
+		                	pa.push({'key':'Lunghezza', "value":ss[0].geometry.getLength()});
+		                	if (ss[0].geometry.getLength() == 0)
+		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[0].geometry)});
 		                	else{
-		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(FIdER.vector_layer.selectedFeatures[0].geometry.components[0])});
-		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(FIdER.vector_layer.selectedFeatures[0].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[0].geometry.components[0])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}
 		                	
-		                	xxte =  {"attributes":pa, "id":FIdER.vector_layer.selectedFeatures[0].id.replace(/\./g,'_')};
+		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_')};
 		                    $('#properties_panel .subpanel .content').empty();
 		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 		                    $('#properties_panel .subpanel .content').show();
@@ -918,12 +919,12 @@
 	                    
 	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
 	                	
-	                	total_length = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
-	                	distinct_line_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
-	                	distinct_point_count = Enumerable.From(FIdER.vector_layer.selectedFeatures).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
-	                	distinct_owners = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(", ");
-	                	distinct_data = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(", ");
-	                	distinct_infra = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(", ");
+	                	total_length = Enumerable.From(ss).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
+	                	distinct_line_count = Enumerable.From(ss).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
+	                	distinct_point_count = Enumerable.From(ss).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
+	                	distinct_owners = Enumerable.From(ss).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(", ");
+	                	distinct_data = Enumerable.From(ss).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(", ");
+	                	distinct_infra = Enumerable.From(ss).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(", ");
 	                	xxte = {
 	                		'attributes':[
 	                			{
@@ -960,7 +961,7 @@
 	                    
 	                    prepare_csv_export(xxte.attributes)
 	                }
-	                FIdER.selected_items = FIdER.vector_layer.selectedFeatures;
+	                FIdER.selected_items = ss;
             }
 			
 
