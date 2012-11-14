@@ -52,7 +52,7 @@ class DataModelAttribute(models.Model):
     
     
     def __str__(self):
-        return "%s%s" % ("_" if self.private else "", self.name,) 
+        return "%s" % (self.name,) 
     
     
 
