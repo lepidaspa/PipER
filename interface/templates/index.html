@@ -898,7 +898,7 @@
             		$('#properties_panel .subpanel .content').empty();
 	                $('#bi_panel .subpanel .content').empty();
 	                ss = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
-                	if (FIdER.vector_layer.selectedFeatures.length == 1){
+                	if (ss.length == 1){
 	                	for (var e in ss[0].attributes)
 	                		if (!e.startsWith('_')){
 	                			pa.push({'key':e, 'value':ss[0].attributes[e]});
@@ -958,6 +958,25 @@
 	                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
 	                    $('#bi_panel .subpanel .content').show();
 	                    
+	                    for (aa in ss){
+	                    	pa = [];
+	                    	
+		                    for (var e in ss[a].attributes)
+		                		if (!e.startsWith('_')){
+		                			pa.push({'key':e, 'value':ss[a].attributes[e]});
+		                		}
+		                	pa.push({'key':'Lunghezza', "value":ss[a].geometry.getLength()});
+		                	if (ss[a].geometry.getLength() == 0)
+		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[a].geometry)});
+		                	else{
+		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[a].geometry.components[0])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[a].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                	}
+		                	
+		                	axxte =  {"attributes":pa, "id":ss[a].id.replace(/\./g,'_')};
+		                    
+			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
+	                    }
 	                    
 	                    prepare_csv_export(xxte.attributes)
 	                }
@@ -1272,10 +1291,10 @@
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
 				FIdER.selected_items = [];
-				FIdER.select_one_control.unselectAll();
+				//FIdER.select_one_control.unselectAll();
 				FIdER.select_multi_control.unselectAll();
 				
-    					$('#export_csv').addClass('disabled');
+    			$('#export_csv').addClass('disabled');
 			});
 			
 			$('#clear_selection_t').live('click', function(){
