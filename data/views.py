@@ -77,7 +77,7 @@ def run_query(bb, query):
     elements = collection.find({ "_center.coordinates" : { "$within" : { "$polygon" : poly } } })
     els = []
     for el in elements:
-        el['properties']['_id'] = str(el['_id'])
+        el['properties']['IDPiper'] = str(el['_id'])
         del el['_id']
         els.append(el)
     response = {
