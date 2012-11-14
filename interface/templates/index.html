@@ -1270,8 +1270,11 @@
 			
 			$('.attribs_element').live('mouseover', function(){
 				id = $(this).data('innerid');
+				ii = FIdER.vector_layer.getFeaturesByAttribute('IDPiper', id)[0];
+				FIdER.hover_layer.addFeatures([ii.clone()]);
 			}).live('mouseout', function(){
-				
+				id = $(this).data('innerid');
+				FIdER.hover_layer.removeAllFeatures();
 			});
 			
 			
