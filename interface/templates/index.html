@@ -961,19 +961,19 @@
 	                    for (aa in ss){
 	                    	pa = [];
 	                    	
-		                    for (var e in ss[a].attributes)
+		                    for (var e in ss[aa].attributes)
 		                		if (!e.startsWith('_')){
-		                			pa.push({'key':e, 'value':ss[a].attributes[e]});
+		                			pa.push({'key':e, 'value':ss[aa].attributes[e]});
 		                		}
-		                	pa.push({'key':'Lunghezza', "value":ss[a].geometry.getLength()});
-		                	if (ss[a].geometry.getLength() == 0)
-		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[a].geometry)});
+		                	pa.push({'key':'Lunghezza', "value":ss[aa].geometry.getLength()});
+		                	if (ss[aa].geometry.getLength() == 0)
+		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
 		                	else{
-		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[a].geometry.components[0])});
-		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[a].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}
 		                	
-		                	axxte =  {"attributes":pa, "id":ss[a].id.replace(/\./g,'_')};
+		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_')};
 		                    
 			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
 	                    }
