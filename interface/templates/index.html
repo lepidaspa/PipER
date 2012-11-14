@@ -990,7 +990,7 @@
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}*/
 		                	
-		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_')};
+		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper};
 		                    
 			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
 	                    }
@@ -1269,7 +1269,7 @@
 			});
 			
 			$('.attribs_element').live('mouseover', function(){
-				
+				id = $(this).data('innerid');
 			}).live('mouseout', function(){
 				
 			});
