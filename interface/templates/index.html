@@ -897,7 +897,7 @@
             		pa = [];
             		$('#properties_panel .subpanel .content').empty();
 	                $('#bi_panel .subpanel .content').empty();
-	                ss = Enumerator.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
+	                ss = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
                 	if (FIdER.vector_layer.selectedFeatures.length == 1){
 	                	for (var e in ss[0].attributes)
 	                		if (!e.startsWith('_')){
