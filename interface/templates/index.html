@@ -908,7 +908,7 @@
 		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[0].geometry)});
 		                	else{
 		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[0].geometry.components[0])});
-		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[ss[0].geometry.components.length-1])});
 		                	}
 		                	
 		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_')};
@@ -917,7 +917,7 @@
 		                    $('#properties_panel .subpanel .content').show();
 		                    
 	                    
-	                }else if(FIdER.vector_layer.selectedFeatures.length > 1 ){
+	                }else if(ss.length > 1 ){
 	                	
 	                	total_length = Enumerable.From(ss).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
 	                	distinct_line_count = Enumerable.From(ss).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
@@ -967,12 +967,12 @@
 		                			pa.push({'key':e, 'value':ss[aa].attributes[e]});
 		                		}
 		                	pa.push({'key':'Lunghezza', "value":ss[aa].geometry.getLength()});
-		                	if (ss[aa].geometry.getLength() == 0)
+		                	/*if (ss[aa].geometry.getLength() == 0)
 		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
 		                	else{
 		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
-		                	}
+		                	}*/
 		                	
 		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_')};
 		                    
