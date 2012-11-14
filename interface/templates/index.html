@@ -401,7 +401,7 @@
 			</div>
 		</script>
 		<script id="attribs" type="text/html">
-			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}">
+			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}" data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" >
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
@@ -577,8 +577,24 @@
 					
 				}
 			});
+						
+			FIdER.hover_style = new OpenLayers.StyleMap({
+				'default':{
+					'fillColor':"Red",
+					'strokeColor':"White",
+					'fillOpacity':0,
+					'strokeWidth':"10",
+					'pointRadius':'9'
+					
+				}
+			});
 			
 			FIdER.status = {};
+			
+			FIdER.hover_layer = new OpenLayers.Layer.Vector("hoverel",{
+				styleMap: FIdER.hover_style
+			});			
+			 
 			
 			FIdER.bg_layer = new OpenLayers.Layer.Vector("bgelements",{
 				styleMap: FIdER.bgstyle
@@ -911,7 +927,7 @@
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[ss[0].geometry.components.length-1])});
 		                	}
 		                	
-		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_')};
+		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_'), 'IDPiper':ss[0].attributes.IDPiper};
 		                    $('#properties_panel .subpanel .content').empty();
 		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 		                    $('#properties_panel .subpanel .content').show();
