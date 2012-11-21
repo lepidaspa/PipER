@@ -1280,6 +1280,16 @@
 				});	
 			});
 			
+			$('.Proprietario, .Fornitore')
+				.live('mouseover', function(){
+					data = $(this).data('value')
+					$(this).append('<span class="fake_link" >Info</span>')
+				})
+				.live('mouseout', function(){
+					data = $(this).data('value');
+					$(this).find('.fake_link').remove();
+				})
+			
 			$('.attribs_element').live('mouseover', function(){
 				id = $(this).data('innerid');
 				ii = FIdER.vector_layer.getFeaturesByAttribute('IDPiper', id)[0];
