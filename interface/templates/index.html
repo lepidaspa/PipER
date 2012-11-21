@@ -1112,8 +1112,8 @@
 				FIdER.status.propopen = false;
 				FIdER.status.biopen = false;
 				
-				FIdER.select_multi_control.deactivate();
-				FIdER.select_one_control.deactivate();
+				//FIdER.select_multi_control.deactivate();
+				//FIdER.select_one_control.deactivate();
 			});
 			
 			$('.nav_btn').disableTextSelect();//No text selection on elements with a class of 'noSelect'
@@ -1372,25 +1372,30 @@
 				FIdER.status.propopen = !FIdER.status.propopen;
 					FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.deactivate();
-
-				if (FIdER.status.propopen){
 					FIdER.select_one_control.activate();
-				}
-				else{
-					FIdER.select_one_control.deactivate();
-				}
-			});
-			FIdER.status.biopen = false;
-			$('#bi_btn').live('click', function(){
-				FIdER.status.biopen = !FIdER.status.biopen;
-					FIdER.select_one_control.deactivate();
-					FIdER.select_one_control.unselectAll();
-					
 				if (FIdER.status.biopen){
 					FIdER.select_multi_control.activate();
 				}
 				else{
 					FIdER.select_multi_control.deactivate();
+				}
+			});
+			FIdER.status.biopen = false;
+			$('#bi_btn').live('click', function(){
+				FIdER.status.biopen = !FIdER.status.biopen;
+				
+					FIdER.select_one_control.deactivate();
+					FIdER.select_one_control.unselectAll();
+					
+
+					FIdER.select_multi_control.activate();
+				
+				
+				if (FIdER.status.propopen){
+					FIdER.select_one_control.activate();
+				}
+				else{
+					FIdER.select_one_control.deactivate();
 				}
 			});
 			
@@ -1894,6 +1899,9 @@
 			<div class="nav_btn" id="track_btn" title="Punti di interesse">
 				<span>?</span>
 			</div>
+			<div class="nav_btn" id="exp_btn" title="Esportazione">
+				<span>~</span>
+			</div>
 			<div class="nav_btn" id="info_btn" title="Informazioni sui Fornitori di dati">
 				<span>C</span>
 			</div>
@@ -1927,6 +1935,18 @@
 			<button id="do_clear_btn">
 				Annulla
 			</button>
+		</div>
+		
+		<div id="exp_panel" class="panel exp_btn">
+			<div class="subpanel">
+				<div class="title">
+						<span>Esportazione</span>
+					</div>
+					<div class="tools_list">
+						<a class="btn" id="export_vector" title="Esporta Vettoriale" href="#" download="Export">?</a>
+						<a class="btn disabled" id="export_image" title="Esporta Immagine" download="Export">I</a>	
+					</div>
+			</div>
 		</div>
 		
 		<div id="track_panel" class="panel track_btn">
@@ -1987,13 +2007,6 @@
 				
 				<div class="content">
 					<a id="fwp_link" href="//5.144.184.146/fwp/selng/">Vai alla Piattaforma di Gestione dei Proxy</a>
-				</div>
-				<div class="title">
-					<span>Esportazione</span>
-				</div>
-				<div class="tools_list">
-					<a class="btn" id="export_vector" title="Esporta Vettoriale" href="#" download="Export">?</a>
-					<a class="btn disabled" id="export_image" title="Esporta Immagine" download="Export">I</a>	
 				</div>
 				<div class="title">
 					<span>Strumenti - Infastrutture</span>
