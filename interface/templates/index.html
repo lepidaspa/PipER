@@ -411,7 +411,11 @@
 			</div>
 		</script>
 		<script id="attribs" type="text/html">
-			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}" data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" >
+			<ul 
+				class="attribs_element" 
+				id="__{% templatetag openvariable %}id{% templatetag closevariable %}" 
+				data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" 
+				data-attributes="{% templatetag openvariable %}ia{% templatetag closevariable %}">
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li class="{% templatetag openvariable %}key{% templatetag closevariable %}"
     			data-key="{% templatetag openvariable %}key{% templatetag closevariable %}" 
@@ -423,6 +427,47 @@
 			<div data-id="{% templatetag openvariable %}id{% templatetag closevariable %}">
 				<span>Cron di aggiornamento:</span><input type="text" value="{% templatetag openvariable %}crondata{% templatetag closevariable %}"></input>
 			</div>
+		</script>
+		
+		<script id="contact" type="text/html">
+			<table class="proxydetailstable">
+            <tbody><tr>
+                <td colspan="2" class="proxydetails_header" id="proxyref_proxyname">{% templatetag openvariable %}owner{% templatetag closevariable %}</td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    Fornitore
+                </td>
+                <td class="proxydetails_info">
+                    <span id="proxyref_provider">{% templatetag openvariable %}owner{% templatetag closevariable %}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    <label for="proxyref_refname">Referente</label>
+                </td>
+                <td class="proxydetails_info">
+                    <input type="text" id="proxyref_refname" value="{% templatetag openvariable %}contact{% templatetag closevariable %}">
+                </td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    <label for="proxyref_refmail">Email</label>
+                </td>
+                <td class="proxydetails_info">
+                    <input type="text" id="proxyref_refmail" value="{% templatetag openvariable %}email{% templatetag closevariable %}">
+                </td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    <label for="proxyref_reftel">Telefono</label>
+                </td>
+                <td class="proxydetails_info">
+                    <input type="text" id="proxyref_reftel" value="{% templatetag openvariable %}phone{% templatetag closevariable %}">
+                </td>
+            </tr>
+
+        </tbody></table>
 		</script>
 		<script>
 			jQuery.extend({
@@ -939,7 +984,7 @@
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[ss[0].geometry.components.length-1])});
 		                	}
 		                	
-		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_'), 'IDPiper':ss[0].attributes.IDPiper};
+		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_'), 'IDPiper':ss[0].attributes.IDPiper, 'ia':$.stringifyJSON(ss[0].attributes)};
 		                    $('#properties_panel .subpanel .content').empty();
 		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 		                    $('#properties_panel .subpanel .content').show();
@@ -1002,7 +1047,7 @@
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}*/
 		                	
-		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper};
+		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
 		                    
 			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
 	                    }
@@ -1282,7 +1327,6 @@
 			
 			$('.Proprietario, .Fornitore')
 				.live('mouseover', function(){
-					data = $(this).data('value')
 					$(this).append('<span class="fake_link remote_info">Info</span>')
 				})
 				.live('mouseout', function(){
@@ -1290,7 +1334,20 @@
 					$(this).find('.fake_link').remove();
 				});
 			$('.remote_info').live('click', function(){
-				
+				data_p = $(this).closest('li').data('attributes')._proxy;
+				data_b = $(this).closest('li').data('attributes')._baseurl;
+				url = data_b + "/fwp/getcontacts/" + data_p;
+				$.getJSON(url, function(data){
+					ich.contact(data).dialog({
+						title:"Dettagli contatto",
+						resizable:false,
+						width:350,
+						buttons:{
+							'OK':function(){
+							}
+						}
+					});
+				});
 			});
 			
 			$('.attribs_element').live('mouseover', function(){

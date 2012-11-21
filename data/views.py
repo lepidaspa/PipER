@@ -53,6 +53,7 @@ def put_data(proxy, data):
                 feature['_metadata'] = metadata_name
                 feature['properties']['_metadata'] = metadata_name
                 feature['properties']['Fornitore']=proxy.request.owner.name
+                feature['properties']['_baseurl']=proxy.request.url
                 collection.insert(feature)
     return
 
