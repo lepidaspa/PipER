@@ -1283,12 +1283,15 @@
 			$('.Proprietario, .Fornitore')
 				.live('mouseover', function(){
 					data = $(this).data('value')
-					$(this).append('<span class="fake_link" >Info</span>')
+					$(this).append('<span class="fake_link remote_info">Info</span>')
 				})
 				.live('mouseout', function(){
 					data = $(this).data('value');
 					$(this).find('.fake_link').remove();
-				})
+				});
+			$('.remote_info').live('click', function(){
+				
+			});
 			
 			$('.attribs_element').live('mouseover', function(){
 				id = $(this).data('innerid');

@@ -49,7 +49,9 @@ def put_data(proxy, data):
                 polygon = OGRGeometry(json.dumps(feature['geometry']))
                 feature['_center'] = json.loads(polygon.geos.centroid.json)
                 feature['_proxy'] = token_id
+                feature['properties']['_proxy'] = token_id
                 feature['_metadata'] = metadata_name
+                feature['properties']['_metadata'] = metadata_name
                 feature['properties']['Fornitore']=proxy.request.owner.name
                 collection.insert(feature)
     return
