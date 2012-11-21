@@ -110,10 +110,10 @@ def all_prox():
     for owner in Owner.objects.all():
         oj = {}
         oj['name']=owner.name
-        oj['data_count'] = owner.proxies.count()
         oj['global_count'] = 0
         oj['data'] = []
         for proxy in owner.proxies.all():
+            oj['data'] = []
             pj = {}
             pj['token']=proxy.token
             pj['url']=proxy.url
@@ -131,7 +131,6 @@ def all_prox():
                 mj['crondata'] = proxy.data.timing.crontab
                 pj['meta'].append(mj)
             oj['data'].append(pj)
-        if oj['global_count'] != 0 :
             ret.append(oj)   
     return ret  
 

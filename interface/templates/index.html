@@ -39,7 +39,7 @@
 				top: 50px;
 			}
 			#map {
-				left: 380px;
+				left: 30px;
 				position: absolute;
 			}
 			#fider-logo {
@@ -477,7 +477,7 @@
 
 			//refresh function for resize and startup
 			FIdER.refresh = function() {
-				var width = $(window).width() - $('nav').width()-$('.panel').width();
+				var width = $(window).width() - $('nav').width();
 				var height = $(window).height() - $('header').height() - $('footer').height() - 10;
 				$('#map').width(width);
 				$('#map').height(height);
@@ -1034,18 +1034,18 @@
 				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
 			});
 
-			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled")' ).live('click', function() {
+			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled"):not("#bi_panel"):not("#properties_panel")' ).live('click', function() {
 				
-        		$('#properties_panel .subpanel .content').empty();
-                $('#bi_panel .subpanel .content').empty();
+        		//$('#properties_panel .subpanel .content').empty();
+                //$('#bi_panel .subpanel .content').empty();
 				if ($(this).hasClass('selected')) {
 					$('.nav_btn').removeClass('selected');
-					//$('.panel').hide();
-					$('#info_btn').click();
-					FIdER.select_one_control.unselectAll();
-					FIdER.select_one_control.deactivate();
-					FIdER.select_multi_control.unselectAll();
-					FIdER.select_multi_control.deactivate();
+					$('.panel').hide();
+					//$('#info_btn').click();
+					//FIdER.select_one_control.unselectAll();
+					//FIdER.select_one_control.deactivate();
+					//FIdER.select_multi_control.unselectAll();
+					//FIdER.select_multi_control.deactivate();
 				} else {
 					$('.nav_btn').removeClass('selected');
 					$(this).addClass('selected');
@@ -1451,8 +1451,11 @@
 					}
 			}
 			
-			$('.uproxy').live('mouseenter', function(){
-				val = $(this).find('input[type=checkbox]').val();
+			$('.uproxy, .aproxy').live('mouseenter', function(){
+				if ($(this).hasClass('uproxy'))
+					val = $(this).find('input[type=checkbox]').val();
+				else
+					val = $(this).find('.p_name').text();
 				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
 					feat = feats[i];
@@ -1462,7 +1465,10 @@
 				}
 				var has_ = FIdER.bbox_layer.redraw();
 			}).live('mouseleave', function(){
-				val = $(this).find('input[type=checkbox]').val();
+				if ($(this).hasClass('uproxy'))
+					val = $(this).find('input[type=checkbox]').val();
+				else
+					val = $(this).find('.p_name').text();
 				
 				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
@@ -1676,7 +1682,7 @@
 						
 					});
 					
-					$('#info_btn').click();
+					//$('#info_btn').click();
 				});
 				
 				
