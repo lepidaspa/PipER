@@ -234,6 +234,16 @@
 				color:gray;
 			}
 			
+			li{
+				padding-left:5px;
+			}
+			
+			li.IDPiper
+			{
+				padding-left:0px;
+			}
+			
+			
 			
 			.fake_link {
 				background-color: #f80;
@@ -403,7 +413,9 @@
 		<script id="attribs" type="text/html">
 			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}" data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" >
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
-    			<li>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
+    			<li class="{% templatetag openvariable %}key{% templatetag closevariable %}"
+    			data-key="{% templatetag openvariable %}key{% templatetag closevariable %}" 
+    			data-value="{% templatetag openvariable %}value{% templatetag closevariable %}">{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
     		</ul>
 		</script>
