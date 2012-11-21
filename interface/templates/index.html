@@ -411,7 +411,11 @@
 			</div>
 		</script>
 		<script id="attribs" type="text/html">
-			<ul class="attribs_element" id="__{% templatetag openvariable %}id{% templatetag closevariable %}" data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" >
+			<ul 
+				class="attribs_element" 
+				id="__{% templatetag openvariable %}id{% templatetag closevariable %}" 
+				data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" 
+				data-attributes="{% templatetag openvariable %}ia{% templatetag closevariable %}">
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li class="{% templatetag openvariable %}key{% templatetag closevariable %}"
     			data-key="{% templatetag openvariable %}key{% templatetag closevariable %}" 
@@ -939,7 +943,7 @@
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[ss[0].geometry.components.length-1])});
 		                	}
 		                	
-		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_'), 'IDPiper':ss[0].attributes.IDPiper};
+		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_'), 'IDPiper':ss[0].attributes.IDPiper, 'ia':$.stringifyJSON(ss[0].attributes)};
 		                    $('#properties_panel .subpanel .content').empty();
 		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 		                    $('#properties_panel .subpanel .content').show();
@@ -1002,7 +1006,7 @@
 		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}*/
 		                	
-		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper};
+		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
 		                    
 			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
 	                    }
@@ -1282,7 +1286,6 @@
 			
 			$('.Proprietario, .Fornitore')
 				.live('mouseover', function(){
-					data = $(this).data('value')
 					$(this).append('<span class="fake_link remote_info">Info</span>')
 				})
 				.live('mouseout', function(){
@@ -1290,7 +1293,20 @@
 					$(this).find('.fake_link').remove();
 				});
 			$('.remote_info').live('click', function(){
-				
+				data_p = $(this).closest('li').data('attributes')._proxy;
+				data_b = $(this).closest('li').data('attributes')._baseurl;
+				url = data_b + "/fwp/getcontacts/" + data_p;
+				$.getJSON(url, function(data){
+					ich.contact(data).dialog({
+						title:"Dettagli contatto",
+						resizable:false,
+						width:350,
+						buttons:{
+							'OK':function(){
+							}
+						}
+					});
+				});
 			});
 			
 			$('.attribs_element').live('mouseover', function(){
