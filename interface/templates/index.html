@@ -238,7 +238,7 @@
 				padding-left:5px;
 			}
 			
-			li.IDPiper
+			li.head.IDPiper
 			{
 				padding-left:0px;
 			}
@@ -416,8 +416,11 @@
 				id="__{% templatetag openvariable %}id{% templatetag closevariable %}" 
 				data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" 
 				data-attributes="{% templatetag openvariable %}ia{% templatetag closevariable %}">
+				<li class="head IDPiper"
+	    			data-key="IDPiper" 
+	    			data-value="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}">IDPiper - {% templatetag openvariable %}IDPiper{% templatetag closevariable %}</li>
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
-    			<li class="{% templatetag openvariable %}key{% templatetag closevariable %}"
+    			<li class="item {% templatetag openvariable %}key{% templatetag closevariable %}"
     			data-key="{% templatetag openvariable %}key{% templatetag closevariable %}" 
     			data-value="{% templatetag openvariable %}value{% templatetag closevariable %}">{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
