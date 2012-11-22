@@ -45,7 +45,7 @@ def put_data(proxy, data):
     
     for metadata_name, featurecollection in data['data']['upserts'].items():
         for feature in featurecollection:
-                print feature['properties']
+                #print feature['properties']
                 polygon = OGRGeometry(json.dumps(feature['geometry']))
                 feature['_center'] = json.loads(polygon.geos.centroid.json)
                 feature['_proxy'] = token_id
