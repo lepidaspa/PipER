@@ -1114,27 +1114,29 @@
 				FIdER.status.panel_open = $('.selected').length >0 ;
 			});
 			
-			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled"):not("#bi_panel"):not("#properties_panel")' ).live('click', function() {
+			$('.nav_btn:not(".special"):not(".disabled")' ).live('click', function() {
+				id = $(this).attr('id');
 				close_panel();
-				if ($(this).hasClass('selected')) {
-					$('.nav_btn').removeClass('selected');
-					$('.panel').hide();
-				} else {
-					$('.nav_btn').removeClass('selected');
-					$(this).addClass('selected');
-					$('.panel').hide();
-					$('.panel.' + $(this).attr('id')).show();
-				}
-				
+				if (!$(this).hasClass('selected')) {
+					open_panel(id);
+				} 
 			});
 			
 			function close_panel(){
 				FIdER.status.propopen = false;
 				FIdER.status.biopen = false;
 				
+					$('.nav_btn').removeClass('selected');
+					$('.panel').hide();
+				
 				FIdER.status.panel_open = $('.selected').length >0 ;
 				FIdER.select_multi_control.deactivate();
 				FIdER.select_one_control.deactivate();
+			}
+			function open_panel(panel){
+				
+					$(this).addClass('selected');
+					$('.panel.' + panel).show();
 			}
 			
 			$('.nav_btn').disableTextSelect();//No text selection on elements with a class of 'noSelect'
@@ -1925,10 +1927,10 @@
 			</div>
 		</header>
 		<nav>
-			<div class="nav_btn" id="home_btn" title="Home">
+			<div class="nav_btn special" id="home_btn" title="Home">
 				<span>h</span>
 			</div>
-			<div class="nav_btn" id="track_btn" title="Punti di interesse">
+			<div class="nav_btn special" id="track_btn" title="Punti di interesse">
 				<span>?</span>
 			</div>
 			<div class="nav_btn" id="search_btn" title="Filtro">
@@ -1943,7 +1945,7 @@
 			<div class="nav_btn" id="exp_btn" title="Esportazione">
 				<span>~</span>
 			</div>
-			<div class="nav_btn bottom" id="settings_btn" title="Impostazioni del sistema">
+			<div class="nav_btn" id="settings_btn" title="Impostazioni del sistema">
 				<span>S</span>
 			</div>
 		</nav>
