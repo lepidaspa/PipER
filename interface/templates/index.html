@@ -1393,6 +1393,7 @@
 			FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
 				if (FIdER.status.panel_open){
+					if ($('#properties_btn.selected').length > 0)
 					FIdER.status.biopen = false;
 					
 					if (FIdER.status.propopen){
@@ -1412,12 +1413,18 @@
 			
 			FIdER.status.biopen = false;
 			$('#bi_btn').live('click', function(){
-				FIdER.status.biopen = !FIdER.select_multi_control.active;
-				FIdER.status.propopen = false;
-				
-				if (FIdER.status.biopen){
-					FIdER.select_multi_control.activate();
-					FIdER.select_one_control.deactivate();
+				if (FIdER.status.panel_open){
+					if ($('#properties_btn.selected').length > 0)
+					FIdER.status.biopen = false;
+					
+					if (FIdER.status.propopen){
+						FIdER.select_one_control.deactivate();
+						FIdER.select_multi_control.activate();
+					}
+					else{
+						FIdER.select_multi_control.deactivate();
+						FIdER.select_one_control.deactivate();
+					}
 				}
 				else{
 					FIdER.select_multi_control.deactivate();
