@@ -190,6 +190,12 @@
 				/*text-shadow:0px 0px 3px black;*/
 				
 			}
+			
+			.content ul {
+				
+				position: relative;
+				left: -33px;
+			}
 			.btn:hover{
 				background-color:#ccc;
 				
@@ -1377,31 +1383,31 @@
 			FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
 				FIdER.status.propopen = !FIdER.status.propopen;
-					//FIdER.select_multi_control.unselectAll();
-					FIdER.select_multi_control.deactivate();
-					FIdER.select_one_control.activate();
+				//FIdER.select_multi_control.unselectAll();
+				FIdER.select_multi_control.deactivate();
+				FIdER.select_one_control.activate();
+				
 				if (FIdER.status.biopen){
 					FIdER.select_multi_control.activate();
 				}
 				else{
 					FIdER.select_multi_control.deactivate();
+					FIdER.select_one_control.deactivate();
 				}
 			});
+			
 			FIdER.status.biopen = false;
 			$('#bi_btn').live('click', function(){
 				FIdER.status.biopen = !FIdER.status.biopen;
-				
-					FIdER.select_one_control.deactivate();
-					//FIdER.select_one_control.unselectAll();
-					
-
-					FIdER.select_multi_control.activate();
-				
+				FIdER.select_one_control.deactivate();
+				//FIdER.select_one_control.unselectAll();
+				FIdER.select_multi_control.activate();
 				
 				if (FIdER.status.propopen){
 					FIdER.select_one_control.activate();
 				}
 				else{
+					FIdER.select_multi_control.deactivate();
 					FIdER.select_one_control.deactivate();
 				}
 			});
