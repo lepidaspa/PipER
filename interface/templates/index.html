@@ -1382,7 +1382,7 @@
 			
 			FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
-				FIdER.status.propopen = !FIdER.status.propopen;
+				FIdER.status.propopen = !FIdER.select_one_control.active;
 				FIdER.status.biopen = false;
 				//FIdER.select_multi_control.unselectAll();
 				FIdER.select_multi_control.deactivate();
@@ -1399,7 +1399,7 @@
 			
 			FIdER.status.biopen = false;
 			$('#bi_btn').live('click', function(){
-				FIdER.status.biopen = !FIdER.status.biopen;
+				FIdER.status.biopen = !FIdER.select_multi_control.active;
 				FIdER.status.propopen = false;
 				FIdER.select_one_control.deactivate();
 				//FIdER.select_one_control.unselectAll();
