@@ -1370,13 +1370,13 @@
 				});	
 			});
 			
-			$('.Proprietario, .Fornitore')
+			$('.itm.Proprietario, .itm.Fornitore')
 				.live('mouseover', function(){
 					$(this).find('.remote_info').show();
 				})
 				.live('mouseout', function(){
 					data = $(this).data('value');
-					$(this).find('.fake_link').remove();
+					$(this).find('.fake_link').hide();
 				});
 			$('.remote_info').live('click', function(){
 				data_p = $(this).closest('li').data('attributes')._proxy;
