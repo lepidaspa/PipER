@@ -991,6 +991,10 @@
 		                    $('#properties_panel .subpanel .content').empty();
 		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
 		                    $('#properties_panel .subpanel .content').show();
+		                    $('#bi_panel .subpanel .content').empty();
+		                    $('#bi_panel .subpanel .content').show();
+		                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
+		                    $('#bi_panel .subpanel .content').append($("<hr></hr>"));
 		                    
 	                    
 	                }else if(ss.length > 1 ){
@@ -1115,8 +1119,8 @@
 				FIdER.status.propopen = false;
 				FIdER.status.biopen = false;
 				
-				//FIdER.select_multi_control.deactivate();
-				//FIdER.select_one_control.deactivate();
+				FIdER.select_multi_control.deactivate();
+				FIdER.select_one_control.deactivate();
 			});
 			
 			$('.nav_btn').disableTextSelect();//No text selection on elements with a class of 'noSelect'
@@ -1373,7 +1377,7 @@
 			FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
 				FIdER.status.propopen = !FIdER.status.propopen;
-					FIdER.select_multi_control.unselectAll();
+					//FIdER.select_multi_control.unselectAll();
 					FIdER.select_multi_control.deactivate();
 					FIdER.select_one_control.activate();
 				if (FIdER.status.biopen){
@@ -1388,7 +1392,7 @@
 				FIdER.status.biopen = !FIdER.status.biopen;
 				
 					FIdER.select_one_control.deactivate();
-					FIdER.select_one_control.unselectAll();
+					//FIdER.select_one_control.unselectAll();
 					
 
 					FIdER.select_multi_control.activate();
@@ -1627,6 +1631,8 @@
 							FIdER.status.url = "search";
 							$('#properties_btn').removeClass('disabled')
 							$('#bi_btn').removeClass('disabled')
+							$('#search_btn').removeClass('disabled')
+							$('#exp_btn').removeClass('disabled')
 						}
 						else{
 							FIdER.vector_layer.display(false);
@@ -1636,6 +1642,8 @@
 							FIdER.status.url = "proxies";
 							$('#properties_btn').addClass('disabled')
 							$('#bi_btn').addClass('disabled')
+							$('#search_btn').addClass('disabled')
+							$('#exp_btn').addClass('disabled')
 						}
 						$('#spinner').show();
 						FIdER.bbox_layer.destroyFeatures();
@@ -1651,9 +1659,6 @@
 								q:"[]"
 							}
 						});
-						
-						
-						
 					});
 
 					FIdER.map.setOptions({restrictedExtent: FIdER.start});
@@ -1902,12 +1907,6 @@
 			<div class="nav_btn" id="track_btn" title="Punti di interesse">
 				<span>?</span>
 			</div>
-			<div class="nav_btn" id="exp_btn" title="Esportazione">
-				<span>~</span>
-			</div>
-			<div class="nav_btn" id="info_btn" title="Informazioni sui Fornitori di dati">
-				<span>C</span>
-			</div>
 			<div class="nav_btn" id="search_btn" title="Filtro">
 				<span>&sup1;</span>
 			</div>
@@ -1916,6 +1915,9 @@
 			</div>
 			<div class="nav_btn" id="bi_btn" title="Business Intelligence">
 				<span>u</span>
+			</div>
+			<div class="nav_btn" id="exp_btn" title="Esportazione">
+				<span>~</span>
 			</div>
 			<div class="nav_btn bottom" id="settings_btn" title="Impostazioni del sistema">
 				<span>S</span>
