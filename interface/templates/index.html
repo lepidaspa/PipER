@@ -290,6 +290,9 @@
 				display:inline;
 				width:auto;
 			}
+			.attrib_info{
+				visibility:hidden;
+			}
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
@@ -432,7 +435,9 @@
 			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
     			<li class="item {% templatetag openvariable %}key{% templatetag closevariable %}"
     			data-key="{% templatetag openvariable %}key{% templatetag closevariable %}" 
-    			data-value="{% templatetag openvariable %}value{% templatetag closevariable %}">{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</li>
+    			data-value="{% templatetag openvariable %}value{% templatetag closevariable %}">
+    				<span>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</span>
+    				<span class=" attrib_info right fake_link">Info</span></li>
     		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
     		</ul>
 		</script>
@@ -989,7 +994,7 @@
 	                		if (!e.startsWith('_') && e!="IDPiper"){
 	                			pa.push({'key':e, 'value':ss[0].attributes[e]});
 	                		}
-		                	pa.push({'key':'Lunghezza', "value":ss[0].geometry.getLength()});
+		                	pa.push({'key':'Lunghezza', "value":Math.round(ss[0].geometry.getLength()*100)/100});
 		                	if (ss[0].geometry.getLength() == 0)
 		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[0].geometry)});
 		                	else{
@@ -1053,10 +1058,10 @@
 	                    	pa = [];
 	                    	
 		                    for (var e in ss[aa].attributes)
-		                		if (!e.startsWith('_')){
+		                		if (!e.startsWith('_') && e!="IDPiper"){
 		                			pa.push({'key':e, 'value':ss[aa].attributes[e]});
 		                		}
-		                	pa.push({'key':'Lunghezza', "value":ss[aa].geometry.getLength()});
+		                	pa.push({'key':'Lunghezza', "value":Math.round(ss[aa].geometry.getLength()*100)/100});
 		                	/*if (ss[aa].geometry.getLength() == 0)
 		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
 		                	else{
@@ -1367,7 +1372,7 @@
 			
 			$('.Proprietario, .Fornitore')
 				.live('mouseover', function(){
-					$(this).append('<span class="fake_link remote_info">Info</span>')
+					$(this).find('.remote_info').show();
 				})
 				.live('mouseout', function(){
 					data = $(this).data('value');
