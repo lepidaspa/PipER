@@ -1140,6 +1140,20 @@
 				
 					$("#"+panel).addClass('selected');
 					$('.panel.' + panel).show();
+					
+					if (panel in spec_ops)
+						spec_ops[panel]();
+			}
+			
+			spec_ops = {
+				"properties_btn":function(){
+					FIdER.select_one_control.activate();
+					FIdER.select_multi_control.deactivate();
+				},
+				'bi_btn':function(){
+					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control.activate();
+				}
 			}
 			
 			$('.nav_btn').disableTextSelect();//No text selection on elements with a class of 'noSelect'
@@ -1393,7 +1407,7 @@
 				$(this).parent().parent().find('option').attr('selected', 'selected');
 			});
 			
-			FIdER.status.propopen = false;
+	/*		FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
 				if (FIdER.status.panel_open){
 					if ($('#properties_btn.selected').length > 0)
@@ -1421,8 +1435,7 @@
 					FIdER.status.biopen = false;
 					
 					if (FIdER.status.propopen){
-						FIdER.select_one_control.deactivate();
-						FIdER.select_multi_control.activate();
+						
 					}
 					else{
 						FIdER.select_multi_control.deactivate();
@@ -1433,7 +1446,7 @@
 					FIdER.select_multi_control.deactivate();
 					FIdER.select_one_control.deactivate();
 				}
-			});
+			});*/
 			
 			$('#clear_selection').live('click', function(){
 				
