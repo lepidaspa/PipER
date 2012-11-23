@@ -1189,8 +1189,8 @@
 						'OK':function(){
 							$.get('/broker/pull', function(ddd){
 								console.log(ddd);
-								$( this ).dialog( "destroy" );
 							});
+								$( this ).dialog( "destroy" );
 						},
 						'Annulla':function(){
 							$( this ).dialog( "destroy" );
@@ -1206,8 +1206,8 @@
 						'OK':function(){
 							$.get('/broker/get', function(ddd){
 								console.log(ddd);
-								$( this ).dialog( "destroy" );
 							});
+								$( this ).dialog( "destroy" );
 						},
 						'Annulla':function(){
 							$( this ).dialog( "destroy" );
@@ -1223,8 +1223,8 @@
 							'OK':function(){
 								$.get('/broker/clear', function(ddd){
 									console.log(ddd);
-									$( this ).dialog( "destroy" );
 								});
+									$( this ).dialog( "destroy" );
 							},
 							'Annulla':function(){
 								$( this ).dialog( "destroy" );
@@ -1243,8 +1243,8 @@
 						'OK':function(){
 							$.get('/broker/pull?id='+id, function(ddd){
 								console.log(ddd);
-								$( this ).dialog( "destroy" );
 							});
+								$( this ).dialog( "destroy" );
 						},
 						'Annulla':function(){
 							$( this ).dialog( "destroy" );
@@ -1261,8 +1261,8 @@
 						'OK':function(){
 							$.get('/broker/get?id='+id, function(ddd){
 								console.log(ddd);
-								$( this ).dialog( "destroy" );
 							});
+								$( this ).dialog( "destroy" );
 						},
 						'Annulla':function(){
 							$( this ).dialog( "destroy" );
@@ -1279,8 +1279,8 @@
 							'OK':function(){
 								$.get('/broker/clear?id='+id, function(ddd){
 									console.log(ddd);
-									$( this ).dialog( "destroy" );
 								});
+									$( this ).dialog( "destroy" );
 							},
 							'Annulla':function(){
 								$( this ).dialog( "destroy" );
@@ -1359,6 +1359,7 @@
 					width:350,
 					buttons:{
 						'OK':function(){
+							$( this ).dialog( "destroy" );
 						},
 						'Annulla':function(){
 							$( this ).dialog( "destroy" );
@@ -1386,6 +1387,7 @@
 						width:350,
 						buttons:{
 							'OK':function(){
+								$(this).dialog('destroy');
 							}
 						}
 					});
