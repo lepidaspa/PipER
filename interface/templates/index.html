@@ -1375,7 +1375,7 @@
 					data = $(this).data('value');
 					$(this).find('.fake_link').hide();
 				});
-			$('.remote_info').live('click', function(){
+			$('.attrib_info').live('click', function(){
 				data_p = $(this).closest('li').data('attributes')._proxy;
 				data_b = $(this).closest('li').data('attributes')._baseurl;
 				url = data_b + "/fwp/getcontacts/" + data_p;
