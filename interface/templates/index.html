@@ -982,7 +982,7 @@
 	                ss = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
                 	if (ss.length == 1){
 	                	for (var e in ss[0].attributes)
-	                		if (!e.startsWith('_')){
+	                		if (!e.startsWith('_') && e!="IDPiper"){
 	                			pa.push({'key':e, 'value':ss[0].attributes[e]});
 	                		}
 		                	pa.push({'key':'Lunghezza', "value":ss[0].geometry.getLength()});
