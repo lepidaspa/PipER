@@ -1116,10 +1116,13 @@
 			
 			$('.nav_btn:not(".special"):not(".disabled")' ).live('click', function() {
 				id = $(this).attr('id');
-				close_panel();
-				if (!$(this).hasClass('selected')) {
+				
+				if ($(this).hasClass('selected')) {
+					close_panel();
+				} else {
+					close_panel();
 					open_panel(id);
-				} 
+				}
 			});
 			
 			function close_panel(){
