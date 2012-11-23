@@ -1384,12 +1384,10 @@
 			$('#properties_btn').live('click', function(){
 				FIdER.status.propopen = !FIdER.select_one_control.active;
 				FIdER.status.biopen = false;
-				//FIdER.select_multi_control.unselectAll();
-				FIdER.select_multi_control.deactivate();
-				FIdER.select_one_control.activate();
 				
 				if (FIdER.status.propopen){
 					FIdER.select_one_control.activate();
+					FIdER.select_multi_control.deactivate();
 				}
 				else{
 					FIdER.select_multi_control.deactivate();
@@ -1401,12 +1399,10 @@
 			$('#bi_btn').live('click', function(){
 				FIdER.status.biopen = !FIdER.select_multi_control.active;
 				FIdER.status.propopen = false;
-				FIdER.select_one_control.deactivate();
-				//FIdER.select_one_control.unselectAll();
-				FIdER.select_multi_control.activate();
 				
 				if (FIdER.status.biopen){
 					FIdER.select_multi_control.activate();
+					FIdER.select_one_control.deactivate();
 				}
 				else{
 					FIdER.select_multi_control.deactivate();
@@ -1419,7 +1415,6 @@
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
 				FIdER.selected_items = [];
-				//FIdER.select_one_control.unselectAll();
 				FIdER.select_multi_control.unselectAll();
 				
     			$('#export_csv').addClass('disabled');
@@ -1429,6 +1424,7 @@
 				FIdER.track_layer.removeAllFeatures();
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
+				FIdER.selected_items = [];
 				FIdER.select_one_control.unselectAll();
 				FIdER.select_multi_control.unselectAll();
 			});
