@@ -1378,7 +1378,7 @@
 			$('.attrib_info').live('click', function(){
 				data_p = $(this).closest('ul').data('attributes')._proxy;
 				data_b = $(this).closest('ul').data('attributes')._baseurl;
-				url = data_b + "/fwp/getcontacts/" + data_p;
+				url = "/external/"+ data_b.replace('http://', '') + "fwp/getcontacts/" + data_p;
 				$.getJSON(url, function(data){
 					ich.contact(data).dialog({
 						title:"Dettagli contatto",
