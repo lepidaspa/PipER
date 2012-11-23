@@ -1107,9 +1107,15 @@
 			$('.add_row').live('click', function(){
 				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
 			});
-
+			
+			FIdER.status.panel_open = false;
+			
+			$('.nav_btn').live('click', function(){
+				FIdER.status.panel_open = $('.selected').length >0 ;
+			});
+			
 			$('.nav_btn:not("#home_btn"):not("#track_btn"):not(".disabled"):not("#bi_panel"):not("#properties_panel")' ).live('click', function() {
-				
+				//FIdER.status.panel_open = $('.selected').length >0 ;
         		//$('#properties_panel .subpanel .content').empty();
                 //$('#bi_panel .subpanel .content').empty();
 				if ($(this).hasClass('selected')) {
@@ -1386,12 +1392,17 @@
 			
 			FIdER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
-				FIdER.status.propopen = !FIdER.select_one_control.active;
-				FIdER.status.biopen = false;
-				
-				if (FIdER.status.propopen){
-					FIdER.select_one_control.activate();
-					FIdER.select_multi_control.deactivate();
+				if (FIdER.status.panel_open){
+					FIdER.status.biopen = false;
+					
+					if (FIdER.status.propopen){
+						FIdER.select_one_control.activate();
+						FIdER.select_multi_control.deactivate();
+					}
+					else{
+						FIdER.select_multi_control.deactivate();
+						FIdER.select_one_control.deactivate();
+					}
 				}
 				else{
 					FIdER.select_multi_control.deactivate();
