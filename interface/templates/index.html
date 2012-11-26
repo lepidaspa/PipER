@@ -571,7 +571,7 @@
 			FIdER.start.extend(new OpenLayers.LonLat(6.62672010, 43.73189080).transform(FIdER.projections.wgs84, FIdER.projections.google));
 			FIdER.start.extend(new OpenLayers.LonLat(13.91885250, 47.0920).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
-					FIdER.ccstyle = new OpenLayers.StyleMap();
+			FIdER.ccstyle = new OpenLayers.StyleMap();
 			$.get('/sld/default', function(sld){
 					sld_reader = new OpenLayers.Format.SLD();
 					FIdER.sld = sld_reader.read(sld);
