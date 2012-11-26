@@ -568,10 +568,10 @@
 	
 			//starting point
 			FIdER.start = new OpenLayers.Bounds();
-			FIdER.start.extend(new OpenLayers.LonLat(9.1980988, 43.73086379999999).transform(FIdER.projections.wgs84, FIdER.projections.google));
-			FIdER.start.extend(new OpenLayers.LonLat(12.7558364, 45.1395245).transform(FIdER.projections.wgs84, FIdER.projections.google));
+			FIdER.start.extend(new OpenLayers.LonLat(6.62672010, 43.73189080).transform(FIdER.projections.wgs84, FIdER.projections.google));
+			FIdER.start.extend(new OpenLayers.LonLat(13.91885250, 47.0920).transform(FIdER.projections.wgs84, FIdER.projections.google));
 
-					FIdER.ccstyle = new OpenLayers.StyleMap();
+			FIdER.ccstyle = new OpenLayers.StyleMap();
 			$.get('/sld/default', function(sld){
 					sld_reader = new OpenLayers.Format.SLD();
 					FIdER.sld = sld_reader.read(sld);
@@ -1890,12 +1890,12 @@
 								prepared_query.push(qqq);
 							});
 						});
-						vals = []
-						$('#user_proxies').find('.proxy_check:checked').each(function(a,b){
-							vals.push($(b).val());
-						});
+						//vals = []
+						//$('#user_proxies').find('.proxy_check:checked').each(function(a,b){
+						//	vals.push($(b).val());
+						//});
 						
-						prepared_query.push({'column':"Fornitore","operator":"in", "params":vals});
+						//prepared_query.push({'column':"Fornitore","operator":"in", "params":vals});
 						return prepared_query;
 			}
 			
