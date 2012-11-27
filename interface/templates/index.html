@@ -851,7 +851,7 @@
 				zip.file("BI.csv", bi);
 				
 				content = zip.generate();
-				console.log(content);
+				//console.log(content);
 				var a = $('#export_csv');
 				a.removeClass('disabled')
 				a.attr('href', "data:application/zip;base64," + content);				
@@ -886,11 +886,11 @@
 			
 			
 			
-			    console.log(base[0]);
-			    console.log(baseoffset_x);
-			    console.log(baseoffset_y);
-			    console.log(limit_x);
-			    console.log(limit_y);
+			    //console.log(base[0]);
+			    //console.log(baseoffset_x);
+			    //console.log(baseoffset_y);
+			    //console.log(limit_x);
+			    //console.log(limit_y);
 			
 			    //var canvas = document.createElement('canvas');
 			
@@ -1545,37 +1545,44 @@
 			function refresh_sight(){
 				FIdER.vector_layer.removeAllFeatures();
 				FIdER.selectables = [];
-				for (el in FIdER.status.query){
-					el_sel = []
-					tt = FIdER.status.query[el]['column']
-					ps = FIdER.status.query[el]['params']
-					if (ps != null){
-						
-						for(pp in ps){
-							lsit = ps[pp]
-							if (lsit== "Non definito")
-								lsit = "";
-							vec = FIdER.bg_layer.getFeaturesByAttribute(tt, lsit )
-							for(feat in vec){
-								el_sel.push(vec[feat]);
-								
+				doselect = true;
+				for (e in FIdER.status.query){
+					if (FIdER.status.query[e]['params'] == null)
+						doselect= false;
+				}
+				if (doselect){
+					for (el in FIdER.status.query){
+						el_sel = []
+						tt = FIdER.status.query[el]['column']
+						ps = FIdER.status.query[el]['params']
+						if (ps != null){
+							
+							for(pp in ps){
+								lsit = ps[pp]
+								if (lsit== "Non definito")
+									lsit = "";
+								vec = FIdER.bg_layer.getFeaturesByAttribute(tt, lsit )
+								for(feat in vec){
+									el_sel.push(vec[feat]);
+									
+								}
 							}
+							FIdER.selectables.push(el_sel);
 						}
-						FIdER.selectables.push(el_sel);
 					}
-				}
-				ee = FIdER.selectables[0];
-				if (FIdER.selectables.length > 1){
-					for (a = 0; a < FIdER.selectables.length-1; a++){
-						ee = intersect_safe(ee,FIdER.selectables[a+1])					
+					ee = FIdER.selectables[0];
+					if (FIdER.selectables.length > 1){
+						for (a = 0; a < FIdER.selectables.length-1; a++){
+							ee = intersect_safe(ee,FIdER.selectables[a+1])					
+						}
 					}
-				}
-				FIdER.selectables = ee;
-				if (FIdER.selectables !== undefined) 
-				for (a in FIdER.selectables) 
-					FIdER.vector_layer.addFeatures(FIdER.selectables[a].clone());
+					FIdER.selectables = ee;
+					if (FIdER.selectables !== undefined) 
+					for (a in FIdER.selectables) 
+						FIdER.vector_layer.addFeatures(FIdER.selectables[a].clone());
 				
-				setTimeout(reselect,750);	
+					setTimeout(reselect,750);	
+				}
 				
 			}
 			
@@ -1639,10 +1646,8 @@
 			
 			//run
 			$(function() {
-				//$('.panel .content').hide();
 				$('#sett_panel .content').show();
 				$('#vis_panel .content').show();
-				//$( document ).tooltip();
 				
 				var drag_offset_x = 0;
 				var drag_offset_y = 0;
