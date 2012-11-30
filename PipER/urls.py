@@ -46,6 +46,7 @@ urlpatterns = patterns('',
     url(r'^interface/search$', 'broker.views.search'),
     url(r'^interface/s$', 'broker.views.do_search'),
     url(r'^interface/proxies$', 'broker.views.show'),
+    url(r'^interface/staticmap$', 'interface.views.download_static_map'),
     
     url(r'^sld/default$', 'sldgenerator.views.get_default_sld'),
     url(r'^sld/selected$', 'sldgenerator.views.get_selected_sld'),
