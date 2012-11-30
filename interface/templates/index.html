@@ -1671,6 +1671,7 @@
 			});
 			
 			$('#export_image').live('click', function(){
+				console.log("ciao");
 				bb = "[" + FIdER.map.getExtent().toBBOX() + "]";
 				filter = $.stringifyJSON(FIdER.status.query);
 				selected = $.stringifyJSON(FIdER.selected_items);
@@ -1678,14 +1679,16 @@
 				h = $(window).height();
 				bl =""
 				pois=""
-				$.get('/export?'+
-					'b='+bb+
+				url = '/export'+
+					'?b='+bb+
 					"&f="+filter+
 					"&w="+w+
 					"&h="+h+
 					"&l="+bl+
 					"&p="+pois+
-					"&s="+selected);
+					"&s="+selected;
+				console.log(url);
+				$('<a target="_blank" href="'+url+'"></a>').click();
 			});
 			
 			//run
