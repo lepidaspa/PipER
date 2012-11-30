@@ -722,208 +722,6 @@
             	}
             }
             
-            function tryExportView()
-				{
-					pr = ich.map_exporter();
-					pr.dialog({
-						width:666,
-						height:300,
-						modal:true
-					});				
-				
-				    console.log("Trying to export the viewport");
-				
-				
-				    var drawcenter = new OpenLayers.LonLat(FIdER.map.getCenter().lon,
-				FIdER.map.getCenter().lat).transform(FIdER.map.getProjectionObject(), new
-				OpenLayers.Projection(FIdER.projections.wgs84));
-				
-				    viewportWidth = $(FIdER.map.div).width();
-				    viewportHeight = $(FIdER.map.div).height();
-				
-				    //console.log(drawcenter);
-				    //console.log(drawcenter.lon);
-				    //console.log(drawcenter.lat);
-				    drawcenter = [drawcenter.lat, drawcenter.lon];
-				    var drawzoom = FIdER.map.getZoom();
-				
-				    console.log("Getting map background with zoom "+drawzoom);
-				
-				
-				
-				    //$("#btn_downloadMapRender").hide();
-				
-				    var provider;
-				    var maptype;
-				    if (FIdER.map.baseLayer.name == 'OpenStreetMap')
-				    {
-				        provider = 'osm';
-				        maptype = 'mapnik';
-				    }
-				    else
-				    {
-				        provider = 'google';
-				        maptype = FIdER.map.baseLayer.name.split(" ",2)[1].toLowerCase();
-				
-				    }
-				
-				    limitHeight = provider == 'google' ? 640 : 1280;
-				    limitWidth = provider == 'google' ? 640 : 1280;
-				
-				    vpCropWidth = Math.min(viewportWidth, limitWidth);
-				    vpCropHeight = Math.min(viewportHeight, limitHeight);
-				
-				    // hardcoded: can switch to 2 but gives problems in rebuilding vector geometry later
-				    var googleMultip = 1;
-				
-				    sizeMultip = provider == 'google' ? googleMultip : 1;
-				
-				    $("#exportcanvas").empty().append('<canvas id="drawingarea"	height='+vpCropHeight*sizeMultip+' width='+vpCropWidth*sizeMultip+'></canvas>');
-				
-				    console.log("Parameters for map call");
-				
-				    exportprovider = provider;
-				    var parameters = {
-				        'provider': provider,
-				        'maptype': maptype,
-				        'drawcenter': drawcenter,
-				        'drawzoom': drawzoom,
-				        'drawsize': [vpCropWidth, vpCropHeight]
-				    };
-				
-				
-				    console.log(parameters);
-				
-				    $.ajax ({
-				        url: '/interface/staticmap',
-				        data:   {jsondata: JSON.stringify(parameters)},
-				        async: true,
-				        type: 'POST',
-				        success: function (data)
-				        {
-				
-				            $("#progress_imagerender").dialog("close");
-				            $("#mapdloadlinkpng").empty().append("L'operazione di rendering puo' richiedere tempi elevati.<br>In caso di interruzione da parte del browser, premere il pulsante Continua.");
-				            $("#btn_maptoimage_close").hide();
-				            $("#maptoimage").dialog("open");
-				
-				
-				            renderExportableMap(data);
-				
-				
-				
-				
-				        },
-				        error: function () {
-				
-				            $("#progress_imagerender .progspinner").hide();
-				            $("#progress_imagerender .formbrieding").hide();
-				            $("#renderfinished_fail").show();
-				            $("#btn_renderprogress_close").show();
-				            console.log("ERROR received");
-				        }
-				    });
-				
-				}
-
-function renderExportableMap (rawimagedata)
-{
-	
-	 map_id="map";
-    console.log("succeeded downloading remote map");
-    //console.log(data);
-
-
-
-
-    // cleaning the context
-    var canvas = document.getElementById('drawingarea');
-    var context = canvas.getContext('2d');
-    context.clearRect(0, 0, vpCropWidth*sizeMultip,
-vpCropHeight*sizeMultip);
-
-    console.log("Ready to render");
-    //console.log(typeof data);
-
-    $("#exportcanvasshadow").attr("src", "data:image/png;base64," +
-rawimagedata);
-  //  $("#exportcanvasshadow")[0].onload = function ()
-    //{
-        console.log("Export shadow info");
-        console.log($("#exportcanvasshadow"));
-
-        context.drawImage($("#exportcanvasshadow")[0], 0, 0,
-vpCropWidth*sizeMultip, vpCropHeight*sizeMultip, 0, 0,
-vpCropWidth*sizeMultip, vpCropHeight*sizeMultip);
-        //console.log(canvas.toDataURL());
-        renderVectorLayerToCanvas(FIdER.bbox_layer, canvas);
-        renderVectorLayerToCanvas(FIdER.bg_layer, canvas);
-        renderVectorLayerToCanvas(FIdER.vector_layer, canvas);
-
-        var linkstring = $("<a>Scarica mappa</a>");
-        linkstring.attr('href', canvas.toDataURL());
-        linkstring.attr('download', map_id+".png");
-        $("#mapdloadlinkpng").empty().append(linkstring);
-
-        //$("#btn_downloadMapRender").show();
-        $("#btn_maptoimage_close").show();
-
-
- //   };
-
-
-
-
-
-}
-
-function renderVectorLayerToCanvas (layerfrom, destcanvas)
-{
-
-    console.log("Copying "+layerfrom.features.length+" features to draw layer");
-
-    var featurestylemap = layerfrom.styleMap;
-    var renderlayer = new OpenLayers.Layer.Vector("drawlayer__"+layerfrom.name, {name:
-"drawlayer__"+layerfrom.name, styleMap: featurestylemap, renderers: ["Canvas"]});
-    renderlayer.id = "rendercanvas";
-    //(($(renderlayer.div)).find("canvas")[0]).lineCap="round";
-    //(($(renderlayer.div)).find("canvas")[0]).lineJoin="round";
-
-    renderlayer.display(false);
-
-
-
-    /* V2: much slower in theory but should scale */
-
-    console.log("Copying renderer canvas to output");
-    var element = ($(renderlayer.div)).find("canvas")[0];
-    var context = destcanvas.getContext('2d');
-    console.log(element);
-
-    var offsetX = (vpCropWidth - viewportWidth)/2;
-    var offsetY = (vpCropHeight - viewportHeight)/2;
-    FIdER.map.addLayer(renderlayer);
-
-    for (var f in layerfrom.features)
-    {
-
-        var geom = layerfrom.features[f].geometry;
-
-        if (layerfrom.features[f].onScreen())
-        {
-            renderlayer.addFeatures(new
-OpenLayers.Feature.Vector(geom));
-            context.drawImage(element, offsetX, offsetY);
-            renderlayer.destroyFeatures();
-        }
-
-
-
-    }
-    renderlayer.destroy();
-
-
-}
 
             
             
@@ -1872,7 +1670,23 @@ OpenLayers.Feature.Vector(geom));
 				var has_ = FIdER.bbox_layer.redraw();
 			});
 			
-			$('#export_image').live('click', tryExportView)
+			$('#export_image').live('click', function(){
+				bb = "[" + FIdER.map.getExtent().toBBOX() + "]";
+				filter = $.stringifyJSON(FIdER.status.query);
+				selected = $.stringifyJSON(FIdER.selected_items);
+				w = $(window).width();
+				h = $(window).height();
+				bl =""
+				pois=""
+				$.get('/export?'+
+					'b='+bb+
+					"&f="+filter+
+					"&w="+w+
+					"&h="+h+
+					"&l="+bl+
+					"&p="+pois+
+					"&s="+selected);
+			});
 			
 			//run
 			$(function() {
