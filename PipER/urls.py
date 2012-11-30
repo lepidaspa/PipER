@@ -42,6 +42,8 @@ urlpatterns = patterns('',
     url(r'^models/add/infrastructure$', 'model_manager.views.get_model_secondary'),
     
     
+    url(r'^export$', 'interface.views.export'),
+    url(r'^print$', 'interface.views.do_export'),
     url(r'^interface/urls$', 'interface.views.urls'),
     url(r'^interface/search$', 'broker.views.search'),
     url(r'^interface/s$', 'broker.views.do_search'),

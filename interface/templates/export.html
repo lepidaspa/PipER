@@ -1,0 +1,2172 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>PipER</title>
+		<style>
+			@font-face {
+				font-family: 'WebSymbolsRegular';
+				src: url('/fstatic/fonts/websymbols-regular-webfont.eot');
+				src: url('/fstatic/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'), url('/fstatic/fonts/websymbols-regular-webfont.woff') format('woff'), url('/fstatic/fonts/websymbols-regular-webfont.ttf') format('truetype'), url('/fstatic/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
+			}
+			.logo {
+				height: 50px;
+				display: block;
+				width: 190px;
+			}
+			body {
+				font-family: "segoe ui", verdana, Arial, Helvetica, sans-serif;
+				margin: 0 0 0 0;
+				font-size: 12px;
+			}
+			.left {
+				float: left;
+				left: 50px;
+			}
+			.right {
+				float: right;
+			}
+			header {
+				width: 100%;
+				height: 50px;
+				background-color: #f80;
+			}
+			nav {
+				display: block;
+				width: 30px;
+				background-color: #f80;
+				left: 0;
+				position: absolute;
+				top: 50px;
+			}
+			#map {
+				position: absolute;
+			}
+			#fider-logo {
+				font-size: 3.2em;
+			}
+			#fider-logo span {
+				display: block;
+				left: 50px;
+			}
+			#owner-logo span {
+				display: none;
+			}
+			footer {
+				position: relative;
+				height: 8px;
+				background-color: white;
+				border-top: 1px solid gray;
+				width: 100%;
+				text-align: center;
+				font-size: 11px;
+				padding-top: 2px;
+				bottom: 8px;
+			}
+			.nav_btn {
+				font-family: "WebSymbolsRegular";
+				display: block;
+				width: 30px;
+				height: 30px;
+				float: left;
+				background-repeat: no-repeat;
+				text-align: center;
+				vertical-align: middle;
+				font-size: large;
+				cursor: default;
+			}
+			
+			.content .tools_list{
+				
+			}
+			.nav_btn span {
+				position: relative;
+				top: 2px;
+				cursor: default;
+				text-shadow:1px 1px 1px black;
+			}
+			.nav_btn.selected {
+				background-color: #fc8;
+			}
+			.nav_btn.hover {
+				background-color: #fa4;
+			}
+			.nav_btn.selected.hover {
+				background-color: #fa4;
+			}
+			.panel .subpanel {
+				width: 330px;
+				left: 10px;
+				top: 10px;
+				text-align: justify;
+				position: relative;
+				overflow:auto;
+			}
+			.panel {
+				position: absolute;
+				left: 30px;
+				top: 50px;
+				width: 350px;
+				display: block;
+				z-index: 1000;
+				background-color: #FFC887;
+			}
+			.title {
+				height: 48px;
+				display: block;
+				font-size: 23px;
+				padding-left: 4px;
+			}
+			.title span {
+				padding-bottom: 24px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.subpanel {
+				padding-top: 5px;
+				padding-bottom: 5px;
+				margin-bottom: 10px;
+				background-color: white;
+			}
+			.subpanel .content {
+				padding-left: 6px;
+				border-left: 1px solid gray;
+				margin-left: 18px;
+				margin-top: -9px;
+			}
+			button {
+				width: 160px;
+				margin-left: 10px;
+				margin-top: 8px;
+				float: left;
+			}
+			.olLayerGooglePoweredBy.olLayerGoogleV3.gmnoprint {
+				display: none;
+			}
+			.olLayerGoogleCopyright.olLayerGoogleV3 {
+				display: none;
+			}
+			#owner-logo {
+				background-image: url(../../fstatic/lepida_logo_white.png);
+			}
+			.small_in{
+				width:20%;
+			}
+			.filter_active{
+				color:red;
+			}
+			select[multiple="true"]{
+				display:block;
+				width:100%;
+				height:200px;
+			}
+			input[type="checkbox"]{
+				display:none;
+			}
+			input.proxy_check[type="checkbox"]{
+				display:inline-block;
+			}
+			.tools_list{
+				width:95%;
+				margin-left:auto;
+				margin-right:auto;
+				height:30px;
+				background-color:#eee;
+				margin-bottom:5px;
+			}
+			.btn{
+				text-decoration:none;
+				width:28px;
+				height:28px;
+				display:inline-block;
+				background-color:#ddd;
+				margin-top:1px;
+				font-family: "WebSymbolsRegular";
+				background-repeat: no-repeat;
+				text-align: center;
+				vertical-align: middle;
+				font-size: large;
+				cursor: default;
+				/*text-shadow:0px 0px 3px black;*/
+				
+			}
+			
+			.content ul {
+				
+				position: relative;
+				left: -33px;
+			}
+			.btn:hover{
+				background-color:#ccc;
+				
+			}
+			
+			.nav_btn.disabled{
+				color:gray;
+				text-shadow:1px 1px 3px gray;
+			}
+			
+			.btn.disabled{
+				color:gray;
+			}
+			
+			#sett_panel .content{
+				padding-top:10px;
+				padding-bottom:10px;
+			}
+			
+			.aproxy, .uproxy{
+				border-bottom:1px solid #f80;
+			}
+			.p_name{
+				font-weight:bold;
+			}
+			.fake_link{
+				cursor:hand;
+				
+			}
+			.fake_link:hover{
+				cursor:hand;
+				
+			}
+			
+			.c_red {
+				color:red;
+			}
+			.c_gre{
+				color:green;
+			}
+			.c_grey{
+				color:gray;
+			}
+			
+			li{
+				padding-left:5px;
+			}
+			
+			li.head.IDPiper
+			{
+				padding-left:0px;
+			}
+			
+			
+			
+			.fake_link {
+				background-color: #f80;
+				padding-left:2px;
+				padding-right:2px;
+			}
+			.fake_link:hover{
+				background-color: white;
+				padding-left:1px;
+				padding-right:1px;
+				border:#f80 1px solid;
+				cursor: hand;
+			}
+			.model_header{
+				height:29px;
+			}
+			.olControlPanZoomBar {
+				rigth:5%;
+			}
+			
+			.search_geo{
+				position:absolute;
+				width:400px;
+				margin-top:5px;
+				margin-left:250px;
+				float:left;
+			}
+			.search_geo input{
+				width:300px;
+			}
+			
+			#spinner{
+				float:left;
+			}
+			
+			#do_search_geo{
+				float:none;
+				display:inline;
+				width:auto;
+			}
+		</style>
+		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/OpenLayers.js"></script>
+		
+		<script src="/fstatic/js/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+		<script src="/fstatic/js/linq.min.js"></script>
+		<script src="/fstatic/js/jquery.linq.min.js"></script>
+		<script src="/fstatic/js/ICanHaz.min.js"></script>
+		<!--<script src="https://raw.github.com/flowersinthesand/stringifyJSON/master/stringifyjson.js"></script>-->
+		<script src="https://raw.github.com/marcosesperon/Messi/master/messi.min.js"></script>
+		<script src="https://raw.github.com/Stuk/jszip/master/jszip.js"></script>
+		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/style.css" type="text/css">
+		<link rel="stylesheet" href="http://dev.openlayers.org/releases/OpenLayers-2.11/theme/default/google.css" type="text/css">
+  		<link rel="stylesheet" href="https://raw.github.com/marcosesperon/Messi/master/messi.min.css" />
+  		<link rel="stylesheet" href="/fstatic/css/custom-theme/jquery-ui-1.8.23.custom.css" />
+
+
+
+		<script id="amodel" type="text/html">
+			<div class="model">
+				<div class="model_header" data-content="{% templatetag openvariable %}ddata{% templatetag closevariable %}">
+					<span class="name">{% templatetag openvariable %}name{% templatetag closevariable %}</span>
+					<span class="right icon btn show_model">d</span>
+				</div>
+			</div>
+		</script>
+		<script id="aproxy" type="text/html">
+			<div class="aproxy">
+				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
+				{% templatetag openvariable %}#data{% templatetag closevariable %}
+					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
+					{% templatetag openvariable %}#meta{% templatetag closevariable %}
+						<tr data-id="{% templatetag openvariable %}id{% templatetag closevariable %}" data-name="{% templatetag openvariable %}name{% templatetag closevariable %}">
+							<td width="*">{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+							
+							<td width="84px">
+								
+								<span class="btn right clear_db" title="Cancella Metadato dal Database">'</span>	
+								<span class="btn right refresh_local" title="Forza Refresh Metadato">V</span>
+								<span class="btn right refresh_remotes" title="Forza Refresh Metadato (lato Proxy)">V</span>
+							</td>
+							<td width="28px">
+								{% templatetag openvariable %}#active{% templatetag closevariable %}
+								<span class=" ref_proxy right btn c_red" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %}" title="Disattiva">-</span>
+								{% templatetag openvariable %}/active{% templatetag closevariable %}
+								{% templatetag openvariable %}^active{% templatetag closevariable %}
+								<span class="ref_proxy btn right  c_gre" data-toggle_url="/broker/toggle/{% templatetag openvariable %}id{% templatetag closevariable %} " title="Attiva">+</span>
+								{% templatetag openvariable %}/active{% templatetag closevariable %}
+							</td>
+							<td width="28px"><span data-settings="{% templatetag openvariable %}crondata{% templatetag closevariable %}" class="p_settings btn right c_grey" title="Impostazioni">S</span></td>
+						</tr>
+					{% templatetag openvariable %}/meta{% templatetag closevariable %}
+					</table>
+				{% templatetag openvariable %}/data{% templatetag closevariable %}
+			</div>
+		</script>
+		<script id="uproxy" type="text/html">
+			<div class="uproxy">
+				<input class="proxy_check" type="checkbox" checked="checked" value="{% templatetag openvariable %}name{% templatetag closevariable %}">
+				<span class="p_name" >{% templatetag openvariable %}name{% templatetag closevariable %}</span>
+				{% templatetag openvariable %}#data{% templatetag closevariable %}
+					<table style="width:100%;" data-token="{% templatetag openvariable %}token{% templatetag closevariable %}">
+					{% templatetag openvariable %}#meta{% templatetag closevariable %}
+						<tr>
+							<td>{% templatetag openvariable %}name{% templatetag closevariable %}</td>
+						</tr>
+					{% templatetag openvariable %}/meta{% templatetag closevariable %}
+					</table>
+				{% templatetag openvariable %}/data{% templatetag closevariable %}
+			</div>
+		</script>
+		
+		
+		<script id="addmodelform" type="text/html">
+			<div>
+				<div class="m_head">Nome Modello Dati: <input id="model_name" type="text" value="{% templatetag openvariable %}name{% templatetag closevariable %}"></div>
+				<div class="m_toolbar tools_list btn">
+					<div class="add_row">+</div>
+				</div>
+				<div class="m_content">
+				{% templatetag openvariable %}#nprops{% templatetag closevariable %}
+					{% templatetag openvariable %}> editable_rowelement{% templatetag closevariable %}
+				{% templatetag openvariable %}/nprops{% templatetag closevariable %}
+				</div>
+			</div>
+		</script>
+		<script id="addinfrastructureform" type="text/html">
+			<div>Nome Infrastruttura: <input id="create_infra" type="text"></div>
+		</script>
+		<script id="editable_rowelement" type="text/html">
+			<div class="row" id="__{% templatetag openvariable %}pname{% templatetag closevariable %}" >
+				<span>Nome:</span><input class="field_name" type="text" value="{% templatetag openvariable %}pname{% templatetag closevariable %}"></input>
+				<span>Valore:</span> <input class="values" type="text"></input>
+				<span>Tipo:</span> <select class="type">
+					<option value="list">Valore da lista</option>	
+					<option value="str">Stringa</option>
+					<option value="int">Intero</option>	
+					<option value="data_fornitore">Fornitore</option>
+					<option value="data_infrastruttura">Infrastruttura</option>
+					<option value="data_fornitore">Proprietario</option>				
+				</select>
+			</div>
+		</script>
+		<script id="range" type="text/html">
+			<div class="line">
+				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
+				{% templatetag openvariable %}name{% templatetag closevariable %}:
+				<span class="q_el" >
+					<label class="label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="gt">Min:</label>
+					<input class="query_element small_in params" type="text"></input>
+				</span>
+				<span class="q_el" >
+					<label class="label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="lt">Max:</label>
+					<input class="query_element small_in params" type="text"></input> 
+				</span>
+			</div>
+		</script>
+		
+		<script id="multi" type="text/html">
+			<div class="line">
+				<input class="use_in_query" data-field="{% templatetag openvariable %}name{% templatetag closevariable %}" type="checkbox"></input>
+				<label class="q_el label" data-column="{% templatetag openvariable %}name{% templatetag closevariable %}" data-operator="in" for="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}">{% templatetag openvariable %}name{% templatetag closevariable %}: <span class="fake_link clear_multi">Nessuno</span> <span class="fake_link all_multi">Tutti</span></label>
+				<select class="query_element params" name="search_col_{% templatetag openvariable %}name{% templatetag closevariable %}" multiple="true">
+					{% templatetag openvariable %}#type{% templatetag closevariable %}
+					<option value="{% templatetag openvariable %}.{% templatetag closevariable %}">{% templatetag openvariable %}.{% templatetag closevariable %}</option>
+					{% templatetag openvariable %}/type{% templatetag closevariable %}
+				</select>
+			</div>
+		</script>
+		<script id="attribs" type="text/html">
+			<ul 
+				class="attribs_element" 
+				id="__{% templatetag openvariable %}id{% templatetag closevariable %}" 
+				data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" 
+				data-attributes="{% templatetag openvariable %}ia{% templatetag closevariable %}">
+				<li class="head IDPiper"
+	    			data-key="IDPiper" 
+	    			data-value="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}">IDPiper - {% templatetag openvariable %}IDPiper{% templatetag closevariable %}</li>
+			{% templatetag openvariable %}#attributes{% templatetag closevariable %}
+    			<li class="item {% templatetag openvariable %}key{% templatetag closevariable %}"
+    			data-key="{% templatetag openvariable %}key{% templatetag closevariable %}" 
+    			data-value="{% templatetag openvariable %}value{% templatetag closevariable %}">
+    				<span>{% templatetag openvariable %}key{% templatetag closevariable %} - {% templatetag openvariable %}value{% templatetag closevariable %}</span>
+    				<span class=" attrib_info right fake_link" style="display:none;">Info</span></li>
+    		{% templatetag openvariable %}/attributes{% templatetag closevariable %}
+    		</ul>
+		</script>
+		<script id="proxysettings" type="text/html">
+			<div data-id="{% templatetag openvariable %}id{% templatetag closevariable %}">
+				<span>Cron di aggiornamento:</span><input type="text" value="{% templatetag openvariable %}crondata{% templatetag closevariable %}"></input>
+			</div>
+		</script>
+		<script id="map_exporter" type="text/html">
+			<div id="maptoimage" title="Esportazione vista">
+
+			    <div class="formbriefing">
+			        Per esportare la mappa mostrata nell'anteprima in basso, fare clic sul collegamento "Scarica mappa".
+			    </div>
+			
+			    <div id="exportcanvas">
+			
+			    </div>
+			
+			    <div class="formbriefing mapdloadlink" id="mapdloadlinkpng">
+			
+			    </div>
+			
+			    <img id="exportcanvasshadow">
+			
+			</div>
+		</script>
+		
+		<script id="contact" type="text/html">
+			<table class="proxydetailstable">
+            <tbody><tr>
+                <td colspan="2" class="proxydetails_header" id="proxyref_proxyname">{% templatetag openvariable %}owner{% templatetag closevariable %}</td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    Fornitore
+                </td>
+                <td class="proxydetails_info">
+                    <span id="proxyref_provider">{% templatetag openvariable %}owner{% templatetag closevariable %}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    <label for="proxyref_refname">Referente</label>
+                </td>
+                <td class="proxydetails_info">
+                    <input type="text" id="proxyref_refname" value="{% templatetag openvariable %}contact{% templatetag closevariable %}">
+                </td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    <label for="proxyref_refmail">Email</label>
+                </td>
+                <td class="proxydetails_info">
+                    <input type="text" id="proxyref_refmail" value="{% templatetag openvariable %}email{% templatetag closevariable %}">
+                </td>
+            </tr>
+            <tr>
+                <td class="proxydetails_label">
+                    <label for="proxyref_reftel">Telefono</label>
+                </td>
+                <td class="proxydetails_info">
+                    <input type="text" id="proxyref_reftel" value="{% templatetag openvariable %}phone{% templatetag closevariable %}">
+                </td>
+            </tr>
+
+        </tbody></table>
+		</script>
+		<script>
+			jQuery.extend({
+			    stringifyJSON  : function stringify(obj) {         
+			        if ("JSON" in window) {
+			            return JSON.stringify(obj);
+			        }
+			
+			        var t = typeof (obj);
+			        if (t != "object" || obj === null) {
+			            // simple data type
+			            if (t == "string") obj = '"' + obj + '"';
+			
+			            return String(obj);
+			        } else {
+			            // recurse array or object
+			            var n, v, json = [], arr = (obj && obj.constructor == Array);
+			
+			            for (n in obj) {
+			                v = obj[n];
+			                t = typeof(v);
+			                if (obj.hasOwnProperty(n)) {
+			                    if (t == "string") {
+			                        v = '"' + v + '"';
+			                    } else if (t == "object" && v !== null){
+			                        v = jQuery.stringify(v);
+			                    }
+			
+			                    json.push((arr ? "" : '"' + n + '":') + String(v));
+			                }
+			            }
+			
+			            return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+			        }
+			    }
+			});
+		</script>
+		<script>
+		    $.extend($.fn.disableTextSelect = function() {
+		        return this.each(function(){
+		            if($.browser.mozilla){
+		                $(this).css('MozUserSelect','none');
+		            }else if($.browser.msie){
+		                $(this).bind('selectstart',function(){return false;});
+		            }else{
+		                $(this).mousedown(function(){return false;});
+		            }
+		        });
+		    });
+		</script>
+		<script>
+			if (typeof String.prototype.startsWith != 'function') {
+			  // see below for better implementation!
+			  String.prototype.startsWith = function (str){
+			    return this.indexOf(str) == 0;
+			  };
+			}
+			
+		</script>
+		<script>
+			FIdER = {};
+			OpenLayers.ImgPath = "https://github.com/sirmmo/openlayers_themes/raw/master/dark/";
+			OpenLayers.ProxyHost = "external/";
+
+			//refresh function for resize and startup
+			FIdER.refresh = function() {
+				var width = $(window).width() - $('nav').width();
+				var height = $(window).height() - $('header').height() - $('footer').height() - 10;
+				$('#map').width(width);
+				$('#map').height(height);
+				$('nav').height(height);
+				$('.panel').height(height);
+				$('footer').css('top', $(window).height() - $('header').height() - 10 - $('footer').height());
+				$('.subpanel').css('max-height', $(window).height()-$('footer').height()-1-$('header').height()-40);
+				$('.bottom').css('top', $(window).height() - $('header').height() - 10 -40 - $('footer').height());
+				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
+			};
+			//projections
+			FIdER.projections = {};
+			FIdER.projections.google = new OpenLayers.Projection("EPSG:900913");
+			FIdER.projections.wgs84 = new OpenLayers.Projection("EPSG:4326");
+			FIdER.projections.ed50 = new OpenLayers.Projection("EPSG:900913");
+	
+			//starting point
+			FIdER.start = new OpenLayers.Bounds();
+			FIdER.start.extend(new OpenLayers.LonLat({{bb.l}},{{bb.t}}).transform(FIdER.projections.wgs84, FIdER.projections.google));
+			FIdER.start.extend(new OpenLayers.LonLat({{bb.r}}, {{bb.b}}).transform(FIdER.projections.wgs84, FIdER.projections.google));
+
+			FIdER.ccstyle = new OpenLayers.StyleMap();
+			$.get('/sld/default', function(sld){
+					sld_reader = new OpenLayers.Format.SLD();
+					FIdER.sld = sld_reader.read(sld);
+					FIdER.ccstyle.styles['default']=FIdER.sld.namedLayers.elements.userStyles[0]
+					
+			});
+			$.get('/sld/selected', function(sld){
+					sld_reader = new OpenLayers.Format.SLD();
+					FIdER.sld = sld_reader.read(sld);
+					FIdER.ccstyle.styles['select']=FIdER.sld.namedLayers.selected_elements.userStyles[0]
+					
+			});
+			FIdER.bbstyle = new OpenLayers.StyleMap();
+			FIdER.bbstyle.addUniqueValueRules("default", "highlight",{
+				'false':{
+					'fillColor':"Orange",
+					'strokeColor':"Orange",
+					'fillOpacity':0.1,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				},
+				'true':{
+					'fillColor':"Blue",
+					'strokeColor':"Blue",
+					'fillOpacity':0.1,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				},
+				'dead':{
+					'fillColor':"White",
+					'strokeColor':"White",
+					'fillOpacity':0.1,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				}
+			});	
+			
+			FIdER.tr_style = new OpenLayers.StyleMap();
+			FIdER.tr_style.addUniqueValueRules("default", "type", {
+				'start':{
+					'fillColor':"#44ff44",
+					'strokeColor':"#44ff44   ",
+					'fillOpacity':0.5,
+					'strokeWidth':"3",
+					'pointRadius':'8'
+					
+				},
+				'end':{
+					'fillColor':"Red",
+					'strokeColor':"Red",
+					'fillOpacity':0.5,
+					'strokeWidth':"3",
+					'pointRadius':'8'
+					
+				},
+			});
+			FIdER.bgstyle = new OpenLayers.StyleMap({
+				'default':{
+					'fillColor':"White",
+					'strokeColor':"White",
+					'fillOpacity':0,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				},
+				'select':{
+					'fillColor':"White",
+					'strokeColor':"White",
+					'fillOpacity':0,
+					'strokeWidth':"1",
+					'pointRadius':'6'
+					
+				}
+			});
+						
+			FIdER.hover_style = new OpenLayers.StyleMap({
+				'default':{
+					'fillColor':"Red",
+					'strokeColor':"White",
+					'fillOpacity':0,
+					'strokeWidth':"10",
+					'pointRadius':'9'
+					
+				}
+			});
+			
+			FIdER.status = {};
+			
+			FIdER.hover_layer = new OpenLayers.Layer.Vector("hoverel",{
+				styleMap: FIdER.hover_style
+			});			
+			 
+			
+			FIdER.bg_layer = new OpenLayers.Layer.Vector("bgelements",{
+				styleMap: FIdER.bgstyle
+			});			
+			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
+				styleMap: FIdER.ccstyle
+			});
+			
+			FIdER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
+				styleMap: FIdER.bbstyle
+			});
+			
+			FIdER.track_layer = new OpenLayers.Layer.Vector("tracks",{
+				styleMap: FIdER.tr_style
+			});
+			
+			
+			FIdER.hide_panels = function(){
+					$('.nav_btn').removeClass('selected');
+					$('.panel').hide();
+			};
+			
+
+			FIdER.vector_layer.events.on({
+                'featureselected': show_features,
+                'featureunselected': show_features
+            });
+            
+            FIdER.block_selections = false;
+            function show_features(feature){
+            	if (!FIdER.block_selections){
+            		setTimeout(do_show_features,500);
+            		FIdER.block_selections = true;
+            	}
+            }
+            
+            function tryExportView()
+				{
+					pr = ich.map_exporter();
+					pr.dialog({
+						width:666,
+						height:300,
+						modal:true
+					});				
+				
+				    console.log("Trying to export the viewport");
+				
+				
+				    var drawcenter = new OpenLayers.LonLat(FIdER.map.getCenter().lon,
+				FIdER.map.getCenter().lat).transform(FIdER.map.getProjectionObject(), new
+				OpenLayers.Projection(FIdER.projections.wgs84));
+				
+				    viewportWidth = $(FIdER.map.div).width();
+				    viewportHeight = $(FIdER.map.div).height();
+				
+				    //console.log(drawcenter);
+				    //console.log(drawcenter.lon);
+				    //console.log(drawcenter.lat);
+				    drawcenter = [drawcenter.lat, drawcenter.lon];
+				    var drawzoom = FIdER.map.getZoom();
+				
+				    console.log("Getting map background with zoom "+drawzoom);
+				
+				
+				
+				    //$("#btn_downloadMapRender").hide();
+				
+				    var provider;
+				    var maptype;
+				    if (FIdER.map.baseLayer.name == 'OpenStreetMap')
+				    {
+				        provider = 'osm';
+				        maptype = 'mapnik';
+				    }
+				    else
+				    {
+				        provider = 'google';
+				        maptype = FIdER.map.baseLayer.name.split(" ",2)[1].toLowerCase();
+				
+				    }
+				
+				    limitHeight = provider == 'google' ? 640 : 1280;
+				    limitWidth = provider == 'google' ? 640 : 1280;
+				
+				    vpCropWidth = Math.min(viewportWidth, limitWidth);
+				    vpCropHeight = Math.min(viewportHeight, limitHeight);
+				
+				    // hardcoded: can switch to 2 but gives problems in rebuilding vector geometry later
+				    var googleMultip = 1;
+				
+				    sizeMultip = provider == 'google' ? googleMultip : 1;
+				
+				    $("#exportcanvas").empty().append('<canvas id="drawingarea"	height='+vpCropHeight*sizeMultip+' width='+vpCropWidth*sizeMultip+'></canvas>');
+				
+				    console.log("Parameters for map call");
+				
+				    exportprovider = provider;
+				    var parameters = {
+				        'provider': provider,
+				        'maptype': maptype,
+				        'drawcenter': drawcenter,
+				        'drawzoom': drawzoom,
+				        'drawsize': [vpCropWidth, vpCropHeight]
+				    };
+				
+				
+				    console.log(parameters);
+				
+				    $.ajax ({
+				        url: '/interface/staticmap',
+				        data:   {jsondata: JSON.stringify(parameters)},
+				        async: true,
+				        type: 'POST',
+				        success: function (data)
+				        {
+				
+				            $("#progress_imagerender").dialog("close");
+				            $("#mapdloadlinkpng").empty().append("L'operazione di rendering puo' richiedere tempi elevati.<br>In caso di interruzione da parte del browser, premere il pulsante Continua.");
+				            $("#btn_maptoimage_close").hide();
+				            $("#maptoimage").dialog("open");
+				
+				
+				            renderExportableMap(data);
+				
+				
+				
+				
+				        },
+				        error: function () {
+				
+				            $("#progress_imagerender .progspinner").hide();
+				            $("#progress_imagerender .formbrieding").hide();
+				            $("#renderfinished_fail").show();
+				            $("#btn_renderprogress_close").show();
+				            console.log("ERROR received");
+				        }
+				    });
+				
+				}
+
+function renderExportableMap (rawimagedata)
+{
+	
+	 map_id="map";
+    console.log("succeeded downloading remote map");
+    //console.log(data);
+
+
+
+
+    // cleaning the context
+    var canvas = document.getElementById('drawingarea');
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, vpCropWidth*sizeMultip,
+vpCropHeight*sizeMultip);
+
+    console.log("Ready to render");
+    //console.log(typeof data);
+
+    $("#exportcanvasshadow").attr("src", "data:image/png;base64," +
+rawimagedata);
+  //  $("#exportcanvasshadow")[0].onload = function ()
+    //{
+        console.log("Export shadow info");
+        console.log($("#exportcanvasshadow"));
+
+        context.drawImage($("#exportcanvasshadow")[0], 0, 0,
+vpCropWidth*sizeMultip, vpCropHeight*sizeMultip, 0, 0,
+vpCropWidth*sizeMultip, vpCropHeight*sizeMultip);
+        //console.log(canvas.toDataURL());
+        renderVectorLayerToCanvas(FIdER.bbox_layer, canvas);
+        renderVectorLayerToCanvas(FIdER.bg_layer, canvas);
+        renderVectorLayerToCanvas(FIdER.vector_layer, canvas);
+
+        var linkstring = $("<a>Scarica mappa</a>");
+        linkstring.attr('href', canvas.toDataURL());
+        linkstring.attr('download', map_id+".png");
+        $("#mapdloadlinkpng").empty().append(linkstring);
+
+        //$("#btn_downloadMapRender").show();
+        $("#btn_maptoimage_close").show();
+
+
+ //   };
+
+
+
+
+
+}
+
+function renderVectorLayerToCanvas (layerfrom, destcanvas)
+{
+
+    console.log("Copying "+layerfrom.features.length+" features to draw layer");
+
+    var featurestylemap = layerfrom.styleMap;
+    var renderlayer = new OpenLayers.Layer.Vector("drawlayer__"+layerfrom.name, {name:
+"drawlayer__"+layerfrom.name, styleMap: featurestylemap, renderers: ["Canvas"]});
+    renderlayer.id = "rendercanvas";
+    //(($(renderlayer.div)).find("canvas")[0]).lineCap="round";
+    //(($(renderlayer.div)).find("canvas")[0]).lineJoin="round";
+
+    renderlayer.display(false);
+
+
+
+    /* V2: much slower in theory but should scale */
+
+    console.log("Copying renderer canvas to output");
+    var element = ($(renderlayer.div)).find("canvas")[0];
+    var context = destcanvas.getContext('2d');
+    console.log(element);
+
+    var offsetX = (vpCropWidth - viewportWidth)/2;
+    var offsetY = (vpCropHeight - viewportHeight)/2;
+    FIdER.map.addLayer(renderlayer);
+
+    for (var f in layerfrom.features)
+    {
+
+        var geom = layerfrom.features[f].geometry;
+
+        if (layerfrom.features[f].onScreen())
+        {
+            renderlayer.addFeatures(new
+OpenLayers.Feature.Vector(geom));
+            context.drawImage(element, offsetX, offsetY);
+            renderlayer.destroyFeatures();
+        }
+
+
+
+    }
+    renderlayer.destroy();
+
+
+}
+
+            
+            
+            OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
+                defaultHandlerOptions: {
+                    'single': true,
+                    'double': false,
+                    'pixelTolerance': 0,
+                    'stopSingle': false,
+                    'stopDouble': false
+                },
+
+                initialize: function(options) {
+                    this.handlerOptions = OpenLayers.Util.extend(
+                        {}, this.defaultHandlerOptions
+                    );
+                    OpenLayers.Control.prototype.initialize.apply(
+                        this, arguments
+                    ); 
+                    this.handler = new OpenLayers.Handler.Click(
+                        this, {
+                            'click': this.trigger
+                        }, this.handlerOptions
+                    );
+                }, 
+
+                trigger: function(e) {
+                    lonlat = FIdER.map.getLonLatFromPixel(e.xy);
+					FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),  {'type':'start'})]);
+					FIdER.interestclick.deactivate();
+                }
+
+            });
+            
+            FIdER.interestclick = new OpenLayers.Control.Click();
+            
+            FIdER.selected_items = {{selected|safe}};
+            
+            function intersect_safe(a, b)
+			{
+			  var ai=0, bi=0;
+			  var result = new Array();
+			
+			  while( ai < a.length && bi < b.length )
+			  {
+			     if      (a[ai] < b[bi] ){ ai++; }
+			     else if (a[ai] > b[bi] ){ bi++; }
+			     else /* they're equal */
+			     {
+			       result.push(a[ai]);
+			       ai++;
+			       bi++;
+			     }
+			  }
+			
+			  return result;
+			}
+            
+            
+            
+			function reverseGeoSearch (featuregeom, array, attname)
+			{
+			    /*
+			
+			http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true_or_false
+			     */
+			
+			    var coords = new OpenLayers.LonLat(featuregeom.x,
+			featuregeom.y).transform(FIdER.map.getProjectionObject(), FIdER.projections.wgs84);
+			
+			
+			    //console.log("Trying reverse geocoding for coordinates");
+			    //console.log(coords);
+			
+			    //console.log("Writing result to ID");
+			    //console.log(writetoid);
+			
+			    //console.log(dest);
+			
+			    var path =
+			'/external/maps.googleapis.com/maps/api/geocode/json?latlng='+coords.lat
+			+','+coords.lon+'&sensor=false';
+			
+			
+				gdata = "";
+			    $.ajax({
+			    	method:"GET",
+			    	url:path, 
+			    	async:false,
+			    	success:function(gqdata)
+					    {
+					        //console.log(gqdata);
+					        if(gqdata.status == "OK")
+					        {
+					            if (gqdata.results.length > 0)
+					            {
+					
+					                //console.log("Results found");
+					                gdata = gqdata['results'][0]['formatted_address'];
+					                
+					            }
+					        }
+					    }
+			    });
+			    return gdata;
+			}
+			
+			 function ConvertToCSV(objArray) {
+	            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+	            var str = '';
+	
+	            for (var i = 0; i < array.length; i++) {
+	                var line = '';
+	                for (var index in array[i]) {
+	                    if (line != '') line += ','
+	
+	                    line += array[i][index];
+	                }
+	
+	                str += line + '\r\n';
+	            }
+	
+	            return str;
+	        }
+
+            function prepare_csv_export(bi_data){
+				lines = [];
+				points = [];
+				var zip = new JSZip();
+				
+				points_csv = [];
+				lines_csv = [];
+				bi = []
+										
+				for (i in FIdER.vector_layer.selectedFeatures){
+					feat = FIdER.vector_layer.selectedFeatures[i];
+					if (feat.geometry.toString().split('(')[0] == "POINT")
+						lines_csv.push(feat.attributes);
+					else
+						points_csv.push(feat.attributes);
+				}
+				
+				lines = ConvertToCSV(lines_csv);
+				points = ConvertToCSV(points_csv);
+				bi = ConvertToCSV(bi_data);
+				
+				zip.file("linear.csv", lines);
+				zip.file("punctual.csv", points);
+				zip.file("BI.csv", bi);
+				
+				content = zip.generate();
+				//console.log(content);
+				var a = $('#export_csv');
+				a.removeClass('disabled')
+				a.attr('href', "data:application/zip;base64," + content);				
+			}
+            
+            
+            
+            function tryBuildMapToCanvas()
+			{
+			
+			    console.log("Trying to copy the tiledata to a canvas object");
+			
+			    var base = $("#OpenLayers\\.Map_35_GMapContainer");
+			
+			    var baseoffset_y = parseInt(base.css("top"));
+			    var baseoffset_x = parseInt(base.css("left"));
+			
+			    if (isNaN(baseoffset_y))
+			    {
+			        baseoffset_y = 0;
+			    }
+			    if (isNaN(baseoffset_x))
+			    {
+			        baseoffset_x = 0;
+			    }
+			
+			    var limit_x = parseInt($("#mapview").css("width"));
+			    var limit_y = parseInt($("#mapview").css("height"));
+			
+			    $("#maptoimage").dialog("open");
+			
+			    $("#vis_panel").empty().append('<canvas id="drawingarea"	height="'+limit_y+'" width="'+limit_x+'"></canvas>');
+			
+			
+			
+			
+			    //console.log(base[0]);
+			    //console.log(baseoffset_x);
+			    //console.log(baseoffset_y);
+			    //console.log(limit_x);
+			    //console.log(limit_y);
+			
+			    //var canvas = document.createElement('canvas');
+			
+			    var canvas = document.getElementById('drawingarea');
+			    var context = canvas.getContext('2d');
+			    context.clearRect(0, 0, canvas.width, canvas.height);
+			
+			    var tileset = base.find("img:visible");
+			
+			    console.log("Total "+tileset.length+" tiles available on this layer");
+			
+			    var offsetter = base.find("div:first div:first div:first");
+			    // console.log("Reading offset div");
+			    // console.log(offsetter);
+			    // console.log(offsetter.css("-webkit-transform"));
+			
+			    // cleaning up the matrix string from css
+			    var preparse =
+			offsetter.css("-webkit-transform").replace(")","").split(",");
+			    // console.log(preparse);
+			
+			    var mainoffset_x = parseInt(preparse[preparse.length-2]);
+			    var mainoffset_y = parseInt(preparse[preparse.length-1]);
+			
+			
+			
+			    for (var i = 0; i < tileset.length; i++)
+			    {
+			        // drawing EVERYTHING to the canvas
+			        var ctile = $(tileset[i]);
+			        var ctileimg = tileset[i];
+			
+			        var parent = ctile.closest("div");
+			
+			        var offset_x = parseInt(parent.css('left'))+mainoffset_x;
+			        var offset_y = parseInt(parent.css('top'))+mainoffset_y;
+			
+			
+			        var tile_width = ctileimg.width;
+			        var tile_height = ctileimg.height;
+			
+			        //context.drawImage(ctileimg, 0, 0, tile_width, tile_height,offset_x, offset_y, tile_width, tile_height);
+			        context.drawImage(ctileimg, 0, 0, tile_width, tile_height,offset_x, offset_y, tile_width, tile_height);
+			
+			        console.log("Drawn "+tileset[i]+" in "+offset_x+","+offset_y+"with size "+ctileimg.width+"*"+ctileimg.height);
+			
+			    }
+			
+			    console.log("Drawn "+i+" tiles");
+			
+			    console.log("Copying "+vislayer.features.length+" features to drawlayer");
+			
+			    var featurestyle = new OpenLayers.Style ({fillOpacity: 0.5,
+			fillColor: "#ff00ff", strokeColor: "#000000", strokeWidth: 6,
+			strokeDashstyle: "solid", pointRadius: 10});
+			    var featurestylemap = new OpenLayers.StyleMap(featurestyle);
+			    var renderlayer = new OpenLayers.Layer.Vector("drawlayer", {name:"drawlayer", styleMap: featurestylemap, renderers: ["Canvas"]});
+			    renderlayer.id = "rendercanvas";
+			
+			    renderlayer.display(false);
+			
+			    mapview.addLayer(renderlayer);
+			
+			
+			    for (var f in vislayer.features)
+			    {
+			        //renderlayer.addFeatures(vislayer.features);
+			        var cfeature = vislayer.features[f];
+			        renderlayer.addFeatures(new
+			OpenLayers.Feature.Vector(cfeature.geometry));
+			    }
+			
+			
+			
+			    //renderlayer.display();
+			
+			    console.log("Copying renderer canvas to output");
+			    var element = ($(renderlayer.div)).find("canvas")[0];
+			
+			    context.drawImage(element, 0, 0);
+			
+			    renderlayer.destroy();
+			
+			    console.log("canvas to data URL");
+			
+			    console.log($(canvas));
+			
+			}
+            
+            function do_show_features(){
+            		FIdER.block_selections = false;
+            		pa = [];
+            		$('#properties_panel .subpanel .content').empty();
+	                $('#bi_panel .subpanel .content').empty();
+	                ss = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
+                	if (ss.length == 1){
+	                	for (var e in ss[0].attributes)
+	                		if (!e.startsWith('_') && e!="IDPiper"){
+	                			pa.push({'key':e, 'value':ss[0].attributes[e]});
+	                		}
+		                	pa.push({'key':'Lunghezza', "value":Math.round(ss[0].geometry.getLength()*100)/100});
+		                	if (ss[0].geometry.getLength() == 0)
+		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[0].geometry)});
+		                	else{
+		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[0].geometry.components[0])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[0].geometry.components[ss[0].geometry.components.length-1])});
+		                	}
+		                	
+		                	xxte =  {"attributes":pa, "id":ss[0].id.replace(/\./g,'_'), 'IDPiper':ss[0].attributes.IDPiper, 'ia':$.stringifyJSON(ss[0].attributes)};
+		                    $('#properties_panel .subpanel .content').empty();
+		                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
+		                    $('#properties_panel .subpanel .content').show();
+		                    $('#bi_panel .subpanel .content').empty();
+		                    $('#bi_panel .subpanel .content').show();
+		                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
+		                    $('#bi_panel .subpanel .content').append($("<hr></hr>"));
+		                    
+	                    
+	                }else if(ss.length > 1 ){
+	                	
+	                	total_length = Enumerable.From(ss).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Sum("$.geometry.getLength()");
+	                	distinct_line_count = Enumerable.From(ss).Where("$.geometry.bounds.bottom != $.geometry.bounds.top").Count();
+	                	distinct_point_count = Enumerable.From(ss).Where("$.geometry.bounds.bottom == $.geometry.bounds.top").Count();
+	                	distinct_owners = Enumerable.From(ss).Distinct("$.attributes.Proprietario").Select("$.attributes.Proprietario").ToString(", ");
+	                	distinct_data = Enumerable.From(ss).Distinct("$.attributes.Fornitore").Select("$.attributes.Fornitore").ToString(", ");
+	                	distinct_infra = Enumerable.From(ss).Distinct("$.attributes.Tipo").Select("$.attributes.Tipo").ToString(", ");
+	                	xxte = {
+	                		'attributes':[
+	                			{
+	                				'key':'Lunghezza totale tratte',
+	                				'value':Math.round(total_length*100)/100+"m"
+	                			},
+	                			{
+	                				'key':'Numero Tratte Distinte',
+	                				'value':distinct_line_count,
+	                			},
+	                			{
+	                				'key':'Numero Pozzetti Distinti',
+	                				'value':distinct_point_count,
+	                			},
+	                			{
+	                				'key':'Proprietari',
+	                				'value':distinct_owners,
+	                			},
+	                			{
+	                				'key':'Fornitori',
+	                				'value':distinct_data,
+	                			},
+	                			{
+	                				'key':'Infrastrutture',
+	                				'value':distinct_infra,
+	                			}
+	                		]
+	                	};
+	                	
+	                	$('#bi_panel .subpanel .content').empty();
+	                    $('#bi_panel .subpanel .content').show();
+	                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
+	                    $('#bi_panel .subpanel .content').append($("<hr></hr>"));
+	                    
+	                    for (aa in ss){
+	                    	pa = [];
+	                    	
+		                    for (var e in ss[aa].attributes)
+		                		if (!e.startsWith('_') && e!="IDPiper"){
+		                			pa.push({'key':e, 'value':ss[aa].attributes[e]});
+		                		}
+		                	pa.push({'key':'Lunghezza', "value":Math.round(ss[aa].geometry.getLength()*100)/100});
+		                	/*if (ss[aa].geometry.getLength() == 0)
+		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
+		                	else{
+		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                	}*/
+		                	
+		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
+		                    
+			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
+	                    }
+	                    
+	                    prepare_csv_export(xxte.attributes)
+	                }
+	                FIdER.selected_items = ss;
+            }
+			
+
+			$(window).resize(FIdER.refresh);		
+
+			$('.ref_proxy').live('click', function(){
+				d = $(this).data('toggle_url');
+				$.get(d, function(data){
+					$.getJSON('/broker/getproxies', function(pdata){
+					
+						$('#admin_proxies').empty();
+						$('#user_proxies').empty();
+						for (owner in pdata){
+							
+							$('#admin_proxies').append(ich.aproxy(pdata[owner]));
+							up = ich.uproxy(pdata[owner]);
+							$('#user_proxies').append(up);
+						
+						}
+					});
+					
+					
+				});
+			});
+			
+			$('.nav_btn').live('mouseover', function() {
+				$(this).addClass('hover');
+			});
+			$('.nav_btn').live('mouseout', function() {
+				$(this).removeClass('hover');
+			});
+			
+			$('.add_row').live('click', function(){
+				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
+			});
+			
+			FIdER.status.panel_open = false;
+			
+			$('.nav_btn').live('click', function(){
+				FIdER.status.panel_open = $('.selected').length >0 ;
+			});
+			
+			$('.nav_btn:not(".special"):not(".disabled")' ).live('click', function() {
+				id = $(this).attr('id');
+				
+				if ($(this).hasClass('selected')) {
+					close_panel();
+				} else {
+					close_panel();
+					open_panel(id);
+				}
+			});
+			
+			function close_panel(){
+				FIdER.status.propopen = false;
+				FIdER.status.biopen = false;
+				
+					$('.nav_btn').removeClass('selected');
+					$('.panel').hide();
+				
+				FIdER.status.panel_open = $('.selected').length >0 ;
+				FIdER.select_multi_control.deactivate();
+				FIdER.select_one_control.deactivate();
+			}
+			function open_panel(panel){
+				
+					$("#"+panel).addClass('selected');
+					$('.panel.' + panel).show();
+					
+					if (panel in spec_ops)
+						spec_ops[panel]();
+			}
+			
+			spec_ops = {
+				"properties_btn":function(){
+					FIdER.select_one_control.activate();
+					FIdER.select_multi_control.deactivate();
+				},
+				'bi_btn':function(){
+					FIdER.select_one_control.deactivate();
+					FIdER.select_multi_control.activate();
+				}
+			}
+			
+			$('.nav_btn').disableTextSelect();//No text selection on elements with a class of 'noSelect'
+
+			
+			$('.query_element').live('change', function(){
+				$(this).parent().find('.use_in_query').attr('checked', true);
+			});
+			
+			$('#do_clear_btn').live('click', function(){
+			});
+			
+			$('#home_btn').live('click', function(){
+					FIdER.map.zoomToExtent(FIdER.start);
+			});
+			
+			$('.show_model').live('click', function(){
+				content = $(this).parent().data('content');
+				show_models(content);
+			});
+			
+			$('.proxy_check').live('click', function(){
+				
+			})
+			
+			$('#refresh_remotes').live('click', function(){
+				$('<div>Desideri forzare il refresh dei proxy?</div>').dialog({
+					title:"Forzare il refresh dei proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/pull', function(ddd){
+								console.log(ddd);
+							});
+								$( this ).dialog( "destroy" );
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			$('#refresh_local').live('click', function(){
+				$('<div>Desideri scaricare i dati dai proxy?</div>').dialog({
+					title:"Scaricamento dati dai proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/get', function(ddd){
+								console.log(ddd);
+							});
+								$( this ).dialog( "destroy" );
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			$('#clear_db').live('click', function(){
+					$('<div>Desideri cancellare il contenuto del database?</div>').dialog({
+						title:"Cancellazione del DataBase",
+						modal:true,
+						buttons:{
+							'OK':function(){
+								$.get('/broker/clear', function(ddd){
+									console.log(ddd);
+								});
+									$( this ).dialog( "destroy" );
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			});
+			
+			
+			$('.refresh_remotes').live('click', function(){
+				id= $(this).parent('tr').data('id');
+				$('<div>Desideri forzare il refresh del proxy?</div>').dialog({
+					title:"Forzare il refresh dei proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/pull?id='+id, function(ddd){
+								console.log(ddd);
+							});
+								$( this ).dialog( "destroy" );
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			$('.refresh_local').live('click', function(){
+				id= $(this).parent('tr').data('id');
+				$('<div>Desideri scaricare i dati dal proxy?</div>').dialog({
+					title:"Scaricamento dati dai proxy",
+						modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/get?id='+id, function(ddd){
+								console.log(ddd);
+							});
+								$( this ).dialog( "destroy" );
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			$('.clear_db').live('click', function(){
+				id= $(this).parent('tr').data('id');
+					$('<div>Desideri cancellare il contenuto del database relativo al proxy slezionato?</div>').dialog({
+						title:"Cancellazione del DataBase",
+						modal:true,
+						buttons:{
+							'OK':function(){
+								$.get('/broker/clear?id='+id, function(ddd){
+									console.log(ddd);
+								});
+									$( this ).dialog( "destroy" );
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			});
+			
+			
+			$('.type').live('change', function(){
+				if($(this).val() != "list")
+					$(this).parent().children('.values').attr("disabled", "disabled");
+				else
+					$(this).parent().children('.values').removeAttr("disabled");
+			});
+			
+			$('#add_infrastructure').live('click', function(){
+					ich.addinfrastructureform().dialog({
+						title:"Aggiungi Infrastruttura",
+						buttons:{
+							'OK':function(){
+								$.get('/data', function(ddd){
+									console.log(ddd);
+									$( this ).dialog( "destroy" );
+								});
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			});
+			
+			function show_models(data){
+				if (data == null)
+					ff = ich.addmodelform();
+				else{
+					ff = ich.addmodelform(data);
+					for (d in data.nprops){
+						ss = data.nprops[d];
+						if (typeof(ss.ptype) == "string"){
+							ff.find('#__'+ss.pname).find('.type').val(ss.ptype);
+							ff.find('#__'+ss.pname).find('.values').attr("disabled","disabled");
+						}
+						else{
+							ff.find('#__'+ss.pname).find('.type').val("list");
+							ff.find('#__'+ss.pname).find('.values').val(ss.ptype);
+						}
+					}
+				}
+				ff.dialog({
+						width:650,
+						title:"Definizione Modello",
+						buttons:{
+							'OK':function(){
+								$.get('/data', function(ddd){
+									console.log(ddd);
+									$( this ).dialog( "destroy" );
+								});
+							},
+							'Annulla':function(){
+								$( this ).dialog( "destroy" );
+							}
+						}
+					});	
+			}
+			
+			$('#add_model').live('click', function(){
+				show_models(null);
+			});
+			$('.p_settings').live('click', function(){
+				data = $(this).data('settings');
+				ich.proxysettings({'crondata':data}).dialog({
+					title:"Impostazioni proxy",
+					resizable:false,
+					width:350,
+					buttons:{
+						'OK':function(){
+							$( this ).dialog( "destroy" );
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
+						}
+					}
+				});	
+			});
+			
+			$('.Proprietario, .Fornitore')
+				.live('mouseover', function(){
+					$(this).find('.fake_link').show();
+				})
+				.live('mouseout', function(){
+					data = $(this).data('value');
+					$(this).find('.fake_link').hide();
+				});
+			$('.attrib_info').live('click', function(){
+				data_p = $(this).closest('ul').data('attributes')._proxy;
+				data_b = $(this).closest('ul').data('attributes')._baseurl;
+				url = "/external/"+ data_b.replace('http://', '') + "fwp/getcontacts/" + data_p;
+				$.getJSON(url, function(data){
+					ich.contact(data).dialog({
+						title:"Dettagli contatto",
+						resizable:false,
+						width:350,
+						buttons:{
+							'OK':function(){
+								$(this).dialog('destroy');
+							}
+						}
+					});
+				});
+			});
+			
+			$('.attribs_element').live('mouseover', function(){
+				id = $(this).data('innerid');
+				ii = FIdER.vector_layer.getFeaturesByAttribute('IDPiper', id)[0];
+				FIdER.hover_layer.addFeatures([ii.clone()]);
+			}).live('mouseout', function(){
+				id = $(this).data('innerid');
+				FIdER.hover_layer.removeAllFeatures();
+			});
+			
+			
+			$('.clear_multi').live('click', function(){
+				$(this).parent().parent().find('option').prop("selected", false);
+			});
+			$('.all_multi').live('click', function(){
+				$(this).parent().parent().find('option').attr('selected', 'selected');
+			});
+			
+	/*		FIdER.status.propopen = false;
+			$('#properties_btn').live('click', function(){
+				if (FIdER.status.panel_open){
+					if ($('#properties_btn.selected').length > 0)
+					FIdER.status.biopen = false;
+					
+					if (FIdER.status.propopen){
+						FIdER.select_one_control.activate();
+						FIdER.select_multi_control.deactivate();
+					}
+					else{
+						FIdER.select_multi_control.deactivate();
+						FIdER.select_one_control.deactivate();
+					}
+				}
+				else{
+					FIdER.select_multi_control.deactivate();
+					FIdER.select_one_control.deactivate();
+				}
+			});
+			
+			FIdER.status.biopen = false;
+			$('#bi_btn').live('click', function(){
+				if (FIdER.status.panel_open){
+					if ($('#properties_btn.selected').length > 0)
+					FIdER.status.biopen = false;
+					
+					if (FIdER.status.propopen){
+						
+					}
+					else{
+						FIdER.select_multi_control.deactivate();
+						FIdER.select_one_control.deactivate();
+					}
+				}
+				else{
+					FIdER.select_multi_control.deactivate();
+					FIdER.select_one_control.deactivate();
+				}
+			});*/
+			
+			$('#clear_selection').live('click', function(){
+				
+				$('#bi_panel .subpanel .content').empty();
+				$('#properties_panel .subpanel .content').empty();
+				FIdER.selected_items = [];
+				FIdER.select_multi_control.unselectAll();
+				
+    			$('#export_csv').addClass('disabled');
+			});
+			
+			$('#clear_selection_t').live('click', function(){
+				FIdER.track_layer.removeAllFeatures();
+				$('#bi_panel .subpanel .content').empty();
+				$('#properties_panel .subpanel .content').empty();
+				FIdER.selected_items = [];
+				FIdER.select_one_control.unselectAll();
+				FIdER.select_multi_control.unselectAll();
+			});
+			
+			FIdER.status.add_point = false;
+			$( "#track_btn" ).live('click', function(event, ui){
+				FIdER.status.add_point = true;
+				FIdER.interestclick.activate();
+			});
+			$( "#track_btn" ).live('dblclick', function(event, ui){
+				FIdER.track_layer.removeAllFeatures();
+				FIdER.interestclick.deactivate();
+				setTimeout('FIdER.interestclick.deactivate();',500);
+			});
+			
+			move_to_geo = function(){
+					$.getJSON('/external/maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + $('#search_geo_address').val(), function(gqdata){
+							console.log(gqdata);
+							if(gqdata.status == "OK"){
+								if (gqdata.results.length >= 1){
+									
+									gq = new OpenLayers.Bounds();
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.southwest.lng, gqdata.results[0].geometry.viewport.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.northeast.lng, gqdata.results[0].geometry.viewport.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
+									FIdER.map.zoomToExtent(gq);
+									FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(gq.toGeometry().getCentroid(),  {'type':'start'})]);
+					
+
+								}
+								else{
+									console.log(gqdata.results);
+								}
+							}
+						});
+				}
+			
+			FIdER.status.done_inner_query = true;
+			FIdER.status.done_outer_query = true;
+			
+			FIdER.selectables = [];
+			
+			FIdER.check_spinner= function(){
+				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
+					
+					$('#spinner').hide();
+					refresh_sight();
+					prepare_export();
+				}
+				else 
+				$('#spinner').show();
+			}
+			FIdER.selectables = [];
+			
+			function prepare_export(){
+				lines = [];
+				points = [];
+				var zip = new JSZip();
+										
+				for (i in FIdER.vector_layer.features){
+					feat = FIdER.vector_layer.features[i];
+					if (feat.geometry.toString().split('(')[0] == "POINT")
+						points.push(feat);
+					else
+						lines.push(feat);
+				}
+				
+				lines = FIdER.geojson_format.write(lines);
+				points = FIdER.geojson_format.write(points);
+				
+				zip.file("linear.geojson", lines);
+				zip.file("punctual.geojson", points);
+				content = zip.generate();
+				console.log(content);
+				var a = $('#export_vector');
+				a.attr('href', "data:application/zip;base64," + content);				
+			}
+			
+			function refresh_sight(){
+				FIdER.vector_layer.removeAllFeatures();
+				FIdER.selectables = [];
+				doselect = true;
+				for (e in FIdER.status.query){
+					if (FIdER.status.query[e]['params'] == null)
+						doselect= false;
+				}
+				if (doselect){
+					for (el in FIdER.status.query){
+						el_sel = []
+						tt = FIdER.status.query[el]['column']
+						ps = FIdER.status.query[el]['params']
+						if (ps != null){
+							
+							for(pp in ps){
+								lsit = ps[pp]
+								if (lsit== "Non definito")
+									lsit = "";
+								vec = FIdER.bg_layer.getFeaturesByAttribute(tt, lsit )
+								for(feat in vec){
+									el_sel.push(vec[feat]);
+									
+								}
+							}
+							FIdER.selectables.push(el_sel);
+						}
+					}
+					ee = FIdER.selectables[0];
+					if (FIdER.selectables.length > 1){
+						for (a = 0; a < FIdER.selectables.length-1; a++){
+							ee = intersect_safe(ee,FIdER.selectables[a+1])					
+						}
+					}
+					FIdER.selectables = ee;
+					if (FIdER.selectables !== undefined) 
+					for (a in FIdER.selectables) 
+						FIdER.vector_layer.addFeatures(FIdER.selectables[a].clone());
+				
+					setTimeout(reselect,750);	
+				}
+				
+			}
+			
+			function reselect(){
+				FIdER.selected_items = Enumerable.From(FIdER.selected_items).Distinct().ToArray();
+				for (fed in FIdER.vector_layer.features)
+					for (fid in FIdER.selected_items){
+						if (FIdER.selected_items[fid].attributes.IDPiper == FIdER.vector_layer.features[fed].attributes.IDPiper )
+							if (FIdER.selected_items.length == 1)
+								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
+							else
+								FIdER.select_multi_control.select(FIdER.vector_layer.features[fed]);
+					}
+			}
+			
+			$('.uproxy, .aproxy').live('mouseenter', function(){
+				if ($(this).hasClass('uproxy'))
+					val = $(this).find('input[type=checkbox]').val();
+				else
+					val = $(this).find('.p_name').text();
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				for (i in feats){
+					feat = feats[i];
+					if (feat.attributes['highlight'] != "dead"){	
+						feat.attributes['highlight']='true';
+					}
+				}
+				var has_ = FIdER.bbox_layer.redraw();
+			}).live('mouseleave', function(){
+				if ($(this).hasClass('uproxy'))
+					val = $(this).find('input[type=checkbox]').val();
+				else
+					val = $(this).find('.p_name').text();
+				
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				for (i in feats){
+					feat = feats[i];
+					if (feat.attributes['highlight'] != "dead"){
+						
+						feat.attributes['highlight']='false';
+					}
+				}
+				var has_ = FIdER.bbox_layer.redraw();
+			});
+			$('.proxy_check').live('click', function(){
+				c = $(this).is(':checked');
+				val = $(this).val();
+				
+				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				for (i in feats){
+					feat = feats[i];
+					if (!c){
+						feat.attributes['highlight']='dead';
+					}else{
+						feat = feats[i];
+						feat.attributes['highlight']='true';
+					}
+				}
+				var has_ = FIdER.bbox_layer.redraw();
+			});
+			
+			$('#export_image').live('click', tryExportView)
+			
+			//run
+			$(function() {
+				$('#sett_panel .content').show();
+				$('#vis_panel .content').show();
+				
+				var drag_offset_x = 0;
+				var drag_offset_y = 0;
+				FIdER.check_spinner();
+
+				FIdER.refresh();
+				$('.panel').hide();
+				
+				$.getJSON('/interface/urls', function(data) {
+					$.urls = data;
+
+					FIdER.map = new OpenLayers.Map("map", {
+						sphericalMercator : true,
+						projection : "EPSG:900913",
+						controls : []
+					});
+					
+					FIdER.status.dl_vector= {};
+					
+					FIdER.map.events.register('moveend', FIdER.map, function(){
+						//$('.panel').hide();
+						//$('.selected').removeClass('selected');
+						FIdER.vector_layer.styleMap.styles.default = FIdER.ccstyle.styles.default;
+						FIdER.vector_layer.styleMap.styles.select = FIdER.ccstyle.styles.select;
+						//FIdER.vector_layer.redraw();
+						//$('#info_btn').click();
+						if (FIdER.map.getZoom() >= 15){
+							FIdER.vector_layer.display(true);
+							FIdER.bg_layer.display(true);
+							FIdER.bbox_layer.display(false);
+							FIdER.status.active_layer =FIdER.bg_layer; 
+							FIdER.status.url = "search";
+							//$('#properties_btn').removeClass('disabled')
+							//$('#bi_btn').removeClass('disabled')
+							//$('#search_btn').removeClass('disabled')
+							//$('#exp_btn').removeClass('disabled')
+						}
+						else{
+							FIdER.vector_layer.display(false);
+							FIdER.bg_layer.display(false);
+							FIdER.bbox_layer.display(true);
+							FIdER.status.active_layer =FIdER.bbox_layer; 
+							FIdER.status.url = "proxies";
+							//$('#properties_btn').addClass('disabled')
+							//$('#bi_btn').addClass('disabled')
+							//$('#search_btn').addClass('disabled')
+							//$('#exp_btn').addClass('disabled')
+						}
+						$('#spinner').show();
+						FIdER.bbox_layer.destroyFeatures();
+						FIdER.bg_layer.destroyFeatures();
+						FIdER.vector_layer.destroyFeatures();
+						$.ajax({
+							url:'/interface/'+FIdER.status.url,
+							dataType:"jsonp",
+							data:{
+								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
+								cbd:"show_data",
+								cbq:"get_queries",
+								q:"[]"
+							}
+						});
+					});
+
+					FIdER.map.setOptions({restrictedExtent: FIdER.start});
+
+					//Base Maps
+					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
+						type : google.maps.MapTypeId.SATELLITE,
+						numZoomLevels : 20
+					}));
+					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Physical", {
+						type : google.maps.MapTypeId.TERRAIN,
+						visibility : false
+					}));
+					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Streets", {
+						numZoomLevels : 20,
+						visibility : false
+					}));
+					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Hybrid", {
+						type : google.maps.MapTypeId.HYBRID,
+						numZoomLevels : 20,
+						visibility : false
+					}));
+					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
+
+					
+					FIdER.map.addLayer(FIdER.bg_layer);
+					FIdER.map.addLayer(FIdER.vector_layer);
+					FIdER.map.addLayer(FIdER.bbox_layer);
+					FIdER.map.addLayer(FIdER.track_layer);
+					FIdER.map.addLayer(FIdER.hover_layer);
+					
+					FIdER.map.setLayerIndex(FIdER.track_layer, 90);
+					FIdER.map.setLayerIndex(FIdER.bbox_layer, 100);
+					FIdER.map.setLayerIndex(FIdER.bg_layer, 1000);
+					FIdER.map.setLayerIndex(FIdER.vector_layer,1100);
+
+					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+                        clickout: false, toggle: false,
+                        multiple: true, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
+                        multipleKey: "shiftKey", // shift key adds to selection
+                        box: true
+                    });
+                    
+                    FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+                        clickout: true, toggle: true,
+                        multiple: false, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
+                        multipleKey: "shiftKey", // shift key adds to selection
+                        box: false
+                    });
+                    FIdER.selected_control_new = null;
+                    FIdER.selected_control_type = null;
+                    FIdER.selected_control = null;
+                    
+                  
+					//Controls
+					FIdER.map.addControl(FIdER.select_one_control);
+					FIdER.map.addControl(FIdER.select_multi_control);
+					FIdER.map.addControl(FIdER.interestclick);
+					
+					FIdER.map.zoomToExtent(FIdER.start);
+					
+					//prepare_gui
+					$.getJSON($.urls.get_model + "?models=Cavidotto", function(mdata) {
+
+						model = [];
+
+						for (var i in mdata) {
+							table = {};
+
+							table.name = mdata[i].name;
+							table.cols = []
+							stuff = mdata[i].properties;
+							for (var col in stuff) {
+								if (stuff[col] != "str")
+									if (stuff[col] != "int") {
+										col_obj = {};
+										col_obj.name = col;
+										col_obj.type = ["Non definito"].concat(stuff[col]);
+										table.cols.push(col_obj);
+								}
+							}
+							model.push(table);
+
+						}
+						
+						for (var el in model){
+							e = model[el];
+							for (var ul in e.cols){
+								c = e.cols[ul];
+								if (c.type == "int")
+									$('#inventory_q').append(ich.range(c));
+								else
+									$('#inventory_q').append(ich.multi(c))
+							}
+						}
+						$('.all_multi').click();
+						
+						FIdER.status.query = {{filter|safe}};
+						
+					});
+				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
+					
+					$.getJSON('/request/getinfrastructures',function(idata){
+						itm = $('<div></div>');
+						for (i in idata){
+							$('#infras_list').append(itm.clone().text(idata[i]));	
+						}
+						
+					});
+					
+					//$('#info_btn').click();
+				});
+				
+				
+				$('#search_geo_address').keypress(function(e){
+					code= (e.keyCode ? e.keyCode : e.which);
+					if (code == 13) 
+						move_to_geo();
+				});
+				
+				$('#do_search_btn').click(function(){
+						
+						FIdER.status.query = prepare_query();
+						if ($.stringifyJSON(FIdER.status.query) == $.stringifyJSON(FIdER.status.old_query))
+							$('#search_btn').removeClass('filter_active');
+						else
+							$('#search_btn').addClass('filter_active');
+						refresh_sight();
+						FIdER.vector_layer.redraw();
+				});
+				$('#do_search_geo').click(function(){
+					
+						move_to_geo();
+				});
+				$.getJSON('/broker/getproxies', function(pdata){
+					for (owner in pdata){
+						$('#admin_proxies').append(ich.aproxy(pdata[owner]));
+						$('#user_proxies').append(ich.uproxy(pdata[owner]));
+					}
+				});
+				
+				$.getJSON('/models/getmodels', function(mdata){
+					for (model in mdata){
+						rmodel = mdata[model];
+						rmodel.nprops = []
+						for (p in rmodel.properties)
+							rmodel.nprops.push({pname:p, 'ptype':rmodel.properties[p]});
+						rmodel.ddata = $.stringifyJSON(rmodel);
+						$('#admin_models').append(ich.amodel(rmodel));
+					}
+				});
+				
+				FIdER.vector_layer.redraw();
+				
+				refresh_sight();
+			});
+			
+			function prepare_query(){
+				prepared_query = [];
+						
+						$('.line').parent().each(function(a,b){
+							$(b).find('.q_el').each(function(c,d){
+								qqq = {};
+								
+								if($(d).find('.label').length == 0){
+									qqq['column'] = $(d).data('column');
+									qqq['operator'] = $(d).data('operator');
+									qqq['params'] = $(d).parent().find('.params').val();
+								}
+								else {
+									qqq['column'] = $(d).find('.label').data('column');
+									qqq['operator'] = $(d).find('.label').data('operator');
+									qqq['params'] = $(d).parent().find('.params').val();
+								}
+								prepared_query.push(qqq);
+							});
+						});
+						//vals = []
+						//$('#user_proxies').find('.proxy_check:checked').each(function(a,b){
+						//	vals.push($(b).val());
+						//});
+						
+						//prepared_query.push({'column':"Fornitore","operator":"in", "params":vals});
+						return prepared_query;
+			}
+			
+			FIdER.geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
+			
+			function show_data(datas){
+		 		FIdER.status.active_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(datas)));	
+				FIdER.status.done_inner_query = true;
+		 		FIdER.check_spinner();
+			}
+			
+			function get_queries(datas){
+				$.ajax({
+					url:'/interface/s',
+					dataType:"json",
+					data:{'q':$.stringifyJSON(datas)},
+					success:function(layer){
+						if(layer.properties.errors.length > 0)
+							;//alert(layer.properties.errors);
+						else{
+							//var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
+						    FIdER.bg_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(layer)));		
+							FIdER.status.done_outer_query = true;
+							FIdER.check_spinner();		
+    					}
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<header>
+			<div id="fider-logo" class="logo left">
+				<span> PipER </span>
+			</div>
+			
+			<div id="owner-logo" class="logo right">
+				<span> Lepida S.p.A. </span>
+			</div>
+		</header>
+		<div id="map"> </div>
+		<footer>
+			<a href="#">PipER</a> - <a href="https://www.labs.it/">Laboratori Guglielmo Marconi S.p.A.</a> &amp; <a href="http://www.italtel.com">Italtel S.p.A.</a> per <a href="http://www.lepida.it">Lepida S.p.A.</a>
+		</footer>
+	</body>
+</html>
