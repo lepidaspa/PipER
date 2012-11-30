@@ -7,13 +7,48 @@ from django.conf import settings
 
 from broker.models import * 
 from django.views.decorators.csrf import csrf_exempt
+from uuid import  uuid4
 
-
+import subprocess 
 #=======================================================#
 
 def index(request):
     return render_to_response('index.html')
 
+def export(request):
+    filter = request.REQUEST.get('f')
+    selected = request.REQUEST.get('s')
+    bb= json.loads(request.REQUEST.get('b'))
+    pois = request.REQUEST.get('p')
+    bl = request.REQUEST.get('l')
+    
+    return render_to_response('export.html', {
+        'bb':{
+              't':bb[3],
+              'l':bb[0],
+              'r':bb[2],
+              'b':bb[1]
+              },
+        'filter':filter,
+        'selected':selected,
+        'pois': pois,
+        'bl':bl
+    })
+
+def do_export(request):
+    filter = request.REQUEST.get('f')
+    selected = request.REQUEST.get('s')
+    bb= request.REQUEST.get('b')
+    pois = request.REQUEST.get('p')
+    bl = request.REQUEST.get('l')
+    
+    w = request.REQUEST.get('w')
+    h = request.REQUEST.get('h')
+    
+    url = "/export?f="+filter+"&s="+selected + "&b=" + bb + "&p=" + pois + "&l=" + bl
+    filename = str(uuid4())+".pdf"
+    
+    subprocess.call(['phantomjs', 'export.js', url, w,h, filename])
 
 def urls(request):
     return HttpResponse(json.dumps({
