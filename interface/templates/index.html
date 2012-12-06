@@ -1968,8 +1968,6 @@
 						if(layer.properties.errors.length > 0)
 							;//alert(layer.properties.errors);
 						else{
-							for (feat in layer.features)
-								layer.features[feat].properties.IDPiper =layer.features[feat].IDPiper 
 							GJL = $.stringifyJSON(layer);
 						    PipER.bg_layer.addFeatures(PipER.geojson_format.read(GJL));		
 							PipER.status.done_outer_query = true;
