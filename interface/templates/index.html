@@ -42,10 +42,10 @@
 				left: 30px;
 				position: absolute;
 			}
-			#fider-logo {
+			#PipER-logo {
 				font-size: 3.2em;
 			}
-			#fider-logo span {
+			#PipER-logo span {
 				display: block;
 				left: 50px;
 			}
@@ -562,12 +562,12 @@
 			
 		</script>
 		<script>
-			FIdER = {};
+			PipER = {};
 			OpenLayers.ImgPath = "https://github.com/sirmmo/openlayers_themes/raw/master/dark/";
 			OpenLayers.ProxyHost = "external/";
 
 			//refresh function for resize and startup
-			FIdER.refresh = function() {
+			PipER.refresh = function() {
 				var width = $(window).width() - $('nav').width();
 				var height = $(window).height() - $('header').height() - $('footer').height() - 10;
 				$('#map').width(width);
@@ -580,31 +580,31 @@
 				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
 			};
 			//projections
-			FIdER.projections = {};
-			FIdER.projections.google = new OpenLayers.Projection("EPSG:900913");
-			FIdER.projections.wgs84 = new OpenLayers.Projection("EPSG:4326");
-			FIdER.projections.ed50 = new OpenLayers.Projection("EPSG:900913");
+			PipER.projections = {};
+			PipER.projections.google = new OpenLayers.Projection("EPSG:900913");
+			PipER.projections.wgs84 = new OpenLayers.Projection("EPSG:4326");
+			PipER.projections.ed50 = new OpenLayers.Projection("EPSG:900913");
 	
 			//starting point
-			FIdER.start = new OpenLayers.Bounds();
-			FIdER.start.extend(new OpenLayers.LonLat(6.62672010, 43.73189080).transform(FIdER.projections.wgs84, FIdER.projections.google));
-			FIdER.start.extend(new OpenLayers.LonLat(13.91885250, 47.0920).transform(FIdER.projections.wgs84, FIdER.projections.google));
+			PipER.start = new OpenLayers.Bounds();
+			PipER.start.extend(new OpenLayers.LonLat(6.62672010, 43.73189080).transform(PipER.projections.wgs84, PipER.projections.google));
+			PipER.start.extend(new OpenLayers.LonLat(13.91885250, 47.0920).transform(PipER.projections.wgs84, PipER.projections.google));
 
-			FIdER.ccstyle = new OpenLayers.StyleMap();
+			PipER.ccstyle = new OpenLayers.StyleMap();
 			$.get('/sld/default', function(sld){
 					sld_reader = new OpenLayers.Format.SLD();
-					FIdER.sld = sld_reader.read(sld);
-					FIdER.ccstyle.styles['default']=FIdER.sld.namedLayers.elements.userStyles[0]
+					PipER.sld = sld_reader.read(sld);
+					PipER.ccstyle.styles['default']=PipER.sld.namedLayers.elements.userStyles[0]
 					
 			});
 			$.get('/sld/selected', function(sld){
 					sld_reader = new OpenLayers.Format.SLD();
-					FIdER.sld = sld_reader.read(sld);
-					FIdER.ccstyle.styles['select']=FIdER.sld.namedLayers.selected_elements.userStyles[0]
+					PipER.sld = sld_reader.read(sld);
+					PipER.ccstyle.styles['select']=PipER.sld.namedLayers.selected_elements.userStyles[0]
 					
 			});
-			FIdER.bbstyle = new OpenLayers.StyleMap();
-			FIdER.bbstyle.addUniqueValueRules("default", "highlight",{
+			PipER.bbstyle = new OpenLayers.StyleMap();
+			PipER.bbstyle.addUniqueValueRules("default", "highlight",{
 				'false':{
 					'fillColor':"Orange",
 					'strokeColor':"Orange",
@@ -631,8 +631,8 @@
 				}
 			});	
 			
-			FIdER.tr_style = new OpenLayers.StyleMap();
-			FIdER.tr_style.addUniqueValueRules("default", "type", {
+			PipER.tr_style = new OpenLayers.StyleMap();
+			PipER.tr_style.addUniqueValueRules("default", "type", {
 				'start':{
 					'fillColor':"#44ff44",
 					'strokeColor':"#44ff44   ",
@@ -650,7 +650,7 @@
 					
 				},
 			});
-			FIdER.bgstyle = new OpenLayers.StyleMap({
+			PipER.bgstyle = new OpenLayers.StyleMap({
 				'default':{
 					'fillColor':"White",
 					'strokeColor':"White",
@@ -669,7 +669,7 @@
 				}
 			});
 						
-			FIdER.hover_style = new OpenLayers.StyleMap({
+			PipER.hover_style = new OpenLayers.StyleMap({
 				'default':{
 					'fillColor':"Red",
 					'strokeColor':"White",
@@ -680,45 +680,45 @@
 				}
 			});
 			
-			FIdER.status = {};
+			PipER.status = {};
 			
-			FIdER.hover_layer = new OpenLayers.Layer.Vector("hoverel",{
-				styleMap: FIdER.hover_style
+			PipER.hover_layer = new OpenLayers.Layer.Vector("hoverel",{
+				styleMap: PipER.hover_style
 			});			
 			 
 			
-			FIdER.bg_layer = new OpenLayers.Layer.Vector("bgelements",{
-				styleMap: FIdER.bgstyle
+			PipER.bg_layer = new OpenLayers.Layer.Vector("bgelements",{
+				styleMap: PipER.bgstyle
 			});			
-			FIdER.vector_layer = new OpenLayers.Layer.Vector("elements",{
-				styleMap: FIdER.ccstyle
+			PipER.vector_layer = new OpenLayers.Layer.Vector("elements",{
+				styleMap: PipER.ccstyle
 			});
 			
-			FIdER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
-				styleMap: FIdER.bbstyle
+			PipER.bbox_layer = new OpenLayers.Layer.Vector("bboxes",{
+				styleMap: PipER.bbstyle
 			});
 			
-			FIdER.track_layer = new OpenLayers.Layer.Vector("tracks",{
-				styleMap: FIdER.tr_style
+			PipER.track_layer = new OpenLayers.Layer.Vector("tracks",{
+				styleMap: PipER.tr_style
 			});
 			
 			
-			FIdER.hide_panels = function(){
+			PipER.hide_panels = function(){
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
 			};
 			
 
-			FIdER.vector_layer.events.on({
+			PipER.vector_layer.events.on({
                 'featureselected': show_features,
                 'featureunselected': show_features
             });
             
-            FIdER.block_selections = false;
+            PipER.block_selections = false;
             function show_features(feature){
-            	if (!FIdER.block_selections){
+            	if (!PipER.block_selections){
             		setTimeout(do_show_features,500);
-            		FIdER.block_selections = true;
+            		PipER.block_selections = true;
             	}
             }
             
@@ -749,16 +749,16 @@
                 }, 
 
                 trigger: function(e) {
-                    lonlat = FIdER.map.getLonLatFromPixel(e.xy);
-					FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),  {'type':'start'})]);
-					FIdER.interestclick.deactivate();
+                    lonlat = PipER.map.getLonLatFromPixel(e.xy);
+					PipER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),  {'type':'start'})]);
+					PipER.interestclick.deactivate();
                 }
 
             });
             
-            FIdER.interestclick = new OpenLayers.Control.Click();
+            PipER.interestclick = new OpenLayers.Control.Click();
             
-            FIdER.selected_items = [];
+            PipER.selected_items = [];
             
             function intersect_safe(a, b)
 			{
@@ -790,7 +790,7 @@
 			     */
 			
 			    var coords = new OpenLayers.LonLat(featuregeom.x,
-			featuregeom.y).transform(FIdER.map.getProjectionObject(), FIdER.projections.wgs84);
+			featuregeom.y).transform(PipER.map.getProjectionObject(), PipER.projections.wgs84);
 			
 			
 			    //console.log("Trying reverse geocoding for coordinates");
@@ -856,8 +856,8 @@
 				lines_csv = [];
 				bi = []
 										
-				for (i in FIdER.vector_layer.selectedFeatures){
-					feat = FIdER.vector_layer.selectedFeatures[i];
+				for (i in PipER.vector_layer.selectedFeatures){
+					feat = PipER.vector_layer.selectedFeatures[i];
 					if (feat.geometry.toString().split('(')[0] == "POINT")
 						lines_csv.push(feat.attributes);
 					else
@@ -1005,11 +1005,11 @@
 			}
             
             function do_show_features(){
-            		FIdER.block_selections = false;
+            		PipER.block_selections = false;
             		pa = [];
             		$('#properties_panel .subpanel .content').empty();
 	                $('#bi_panel .subpanel .content').empty();
-	                ss = Enumerable.From(FIdER.vector_layer.selectedFeatures).Distinct().ToArray();
+	                ss = Enumerable.From(PipER.vector_layer.selectedFeatures).Distinct().ToArray();
                 	if (ss.length == 1){
 	                	for (var e in ss[0].attributes)
 	                		if (!e.startsWith('_') && e!="IDPiper"){
@@ -1087,7 +1087,7 @@
 		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
 		                	else{
 		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
-		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[FIdER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}*/
 		                	
 		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
@@ -1097,11 +1097,11 @@
 	                    
 	                    prepare_csv_export(xxte.attributes)
 	                }
-	                FIdER.selected_items = ss;
+	                PipER.selected_items = ss;
             }
 			
 
-			$(window).resize(FIdER.refresh);		
+			$(window).resize(PipER.refresh);		
 
 			$('.ref_proxy').live('click', function(){
 				d = $(this).data('toggle_url');
@@ -1134,10 +1134,10 @@
 				$(this).parent().parent().children('.m_content').append(ich.editable_rowelement());
 			});
 			
-			FIdER.status.panel_open = false;
+			PipER.status.panel_open = false;
 			
 			$('.nav_btn').live('click', function(){
-				FIdER.status.panel_open = $('.selected').length >0 ;
+				PipER.status.panel_open = $('.selected').length >0 ;
 			});
 			
 			$('.nav_btn:not(".special"):not(".disabled")' ).live('click', function() {
@@ -1152,15 +1152,15 @@
 			});
 			
 			function close_panel(){
-				FIdER.status.propopen = false;
-				FIdER.status.biopen = false;
+				PipER.status.propopen = false;
+				PipER.status.biopen = false;
 				
 					$('.nav_btn').removeClass('selected');
 					$('.panel').hide();
 				
-				FIdER.status.panel_open = $('.selected').length >0 ;
-				FIdER.select_multi_control.deactivate();
-				FIdER.select_one_control.deactivate();
+				PipER.status.panel_open = $('.selected').length >0 ;
+				PipER.select_multi_control.deactivate();
+				PipER.select_one_control.deactivate();
 			}
 			function open_panel(panel){
 				
@@ -1173,12 +1173,12 @@
 			
 			spec_ops = {
 				"properties_btn":function(){
-					FIdER.select_one_control.activate();
-					FIdER.select_multi_control.deactivate();
+					PipER.select_one_control.activate();
+					PipER.select_multi_control.deactivate();
 				},
 				'bi_btn':function(){
-					FIdER.select_one_control.deactivate();
-					FIdER.select_multi_control.activate();
+					PipER.select_one_control.deactivate();
+					PipER.select_multi_control.activate();
 				}
 			}
 			
@@ -1193,7 +1193,7 @@
 			});
 			
 			$('#home_btn').live('click', function(){
-					FIdER.map.zoomToExtent(FIdER.start);
+					PipER.map.zoomToExtent(PipER.start);
 			});
 			
 			$('.show_model').live('click', function(){
@@ -1420,11 +1420,11 @@
 			
 			$('.attribs_element').live('mouseover', function(){
 				id = $(this).data('innerid');
-				ii = FIdER.vector_layer.getFeaturesByAttribute('IDPiper', id)[0];
-				FIdER.hover_layer.addFeatures([ii.clone()]);
+				ii = PipER.vector_layer.getFeaturesByAttribute('IDPiper', id)[0];
+				PipER.hover_layer.addFeatures([ii.clone()]);
 			}).live('mouseout', function(){
 				id = $(this).data('innerid');
-				FIdER.hover_layer.removeAllFeatures();
+				PipER.hover_layer.removeAllFeatures();
 			});
 			
 			
@@ -1435,44 +1435,44 @@
 				$(this).parent().parent().find('option').attr('selected', 'selected');
 			});
 			
-	/*		FIdER.status.propopen = false;
+	/*		PipER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
-				if (FIdER.status.panel_open){
+				if (PipER.status.panel_open){
 					if ($('#properties_btn.selected').length > 0)
-					FIdER.status.biopen = false;
+					PipER.status.biopen = false;
 					
-					if (FIdER.status.propopen){
-						FIdER.select_one_control.activate();
-						FIdER.select_multi_control.deactivate();
+					if (PipER.status.propopen){
+						PipER.select_one_control.activate();
+						PipER.select_multi_control.deactivate();
 					}
 					else{
-						FIdER.select_multi_control.deactivate();
-						FIdER.select_one_control.deactivate();
+						PipER.select_multi_control.deactivate();
+						PipER.select_one_control.deactivate();
 					}
 				}
 				else{
-					FIdER.select_multi_control.deactivate();
-					FIdER.select_one_control.deactivate();
+					PipER.select_multi_control.deactivate();
+					PipER.select_one_control.deactivate();
 				}
 			});
 			
-			FIdER.status.biopen = false;
+			PipER.status.biopen = false;
 			$('#bi_btn').live('click', function(){
-				if (FIdER.status.panel_open){
+				if (PipER.status.panel_open){
 					if ($('#properties_btn.selected').length > 0)
-					FIdER.status.biopen = false;
+					PipER.status.biopen = false;
 					
-					if (FIdER.status.propopen){
+					if (PipER.status.propopen){
 						
 					}
 					else{
-						FIdER.select_multi_control.deactivate();
-						FIdER.select_one_control.deactivate();
+						PipER.select_multi_control.deactivate();
+						PipER.select_one_control.deactivate();
 					}
 				}
 				else{
-					FIdER.select_multi_control.deactivate();
-					FIdER.select_one_control.deactivate();
+					PipER.select_multi_control.deactivate();
+					PipER.select_one_control.deactivate();
 				}
 			});*/
 			
@@ -1480,30 +1480,30 @@
 				
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
-				FIdER.selected_items = [];
-				FIdER.select_multi_control.unselectAll();
+				PipER.selected_items = [];
+				PipER.select_multi_control.unselectAll();
 				
     			$('#export_csv').addClass('disabled');
 			});
 			
 			$('#clear_selection_t').live('click', function(){
-				FIdER.track_layer.removeAllFeatures();
+				PipER.track_layer.removeAllFeatures();
 				$('#bi_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
-				FIdER.selected_items = [];
-				FIdER.select_one_control.unselectAll();
-				FIdER.select_multi_control.unselectAll();
+				PipER.selected_items = [];
+				PipER.select_one_control.unselectAll();
+				PipER.select_multi_control.unselectAll();
 			});
 			
-			FIdER.status.add_point = false;
+			PipER.status.add_point = false;
 			$( "#track_btn" ).live('click', function(event, ui){
-				FIdER.status.add_point = true;
-				FIdER.interestclick.activate();
+				PipER.status.add_point = true;
+				PipER.interestclick.activate();
 			});
 			$( "#track_btn" ).live('dblclick', function(event, ui){
-				FIdER.track_layer.removeAllFeatures();
-				FIdER.interestclick.deactivate();
-				setTimeout('FIdER.interestclick.deactivate();',500);
+				PipER.track_layer.removeAllFeatures();
+				PipER.interestclick.deactivate();
+				setTimeout('PipER.interestclick.deactivate();',500);
 			});
 			
 			move_to_geo = function(){
@@ -1513,10 +1513,10 @@
 								if (gqdata.results.length >= 1){
 									
 									gq = new OpenLayers.Bounds();
-									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.southwest.lng, gqdata.results[0].geometry.viewport.southwest.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
-									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.northeast.lng, gqdata.results[0].geometry.viewport.northeast.lat).transform(FIdER.projections.wgs84, FIdER.projections.google));
-									FIdER.map.zoomToExtent(gq);
-									FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(gq.toGeometry().getCentroid(),  {'type':'start'})]);
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.southwest.lng, gqdata.results[0].geometry.viewport.southwest.lat).transform(PipER.projections.wgs84, PipER.projections.google));
+									gq.extend(new OpenLayers.LonLat(gqdata.results[0].geometry.viewport.northeast.lng, gqdata.results[0].geometry.viewport.northeast.lat).transform(PipER.projections.wgs84, PipER.projections.google));
+									PipER.map.zoomToExtent(gq);
+									PipER.track_layer.addFeatures([new OpenLayers.Feature.Vector(gq.toGeometry().getCentroid(),  {'type':'start'})]);
 					
 
 								}
@@ -1527,13 +1527,13 @@
 						});
 				}
 			
-			FIdER.status.done_inner_query = true;
-			FIdER.status.done_outer_query = true;
+			PipER.status.done_inner_query = true;
+			PipER.status.done_outer_query = true;
 			
-			FIdER.selectables = [];
+			PipER.selectables = [];
 			
-			FIdER.check_spinner= function(){
-				if (FIdER.status.done_inner_query && FIdER.status.done_outer_query){
+			PipER.check_spinner= function(){
+				if (PipER.status.done_inner_query && PipER.status.done_outer_query){
 					
 					$('#spinner').hide();
 					refresh_sight();
@@ -1542,23 +1542,23 @@
 				else 
 				$('#spinner').show();
 			}
-			FIdER.selectables = [];
+			PipER.selectables = [];
 			
 			function prepare_export(){
 				lines = [];
 				points = [];
 				var zip = new JSZip();
 										
-				for (i in FIdER.vector_layer.features){
-					feat = FIdER.vector_layer.features[i];
+				for (i in PipER.vector_layer.features){
+					feat = PipER.vector_layer.features[i];
 					if (feat.geometry.toString().split('(')[0] == "POINT")
 						points.push(feat);
 					else
 						lines.push(feat);
 				}
 				
-				lines = FIdER.geojson_format.write(lines);
-				points = FIdER.geojson_format.write(points);
+				lines = PipER.geojson_format.write(lines);
+				points = PipER.geojson_format.write(points);
 				
 				zip.file("linear.geojson", lines);
 				zip.file("punctual.geojson", points);
@@ -1569,43 +1569,43 @@
 			}
 			
 			function refresh_sight(){
-				FIdER.vector_layer.removeAllFeatures();
-				FIdER.selectables = [];
+				PipER.vector_layer.removeAllFeatures();
+				PipER.selectables = [];
 				doselect = true;
-				for (e in FIdER.status.query){
-					if (FIdER.status.query[e]['params'] == null)
+				for (e in PipER.status.query){
+					if (PipER.status.query[e]['params'] == null)
 						doselect= false;
 				}
 				if (doselect){
-					for (el in FIdER.status.query){
+					for (el in PipER.status.query){
 						el_sel = []
-						tt = FIdER.status.query[el]['column']
-						ps = FIdER.status.query[el]['params']
+						tt = PipER.status.query[el]['column']
+						ps = PipER.status.query[el]['params']
 						if (ps != null){
 							
 							for(pp in ps){
 								lsit = ps[pp]
 								if (lsit== "Non definito")
 									lsit = "";
-								vec = FIdER.bg_layer.getFeaturesByAttribute(tt, lsit )
+								vec = PipER.bg_layer.getFeaturesByAttribute(tt, lsit )
 								for(feat in vec){
 									el_sel.push(vec[feat]);
 									
 								}
 							}
-							FIdER.selectables.push(el_sel);
+							PipER.selectables.push(el_sel);
 						}
 					}
-					ee = FIdER.selectables[0];
-					if (FIdER.selectables.length > 1){
-						for (a = 0; a < FIdER.selectables.length-1; a++){
-							ee = intersect_safe(ee,FIdER.selectables[a+1])					
+					ee = PipER.selectables[0];
+					if (PipER.selectables.length > 1){
+						for (a = 0; a < PipER.selectables.length-1; a++){
+							ee = intersect_safe(ee,PipER.selectables[a+1])					
 						}
 					}
-					FIdER.selectables = ee;
-					if (FIdER.selectables !== undefined) 
-					for (a in FIdER.selectables) 
-						FIdER.vector_layer.addFeatures(FIdER.selectables[a].clone());
+					PipER.selectables = ee;
+					if (PipER.selectables !== undefined) 
+					for (a in PipER.selectables) 
+						PipER.vector_layer.addFeatures(PipER.selectables[a].clone());
 				
 					setTimeout(reselect,750);	
 				}
@@ -1613,14 +1613,14 @@
 			}
 			
 			function reselect(){
-				FIdER.selected_items = Enumerable.From(FIdER.selected_items).Distinct().ToArray();
-				for (fed in FIdER.vector_layer.features)
-					for (fid in FIdER.selected_items){
-						if (FIdER.selected_items[fid].attributes.IDPiper == FIdER.vector_layer.features[fed].attributes.IDPiper )
-							if (FIdER.selected_items.length == 1)
-								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
+				PipER.selected_items = Enumerable.From(PipER.selected_items).Distinct().ToArray();
+				for (fed in PipER.vector_layer.features)
+					for (fid in PipER.selected_items){
+						if (PipER.selected_items[fid].attributes.IDPiper == PipER.vector_layer.features[fed].attributes.IDPiper )
+							if (PipER.selected_items.length == 1)
+								PipER.select_one_control.select(PipER.vector_layer.features[fed]);
 							else
-								FIdER.select_multi_control.select(FIdER.vector_layer.features[fed]);
+								PipER.select_multi_control.select(PipER.vector_layer.features[fed]);
 					}
 			}
 			
@@ -1629,21 +1629,21 @@
 					val = $(this).find('input[type=checkbox]').val();
 				else
 					val = $(this).find('.p_name').text();
-				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				feats = PipER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
 					feat = feats[i];
 					if (feat.attributes['highlight'] != "dead"){	
 						feat.attributes['highlight']='true';
 					}
 				}
-				var has_ = FIdER.bbox_layer.redraw();
+				var has_ = PipER.bbox_layer.redraw();
 			}).live('mouseleave', function(){
 				if ($(this).hasClass('uproxy'))
 					val = $(this).find('input[type=checkbox]').val();
 				else
 					val = $(this).find('.p_name').text();
 				
-				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				feats = PipER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
 					feat = feats[i];
 					if (feat.attributes['highlight'] != "dead"){
@@ -1651,13 +1651,13 @@
 						feat.attributes['highlight']='false';
 					}
 				}
-				var has_ = FIdER.bbox_layer.redraw();
+				var has_ = PipER.bbox_layer.redraw();
 			});
 			$('.proxy_check').live('click', function(){
 				c = $(this).is(':checked');
 				val = $(this).val();
 				
-				feats = FIdER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
+				feats = PipER.bbox_layer.getFeaturesByAttribute('Fornitore', val)
 				for (i in feats){
 					feat = feats[i];
 					if (!c){
@@ -1667,14 +1667,14 @@
 						feat.attributes['highlight']='true';
 					}
 				}
-				var has_ = FIdER.bbox_layer.redraw();
+				var has_ = PipER.bbox_layer.redraw();
 			});
 			
 			$('#export_image').live('click', function(){
 				console.log("ciao");
-				bb = "[" + FIdER.map.getExtent().toBBOX() + "]";
-				filter = $.stringifyJSON(FIdER.status.query);
-				selected = $.stringifyJSON(FIdER.selected_items);
+				bb = "[" + PipER.map.getExtent().toBBOX() + "]";
+				filter = $.stringifyJSON(PipER.status.query);
+				selected = $.stringifyJSON(PipER.selected_items);
 				w = $(window).width();
 				h = $(window).height();
 				bl =""
@@ -1698,60 +1698,60 @@
 				
 				var drag_offset_x = 0;
 				var drag_offset_y = 0;
-				FIdER.check_spinner();
+				PipER.check_spinner();
 
-				FIdER.refresh();
+				PipER.refresh();
 				$('.panel').hide();
 				
 				$.getJSON('/interface/urls', function(data) {
 					$.urls = data;
 
-					FIdER.map = new OpenLayers.Map("map", {
+					PipER.map = new OpenLayers.Map("map", {
 						sphericalMercator : true,
 						projection : "EPSG:900913",
 						controls : []
 					});
 					
-					FIdER.status.dl_vector= {};
+					PipER.status.dl_vector= {};
 					
-					FIdER.map.events.register('moveend', FIdER.map, function(){
+					PipER.map.events.register('moveend', PipER.map, function(){
 						//$('.panel').hide();
 						//$('.selected').removeClass('selected');
-						FIdER.vector_layer.styleMap.styles.default = FIdER.ccstyle.styles.default;
-						FIdER.vector_layer.styleMap.styles.select = FIdER.ccstyle.styles.select;
-						//FIdER.vector_layer.redraw();
+						PipER.vector_layer.styleMap.styles.default = PipER.ccstyle.styles.default;
+						PipER.vector_layer.styleMap.styles.select = PipER.ccstyle.styles.select;
+						//PipER.vector_layer.redraw();
 						//$('#info_btn').click();
-						if (FIdER.map.getZoom() >= 15){
-							FIdER.vector_layer.display(true);
-							FIdER.bg_layer.display(true);
-							FIdER.bbox_layer.display(false);
-							FIdER.status.active_layer =FIdER.bg_layer; 
-							FIdER.status.url = "search";
+						if (PipER.map.getZoom() >= 15){
+							PipER.vector_layer.display(true);
+							PipER.bg_layer.display(true);
+							PipER.bbox_layer.display(false);
+							PipER.status.active_layer =PipER.bg_layer; 
+							PipER.status.url = "search";
 							//$('#properties_btn').removeClass('disabled')
 							//$('#bi_btn').removeClass('disabled')
 							//$('#search_btn').removeClass('disabled')
 							//$('#exp_btn').removeClass('disabled')
 						}
 						else{
-							FIdER.vector_layer.display(false);
-							FIdER.bg_layer.display(false);
-							FIdER.bbox_layer.display(true);
-							FIdER.status.active_layer =FIdER.bbox_layer; 
-							FIdER.status.url = "proxies";
+							PipER.vector_layer.display(false);
+							PipER.bg_layer.display(false);
+							PipER.bbox_layer.display(true);
+							PipER.status.active_layer =PipER.bbox_layer; 
+							PipER.status.url = "proxies";
 							//$('#properties_btn').addClass('disabled')
 							//$('#bi_btn').addClass('disabled')
 							//$('#search_btn').addClass('disabled')
 							//$('#exp_btn').addClass('disabled')
 						}
 						$('#spinner').show();
-						FIdER.bbox_layer.destroyFeatures();
-						FIdER.bg_layer.destroyFeatures();
-						FIdER.vector_layer.destroyFeatures();
+						PipER.bbox_layer.destroyFeatures();
+						PipER.bg_layer.destroyFeatures();
+						PipER.vector_layer.destroyFeatures();
 						$.ajax({
-							url:'/interface/'+FIdER.status.url,
+							url:'/interface/'+PipER.status.url,
 							dataType:"jsonp",
 							data:{
-								bb:"["+FIdER.map.getExtent().transform(FIdER.projections.google, FIdER.projections.wgs84).toBBOX()+"]",
+								bb:"["+PipER.map.getExtent().transform(PipER.projections.google, PipER.projections.wgs84).toBBOX()+"]",
 								cbd:"show_data",
 								cbq:"get_queries",
 								q:"[]"
@@ -1759,41 +1759,41 @@
 						});
 					});
 
-					FIdER.map.setOptions({restrictedExtent: FIdER.start});
+					PipER.map.setOptions({restrictedExtent: PipER.start});
 
 					//Base Maps
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
-						type : google.maps.MapTypeId.SATELLITE,
+					PipER.map.addLayer(new OpenLayers.Layer.Google("Google Hybrid", {
+						type : google.maps.MapTypeId.HYBRID,
 						numZoomLevels : 20
 					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Physical", {
+					PipER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
+						type : google.maps.MapTypeId.SATELLITE,
+						numZoomLevels : 20,
+						visibility : false
+					}));
+					PipER.map.addLayer(new OpenLayers.Layer.Google("Google Physical", {
 						type : google.maps.MapTypeId.TERRAIN,
 						visibility : false
 					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Streets", {
+					PipER.map.addLayer(new OpenLayers.Layer.Google("Google Streets", {
 						numZoomLevels : 20,
 						visibility : false
 					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Hybrid", {
-						type : google.maps.MapTypeId.HYBRID,
-						numZoomLevels : 20,
-						visibility : false
-					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
+					PipER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
 
 					
-					FIdER.map.addLayer(FIdER.bg_layer);
-					FIdER.map.addLayer(FIdER.vector_layer);
-					FIdER.map.addLayer(FIdER.bbox_layer);
-					FIdER.map.addLayer(FIdER.track_layer);
-					FIdER.map.addLayer(FIdER.hover_layer);
+					PipER.map.addLayer(PipER.bg_layer);
+					PipER.map.addLayer(PipER.vector_layer);
+					PipER.map.addLayer(PipER.bbox_layer);
+					PipER.map.addLayer(PipER.track_layer);
+					PipER.map.addLayer(PipER.hover_layer);
 					
-					FIdER.map.setLayerIndex(FIdER.track_layer, 90);
-					FIdER.map.setLayerIndex(FIdER.bbox_layer, 100);
-					FIdER.map.setLayerIndex(FIdER.bg_layer, 1000);
-					FIdER.map.setLayerIndex(FIdER.vector_layer,1100);
+					PipER.map.setLayerIndex(PipER.track_layer, 90);
+					PipER.map.setLayerIndex(PipER.bbox_layer, 100);
+					PipER.map.setLayerIndex(PipER.bg_layer, 1000);
+					PipER.map.setLayerIndex(PipER.vector_layer,1100);
 
-					FIdER.select_multi_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+					PipER.select_multi_control = new OpenLayers.Control.SelectFeature(PipER.vector_layer, {
                         clickout: false, toggle: false,
                         multiple: true, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
@@ -1801,29 +1801,29 @@
                         box: true
                     });
                     
-                    FIdER.select_one_control = new OpenLayers.Control.SelectFeature(FIdER.vector_layer, {
+                    PipER.select_one_control = new OpenLayers.Control.SelectFeature(PipER.vector_layer, {
                         clickout: true, toggle: true,
                         multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         multipleKey: "shiftKey", // shift key adds to selection
                         box: false
                     });
-                    FIdER.selected_control_new = null;
-                    FIdER.selected_control_type = null;
-                    FIdER.selected_control = null;
+                    PipER.selected_control_new = null;
+                    PipER.selected_control_type = null;
+                    PipER.selected_control = null;
                     
                   
 					//Controls
-					FIdER.map.addControl(new OpenLayers.Control.PanZoomBar());
-					FIdER.map.addControl(new OpenLayers.Control.Navigation());
-					FIdER.map.addControl(new OpenLayers.Control.LayerSwitcher());
-					FIdER.map.addControl(new OpenLayers.Control.KeyboardDefaults());
-					FIdER.map.addControl(new OpenLayers.Control.TouchNavigation());
-					FIdER.map.addControl(FIdER.select_one_control);
-					FIdER.map.addControl(FIdER.select_multi_control);
-					FIdER.map.addControl(FIdER.interestclick);
+					PipER.map.addControl(new OpenLayers.Control.PanZoomBar());
+					PipER.map.addControl(new OpenLayers.Control.Navigation());
+					PipER.map.addControl(new OpenLayers.Control.LayerSwitcher());
+					PipER.map.addControl(new OpenLayers.Control.KeyboardDefaults());
+					PipER.map.addControl(new OpenLayers.Control.TouchNavigation());
+					PipER.map.addControl(PipER.select_one_control);
+					PipER.map.addControl(PipER.select_multi_control);
+					PipER.map.addControl(PipER.interestclick);
 					
-					FIdER.map.zoomToExtent(FIdER.start);
+					PipER.map.zoomToExtent(PipER.start);
 					
 					//prepare_gui
 					$.getJSON($.urls.get_model + "?models=Cavidotto", function(mdata) {
@@ -1861,8 +1861,8 @@
 						}
 						$('.all_multi').click();
 						
-						FIdER.status.query = prepare_query();
-						FIdER.status.old_query = prepare_query();
+						PipER.status.query = prepare_query();
+						PipER.status.old_query = prepare_query();
 						
 					});
 				//$('.olControlPanZoomBar').css('top',87).css('right', 75).css('left','');
@@ -1887,13 +1887,13 @@
 				
 				$('#do_search_btn').click(function(){
 						
-						FIdER.status.query = prepare_query();
-						if ($.stringifyJSON(FIdER.status.query) == $.stringifyJSON(FIdER.status.old_query))
+						PipER.status.query = prepare_query();
+						if ($.stringifyJSON(PipER.status.query) == $.stringifyJSON(PipER.status.old_query))
 							$('#search_btn').removeClass('filter_active');
 						else
 							$('#search_btn').addClass('filter_active');
 						refresh_sight();
-						FIdER.vector_layer.redraw();
+						PipER.vector_layer.redraw();
 				});
 				$('#do_search_geo').click(function(){
 					
@@ -1917,7 +1917,7 @@
 					}
 				});
 				
-				FIdER.vector_layer.redraw();
+				PipER.vector_layer.redraw();
 				
 				
 			});
@@ -1951,12 +1951,12 @@
 						return prepared_query;
 			}
 			
-			FIdER.geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
+			PipER.geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':PipER.projections.wgs84, 'internalProjection':PipER.projections.google});
 			
 			function show_data(datas){
-		 		FIdER.status.active_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(datas)));	
-				FIdER.status.done_inner_query = true;
-		 		FIdER.check_spinner();
+		 		PipER.status.active_layer.addFeatures(PipER.geojson_format.read($.stringifyJSON(datas)));	
+				PipER.status.done_inner_query = true;
+		 		PipER.check_spinner();
 			}
 			
 			function get_queries(datas){
@@ -1968,10 +1968,12 @@
 						if(layer.properties.errors.length > 0)
 							;//alert(layer.properties.errors);
 						else{
-							//var geojson_format = new OpenLayers.Format.GeoJSON({'externalProjection':FIdER.projections.wgs84, 'internalProjection':FIdER.projections.google});
-						    FIdER.bg_layer.addFeatures(FIdER.geojson_format.read($.stringifyJSON(layer)));		
-							FIdER.status.done_outer_query = true;
-							FIdER.check_spinner();		
+							for (feat in layer.features)
+								layer.features[feat].properties.IDPiper =layer.features[feat].IDPiper 
+							GJL = $.stringifyJSON(layer);
+						    PipER.bg_layer.addFeatures(PipER.geojson_format.read(GJL));		
+							PipER.status.done_outer_query = true;
+							PipER.check_spinner();		
     					}
 					}
 				});
@@ -1980,7 +1982,7 @@
 	</head>
 	<body>
 		<header>
-			<div id="fider-logo" class="logo left">
+			<div id="PipER-logo" class="logo left">
 				<span> PipER </span>
 			</div>
 			<img id="spinner" src="/fstatic/301.gif">
