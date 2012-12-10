@@ -281,6 +281,14 @@
 				width:300px;
 			}
 			
+			.collapsed .item {
+				display:none;
+			}
+			
+			.expanded .item {
+				display:none;
+			}
+			
 			#spinner{
 				float:left;
 			}
@@ -422,7 +430,7 @@
 		</script>
 		<script id="attribs" type="text/html">
 			<ul 
-				class="attribs_element" 
+				class="attribs_element collapsed" 
 				id="__{% templatetag openvariable %}id{% templatetag closevariable %}" 
 				data-innerid="{% templatetag openvariable %}IDPiper{% templatetag closevariable %}" 
 				data-attributes="{% templatetag openvariable %}ia{% templatetag closevariable %}">
@@ -706,6 +714,18 @@
                 'featureselected': show_features,
                 'featureunselected': show_features
             });
+			PipER.bbox_layer.events.on({
+                'featureselected': show_bb,
+                'featureunselected': show_bb
+            });
+            
+            PipER.block_bb_selections = false;
+            function show_bb(feature){
+            	if (!PipER.block_bb_selections){
+            		setTimeout(do_show_bb,500);
+            		PipER.block_bb_selections = true;
+            	}
+            }
             
             PipER.block_selections = false;
             function show_features(feature){
@@ -996,6 +1016,34 @@
 			    console.log($(canvas));
 			
 			}
+			
+			function do_show_bb(){
+        		PipER.block_bb_selections = false;
+        		pa = [];
+        		$('#properties_panel .subpanel .content').empty();
+                $('#bi_panel .subpanel .content').empty();
+                ss = Enumerable.From(PipER.bbox_layer.selectedFeatures).Distinct().ToArray();
+                if (ss.length == 0){
+                	
+	                    $('#properties_panel .subpanel .content').empty();
+	                    $('#properties_panel .subpanel .content').show();
+	                    $('#bi_panel .subpanel .content').empty();
+	                    $('#bi_panel .subpanel .content').show();
+                	
+                }else if (ss.length == 1){
+                	for (var e in ss[0].attributes)
+                		pa.push({'key':e, 'value':ss[0].attributes[e]});
+            		xxte =  {"attributes":pa};
+                    $('#properties_panel .subpanel .content').empty();
+                    $('#properties_panel .subpanel .content').append(ich.attribs(xxte));
+                    $('#properties_panel .subpanel .content').show();
+                    $('#bi_panel .subpanel .content').empty();
+                    $('#bi_panel .subpanel .content').show();
+                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
+                    $('#bi_panel .subpanel .content').append($("<hr></hr>"));
+	                    
+				}
+			}
             
             function do_show_features(){
             		PipER.block_selections = false;
@@ -1004,6 +1052,13 @@
 	                $('#bi_panel .subpanel .content').empty();
 	                ss = Enumerable.From(PipER.vector_layer.selectedFeatures).Distinct().ToArray();
 	                if (ss.length == 0){
+	                	
+		                    $('#properties_panel .subpanel .content').empty();
+		                    $('#properties_panel .subpanel .content').append("Nessun elemento selezionato");
+		                    $('#properties_panel .subpanel .content').show();
+		                    $('#bi_panel .subpanel .content').empty();
+		                    $('#bi_panel .subpanel .content').append("Nessuna area selezionata");
+		                    $('#bi_panel .subpanel .content').show();
 	                	
 	                }else if (ss.length == 1){
 	                	for (var e in ss[0].attributes)
@@ -1080,13 +1135,16 @@
 		                		if (!e.startsWith('_') && e!="IDPiper"){
 		                			pa.push({'key':e, 'value':ss[aa].attributes[e]});
 		                		}
-		                	pa.push({'key':'Lunghezza', "value":Math.round(ss[aa].geometry.getLength()*100)/100});
-		                	/*if (ss[aa].geometry.getLength() == 0)
-		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
+		                	pa.push({'key':'Lunghezza calcolata', "value":Math.round(ss[aa].geometry.getLength()*100)/100+"m"});
+		                	if (ss[aa].geometry.getLength() == 0){
+		                		pa.push({'key':'Tipo di Elemento', "value":"Nodo"});
+		                		//pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
+		                	}
 		                	else{
-		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
-		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
-		                	}*/
+		                		pa.push({'key':'Tipo di Elemento', "value":"Tratta"});
+		                		//pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
+		                		//pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                	}
 		                	
 		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
 		                    
@@ -1172,11 +1230,13 @@
 			spec_ops = {
 				"properties_btn":function(){
 					PipER.select_one_control.activate();
+					PipER.select_one_bb_control.activate();
 					PipER.select_multi_control.deactivate();
 				},
 				'bi_btn':function(){
 					PipER.select_one_control.deactivate();
 					PipER.select_multi_control.activate();
+					PipER.select_one_bb_control.deactivate();
 				}
 			}
 			
@@ -1715,6 +1775,16 @@
 					PipER.map.events.register('moveend', PipER.map, function(){
 						//$('.panel').hide();
 						//$('.selected').removeClass('selected');
+						
+						if(PipER.selected_items.length == 0 ){
+							
+		                    $('#properties_panel .subpanel .content').empty();
+		                    $('#properties_panel .subpanel .content').append("Nessun elemento selezionato");
+		                    $('#properties_panel .subpanel .content').show();
+		                    $('#bi_panel .subpanel .content').empty();
+		                    $('#bi_panel .subpanel .content').append("Nessuna area selezionata");
+		                    $('#bi_panel .subpanel .content').show();
+						}
 						PipER.vector_layer.styleMap.styles.default = PipER.ccstyle.styles.default;
 						PipER.vector_layer.styleMap.styles.select = PipER.ccstyle.styles.select;
 						//PipER.vector_layer.redraw();
@@ -1806,6 +1876,13 @@
                         multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         multipleKey: "shiftKey", // shift key adds to selection
+                        box: false
+                    });
+                    
+					PipER.select_one_bb_control = new OpenLayers.Control.SelectFeature(PipER.bbox_layer, {
+                        clickout: true, toggle: true,
+                        multiple: false, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
                         box: false
                     });
                     PipER.selected_control_new = null;
