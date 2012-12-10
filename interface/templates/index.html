@@ -1789,6 +1789,22 @@
 				$('<a target="_blank" href="'+url+'"></a>').click();
 			});
 			
+			$('#ruler').live('click', function(){
+				PipER.measureControl.activate();
+				PipER.measureControl.events.on({
+					'measure': function(event){
+						measure = event.measure;
+
+						$('#ruler_result').text(measure+"m");
+						PipER.measureControl.deactivate();
+					},
+					'measurepartial':function(event){
+						measure = event.measure;
+						$('#ruler_result').text(measure+"m");
+					}
+				});
+			});
+			
 			//run
 			$(function() {
 				$('#sett_panel .content').show();
@@ -1936,6 +1952,18 @@
                     PipER.selected_control = null;
                     
                     
+                    PipER.measureControl = new OpenLayers.Control.Measure(
+	                    OpenLayers.Handler.Path, {
+	                        persist: true,
+	                        handlerOptions: {
+	                            layerOptions: {
+	                                renderers: renderer,
+	                                styleMap: styleMap
+	                            }
+	                        }
+	                });
+	                PipER.measureControl.setImmediate(true);
+                    
                   
 					//Controls
 					PipER.map.addControl(new OpenLayers.Control.PanZoomBar());
@@ -1948,6 +1976,8 @@
 					PipER.map.addControl(PipER.select_track_control); 
 					//PipER.map.addControl(PipER.select_one_bb_control); BBOX_SELECT
 					PipER.map.addControl(PipER.interestclick);
+					
+					PipER.map.addControl(PipER.measureControl);
 					
 					PipER.map.zoomToExtent(PipER.start);
 					
@@ -2193,7 +2223,9 @@
 					</div>
 					<div class="tools_list">
 						<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
-						<a class="btn disabled export_csv"  href="" title="Download CSV" download="BI.zip">X</a>		
+						<a class="btn disabled export_csv"  href="" title="Download CSV" download="BI.zip">X</a>
+						<a class="btn" id="ruler" title="Misura" >`</a>	
+						<span id="ruler_result"></span>
 					</div>
 				<div class="content">
 					
