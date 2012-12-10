@@ -266,10 +266,7 @@
 			.model_header{
 				height:29px;
 			}
-			.olControlPanZoomBar {
-				rigth:5%;
-			}
-			
+		
 			.search_geo{
 				position:absolute;
 				width:400px;
@@ -281,12 +278,12 @@
 				width:300px;
 			}
 			
-			.collapsed .item {
+			.collapsed:not("#__") .item {
 				display:none;
 			}
 			
-			.expanded .item {
-				display:none;
+			.expanded:not("#__") .item {
+				display:list-item;
 			}
 			
 			#spinner{
