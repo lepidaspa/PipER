@@ -1480,7 +1480,8 @@
 			$('.attribs_element').live('mouseover', function(){
 				id = $(this).data('innerid');
 				ii = PipER.vector_layer.getFeaturesByAttribute('IDPiper', id)[0];
-				PipER.hover_layer.addFeatures([ii.clone()]);
+				if(ii)
+					PipER.hover_layer.addFeatures([ii.clone()]);
 			}).live('mouseout', function(){
 				id = $(this).data('innerid');
 				PipER.hover_layer.removeAllFeatures();
