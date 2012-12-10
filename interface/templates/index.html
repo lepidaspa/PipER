@@ -1954,13 +1954,12 @@
                     
                     PipER.measureControl = new OpenLayers.Control.Measure(
 	                    OpenLayers.Handler.Path, {
-	                        persist: true,
+	                        persist: true/*,
 	                        handlerOptions: {
 	                            layerOptions: {
-	                                renderers: renderer,
 	                                styleMap: styleMap
 	                            }
-	                        }
+	                        }*/
 	                });
 	                PipER.measureControl.setImmediate(true);
                     
