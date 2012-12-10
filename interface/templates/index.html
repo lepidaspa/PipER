@@ -891,7 +891,7 @@
 				
 				content = zip.generate();
 				//console.log(content);
-				var a = $('#export_csv');
+				var a = $('.export_csv');
 				a.removeClass('disabled')
 				a.attr('href', "data:application/zip;base64," + content);				
 			}
@@ -1576,7 +1576,7 @@
 				PipER.selected_items = [];
 				PipER.select_multi_control.unselectAll();
 				
-    			$('#export_csv').addClass('disabled');
+    			$('.export_csv').addClass('disabled');
 			});
 			
 			$('#clear_selection_t').live('click', function(){
@@ -2193,7 +2193,7 @@
 					</div>
 					<div class="tools_list">
 						<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
-						<a class="btn disabled export_csv"  href="" title="Download CSV" download="BI">X</a>		
+						<a class="btn disabled export_csv"  href="" title="Download CSV" download="BI.zip">X</a>		
 					</div>
 					
 			</div>
@@ -2233,7 +2233,7 @@
 				</div>
 				<div class="tools_list">
 					<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
-					<a class="btn disabled export_csv" href="" title="Download CSV" download="BI">X</a>		
+					<a class="btn disabled export_csv" href="" title="Download CSV" download="BI.zip">X</a>		
 				</div>
 				<div class="content">
 					
