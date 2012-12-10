@@ -1495,6 +1495,10 @@
 				$(this).parent().parent().find('option').attr('selected', 'selected');
 			});
 			
+			$('.attribs_element .head').live('click', function(){
+				$(this).toggleClass('collapsed').toggleClass('expanded')
+			});
+			
 	/*		PipER.status.propopen = false;
 			$('#properties_btn').live('click', function(){
 				if (PipER.status.panel_open){
