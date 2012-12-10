@@ -1794,14 +1794,14 @@
 				PipER.measureControl.events.on({
 					'measure': function(event){
 						measure = Math.round(event.measure*100)/100;
-						units = event.unit;
+						units = event.units;
 
 						$('#ruler_result').text(measure+units);
 						PipER.measureControl.deactivate();
 					},
 					'measurepartial':function(event){
 						measure = event.measure;
-						units = event.unit;
+						units = event.units;
 
 						$('#ruler_result').text(measure+units);
 					}
