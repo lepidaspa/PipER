@@ -1033,6 +1033,8 @@
 	                    $('#properties_panel .subpanel .content').show();
 	                    $('#bi_panel .subpanel .content').empty();
 	                    $('#bi_panel .subpanel .content').show();
+	                    $('#sp_panel .subpanel .content').empty();
+	                    $('#sp_panel .subpanel .content').show();
                 	
                 }else if (ss.length == 1){
                 	for (var e in ss[0].attributes)
@@ -1045,6 +1047,10 @@
                     $('#bi_panel .subpanel .content').show();
                     $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
                     $('#bi_panel .subpanel .content').append($("<hr></hr>"));
+                    $('#sp_panel .subpanel .content').empty();
+                    $('#sp_panel .subpanel .content').show();
+                    $('#sp_panel .subpanel .content').append(ich.attribs(xxte));
+                    $('#sp_panel .subpanel .content').append($("<hr></hr>"));
 	                    
 				}
 			}
@@ -1088,6 +1094,10 @@
 		                    $('#bi_panel .subpanel .content').show();
 		                    $('#bi_panel .subpanel .content').append(ich.attribs(xxte));
 		                    $('#bi_panel .subpanel .content').append($("<hr></hr>"));
+		                    $('#sp_panel .subpanel .content').empty();
+		                    $('#sp_panel .subpanel .content').show();
+		                    $('#sp_panel .subpanel .content').append(ich.attribs(xxte));
+		                    $('#sp_panel .subpanel .content').append($("<hr></hr>"));
 		                    
 		                    $('.attribs_element .head').click();
 	                    
@@ -1154,6 +1164,7 @@
 		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
 		                    
 			                $('#bi_panel .subpanel .content').append(ich.attribs(axxte));
+		                    $('#sp_panel .subpanel .content').append(ich.attribs(xxte));
 	                    }
 	                    
 	                    prepare_csv_export(xxte.attributes)
@@ -1901,9 +1912,16 @@
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         box: false
                     });
+                    PipER.select_track_control = new OpenLayers.Control.SelectFeature(PipER.vector_layer, {
+                        clickout: false, toggle: true,
+                        multiple: true, hover: false,
+                        toggleKey: "ctrlKey", // ctrl key removes from selection
+                        box: false
+                    });
                     PipER.selected_control_new = null;
                     PipER.selected_control_type = null;
                     PipER.selected_control = null;
+                    
                     
                   
 					//Controls
@@ -1914,6 +1932,8 @@
 					PipER.map.addControl(new OpenLayers.Control.TouchNavigation());
 					PipER.map.addControl(PipER.select_one_control);
 					PipER.map.addControl(PipER.select_multi_control);
+					PipER.map.addControl(PipER.select_track_control);
+					PipER.map.addControl(PipER.select_one_bb_control);
 					PipER.map.addControl(PipER.interestclick);
 					
 					PipER.map.zoomToExtent(PipER.start);
