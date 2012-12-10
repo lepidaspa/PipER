@@ -1637,7 +1637,12 @@
 				a.attr('href', "data:application/zip;base64," + content);				
 			}
 			
+			PipER.to_refresh = true;
 			function refresh_sight(){
+				PipER.to_refresh = !PipER.to_refresh;
+				if (PipER.to_refresh){
+					return;
+				}
 				PipER.vector_layer.removeAllFeatures();
 				PipER.selectables = [];
 				doselect = true;
@@ -2145,6 +2150,19 @@
 						<a class="btn" id="export_vector" title="Esporta Mappa" href="#" download="Export">?</a>
 						<a class="btn" id="export_image" title="Esporta Vista" download="Export">I</a>	
 					</div>
+			</div>
+		</div>
+		
+		<div id="sp_panel" class="panel sp_btn">
+			<div class="subpanel">
+				<div class="title">
+						<span>Tracciato</span>
+					</div>
+					<div class="tools_list">
+						<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
+						<a class="btn disabled" id="export_csv" href="" title="Download CSV" download="BI">X</a>		
+					</div>
+					
 			</div>
 		</div>
 		
