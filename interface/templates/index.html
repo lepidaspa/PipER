@@ -1246,13 +1246,22 @@
 			spec_ops = {
 				"properties_btn":function(){
 					PipER.select_one_control.activate();
-					PipER.select_one_bb_control.activate();
+					//PipER.select_one_bb_control.activate();
 					PipER.select_multi_control.deactivate();
+					PipER.select_track_control.deactivate();
 				},
 				'bi_btn':function(){
 					PipER.select_one_control.deactivate();
 					PipER.select_multi_control.activate();
-					PipER.select_one_bb_control.deactivate();
+					//PipER.select_one_bb_control.deactivate();
+					PipER.select_track_control.deactivate();
+				},
+				'sp_btn':function(){
+					PipER.select_one_control.deactivate();
+					PipER.select_multi_control.deactivate();
+					//PipER.select_one_bb_control.deactivate();
+					PipER.select_track_control.activate();
+					
 				}
 			}
 			
@@ -1906,12 +1915,12 @@
                         box: false
                     });
                     
-					PipER.select_one_bb_control = new OpenLayers.Control.SelectFeature(PipER.bbox_layer, {
+					/*PipER.select_one_bb_control = new OpenLayers.Control.SelectFeature(PipER.bbox_layer, { BBOX_SELECT
                         clickout: true, toggle: true,
                         multiple: false, hover: false,
                         toggleKey: "ctrlKey", // ctrl key removes from selection
                         box: false
-                    });
+                    });*/
                     PipER.select_track_control = new OpenLayers.Control.SelectFeature(PipER.vector_layer, {
                         clickout: false, toggle: true,
                         multiple: true, hover: false,
@@ -1932,7 +1941,7 @@
 					PipER.map.addControl(new OpenLayers.Control.TouchNavigation());
 					PipER.map.addControl(PipER.select_one_control);
 					PipER.map.addControl(PipER.select_multi_control);
-					PipER.map.addControl(PipER.select_track_control);
+					//PipER.map.addControl(PipER.select_track_control); BBOX_SELECT
 					PipER.map.addControl(PipER.select_one_bb_control);
 					PipER.map.addControl(PipER.interestclick);
 					
