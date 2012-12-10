@@ -1793,14 +1793,15 @@
 				PipER.measureControl.activate();
 				PipER.measureControl.events.on({
 					'measure': function(event){
-						measure = event.measure;
+						measure = Math.round(event.measure*100)/100;
+						units = event.units;
 
-						$('#ruler_result').text(measure+"m");
+						$('#ruler_result').text(measure+units);
 						PipER.measureControl.deactivate();
 					},
 					'measurepartial':function(event){
 						measure = event.measure;
-						$('#ruler_result').text(measure+"m");
+						$('#ruler_result').text(measure+units);
 					}
 				});
 			});
