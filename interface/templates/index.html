@@ -835,10 +835,8 @@
 					        {
 					            if (gqdata.results.length > 0)
 					            {
-					
 					                //console.log("Results found");
 					                gdata = gqdata['results'][0]['formatted_address'];
-					                
 					            }
 					        }
 					    }
@@ -898,128 +896,7 @@
             
             
             
-            function tryBuildMapToCanvas()
-			{
-			
-			    console.log("Trying to copy the tiledata to a canvas object");
-			
-			    var base = $("#OpenLayers\\.Map_35_GMapContainer");
-			
-			    var baseoffset_y = parseInt(base.css("top"));
-			    var baseoffset_x = parseInt(base.css("left"));
-			
-			    if (isNaN(baseoffset_y))
-			    {
-			        baseoffset_y = 0;
-			    }
-			    if (isNaN(baseoffset_x))
-			    {
-			        baseoffset_x = 0;
-			    }
-			
-			    var limit_x = parseInt($("#mapview").css("width"));
-			    var limit_y = parseInt($("#mapview").css("height"));
-			
-			    $("#maptoimage").dialog("open");
-			
-			    $("#vis_panel").empty().append('<canvas id="drawingarea"	height="'+limit_y+'" width="'+limit_x+'"></canvas>');
-			
-			
-			
-			
-			    //console.log(base[0]);
-			    //console.log(baseoffset_x);
-			    //console.log(baseoffset_y);
-			    //console.log(limit_x);
-			    //console.log(limit_y);
-			
-			    //var canvas = document.createElement('canvas');
-			
-			    var canvas = document.getElementById('drawingarea');
-			    var context = canvas.getContext('2d');
-			    context.clearRect(0, 0, canvas.width, canvas.height);
-			
-			    var tileset = base.find("img:visible");
-			
-			    console.log("Total "+tileset.length+" tiles available on this layer");
-			
-			    var offsetter = base.find("div:first div:first div:first");
-			    // console.log("Reading offset div");
-			    // console.log(offsetter);
-			    // console.log(offsetter.css("-webkit-transform"));
-			
-			    // cleaning up the matrix string from css
-			    var preparse =
-			offsetter.css("-webkit-transform").replace(")","").split(",");
-			    // console.log(preparse);
-			
-			    var mainoffset_x = parseInt(preparse[preparse.length-2]);
-			    var mainoffset_y = parseInt(preparse[preparse.length-1]);
-			
-			
-			
-			    for (var i = 0; i < tileset.length; i++)
-			    {
-			        // drawing EVERYTHING to the canvas
-			        var ctile = $(tileset[i]);
-			        var ctileimg = tileset[i];
-			
-			        var parent = ctile.closest("div");
-			
-			        var offset_x = parseInt(parent.css('left'))+mainoffset_x;
-			        var offset_y = parseInt(parent.css('top'))+mainoffset_y;
-			
-			
-			        var tile_width = ctileimg.width;
-			        var tile_height = ctileimg.height;
-			
-			        //context.drawImage(ctileimg, 0, 0, tile_width, tile_height,offset_x, offset_y, tile_width, tile_height);
-			        context.drawImage(ctileimg, 0, 0, tile_width, tile_height,offset_x, offset_y, tile_width, tile_height);
-			
-			        console.log("Drawn "+tileset[i]+" in "+offset_x+","+offset_y+"with size "+ctileimg.width+"*"+ctileimg.height);
-			
-			    }
-			
-			    console.log("Drawn "+i+" tiles");
-			
-			    console.log("Copying "+vislayer.features.length+" features to drawlayer");
-			
-			    var featurestyle = new OpenLayers.Style ({fillOpacity: 0.5,
-			fillColor: "#ff00ff", strokeColor: "#000000", strokeWidth: 6,
-			strokeDashstyle: "solid", pointRadius: 10});
-			    var featurestylemap = new OpenLayers.StyleMap(featurestyle);
-			    var renderlayer = new OpenLayers.Layer.Vector("drawlayer", {name:"drawlayer", styleMap: featurestylemap, renderers: ["Canvas"]});
-			    renderlayer.id = "rendercanvas";
-			
-			    renderlayer.display(false);
-			
-			    mapview.addLayer(renderlayer);
-			
-			
-			    for (var f in vislayer.features)
-			    {
-			        //renderlayer.addFeatures(vislayer.features);
-			        var cfeature = vislayer.features[f];
-			        renderlayer.addFeatures(new
-			OpenLayers.Feature.Vector(cfeature.geometry));
-			    }
-			
-			
-			
-			    //renderlayer.display();
-			
-			    console.log("Copying renderer canvas to output");
-			    var element = ($(renderlayer.div)).find("canvas")[0];
-			
-			    context.drawImage(element, 0, 0);
-			
-			    renderlayer.destroy();
-			
-			    console.log("canvas to data URL");
-			
-			    console.log($(canvas));
-			
-			}
+           
 			
 			function do_show_bb(){
         		PipER.block_bb_selections = false;
@@ -1174,6 +1051,7 @@
 	                    prepare_csv_export(xxte.attributes)
 	                }
 	                PipER.selected_items = ss;
+	                
             }
 			
 
@@ -1328,21 +1206,21 @@
 				});	
 			});
 			$('#clear_db').live('click', function(){
-					$('<div>Desideri cancellare il contenuto del database?</div>').dialog({
-						title:"Cancellazione del DataBase",
-						modal:true,
-						buttons:{
-							'OK':function(){
-								$.get('/broker/clear', function(ddd){
-									console.log(ddd);
-								});
-									$( this ).dialog( "destroy" );
-							},
-							'Annulla':function(){
+				$('<div>Desideri cancellare il contenuto del database?</div>').dialog({
+					title:"Cancellazione del DataBase",
+					modal:true,
+					buttons:{
+						'OK':function(){
+							$.get('/broker/clear', function(ddd){
+								console.log(ddd);
+							});
 								$( this ).dialog( "destroy" );
-							}
+						},
+						'Annulla':function(){
+							$( this ).dialog( "destroy" );
 						}
-					});	
+					}
+				});	
 			});
 			
 			
@@ -1887,18 +1765,8 @@
 								q:"[]"
 							}
 						});
-						if (PipER.track_layer.features.length > 0)
-							tl = $.stringifyJSON(PipER.track_layer.features[0].geometry)
-						else
-							tl = null;
-						$('#export_image').attr('href', 
-							'/print?f='+$.stringifyJSON(PipER.status.query)+
-							"&s="+$.stringifyJSON()+
-							"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+
-							"&p="+tl+
-							"&w="+$(window).width()+
-							"&l="+PipER.map.baseLayer.name+
-							"&h="+$(window).height())
+						
+						prepare_img();
 					});
 
 					//PipER.map.setOptions({restrictedExtent: PipER.start});
@@ -2046,8 +1914,12 @@
 						
 					});
 					
+					prepare_img();
+					
 					//$('#info_btn').click();
 				});
+				
+				
 				
 				
 				$('#search_geo_address').keypress(function(e){
@@ -2092,6 +1964,24 @@
 				PipER.vector_layer.redraw();
 				setTimeout(move_bar, 200);
 			});
+			
+			function prepare_img(){
+				if (PipER.track_layer.features.length > 0)
+					tl = $.stringifyJSON(PipER.track_layer.features[0].geometry)
+				else
+					tl = null;
+					
+				a = Enumerable.From(PipER.selected_items).Select("$.attributes.IDPiper").ToArray();
+				
+				$('#export_image').attr('href', 
+					'/print?f='+$.stringifyJSON(PipER.status.query)+
+					"&s="+$.stringifyJSON(a)+
+					"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+
+					"&p="+tl+
+					"&w="+$(window).width()+
+					"&l="+PipER.map.baseLayer.name+
+					"&h="+$(window).height());
+			}
 			
 			function move_bar(){
 				$('.olControlPanZoomBar').attr('style', "");
