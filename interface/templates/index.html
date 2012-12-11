@@ -891,7 +891,8 @@
 				//console.log(content);
 				var a = $('.export_csv');
 				a.removeClass('disabled')
-				a.attr('href', "data:application/zip;base64," + content);				
+				a.attr('href', "data:application/zip;base64," + content);		
+				prepare_img();		
 			}
             
             
@@ -1051,7 +1052,7 @@
 	                    prepare_csv_export(xxte.attributes)
 	                }
 	                PipER.selected_items = ss;
-	                
+	                prepare_img();
             }
 			
 
@@ -1508,7 +1509,7 @@
 				if (PipER.status.done_inner_query && PipER.status.done_outer_query){
 					
 					$('#spinner').hide();
-					refresh_sight();
+					refresh_sight(true);
 					prepare_export();
 				}
 				else 
@@ -1537,12 +1538,14 @@
 				content = zip.generate();
 				console.log(content);
 				var a = $('#export_vector');
-				a.attr('href', "data:application/zip;base64," + content);				
+				a.attr('href', "data:application/zip;base64," + content);	
+				prepare_img();			
 			}
 			
 			PipER.to_refresh = true;
-			function refresh_sight(){
-				PipER.to_refresh = !PipER.to_refresh;
+			function refresh_sight(force){
+				if (force != true)
+					PipER.to_refresh = !PipER.to_refresh;
 				if (PipER.to_refresh){
 					return;
 				}
@@ -1586,6 +1589,7 @@
 				
 					setTimeout(reselect,750);	
 				}
+				prepare_img();
 				
 			}
 			
@@ -1599,6 +1603,7 @@
 							else
 								PipER.select_multi_control.select(PipER.vector_layer.features[fed]);
 					}
+					prepare_img();
 			}
 			
 			$('.uproxy, .aproxy').live('mouseenter', function(){
@@ -1935,7 +1940,7 @@
 							$('#search_btn').removeClass('filter_active');
 						else
 							$('#search_btn').addClass('filter_active');
-						refresh_sight();
+						refresh_sight(true);
 						PipER.vector_layer.redraw();
 				});
 				$('#do_search_geo').click(function(){
@@ -1963,7 +1968,7 @@
 				
 				PipER.vector_layer.redraw();
 				setTimeout(move_bar, 300);
-				prepare_img()
+				prepare_img();
 			});
 			
 			function prepare_img(){
