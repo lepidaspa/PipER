@@ -1035,12 +1035,12 @@
 		                	pa.push({'key':'Lunghezza calcolata', "value":Math.round(ss[aa].geometry.getLength()*100)/100+"m"});
 		                	if (ss[aa].geometry.getLength() == 0){
 		                		pa.push({'key':'Tipo di Elemento', "value":"Nodo"});
-		                		//pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
+		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
 		                	}
 		                	else{
 		                		pa.push({'key':'Tipo di Elemento', "value":"Tratta"});
-		                		//pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
-		                		//pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
+		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}
 		                	
 		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
@@ -1719,7 +1719,7 @@
 							PipER.bbox_layer.display(false);
 							PipER.status.active_layer =PipER.bg_layer; 
 							PipER.status.url = "search";
-							//$('#properties_btn').removeClass('disabled')
+							$('#properties_btn').removeClass('disabled')
 							$('#bi_btn').removeClass('disabled')
 							$('#sp_btn').removeClass('disabled')
 							//$('#search_btn').removeClass('disabled')
@@ -1731,7 +1731,7 @@
 							PipER.bbox_layer.display(true);
 							PipER.status.active_layer =PipER.bbox_layer; 
 							PipER.status.url = "proxies";
-							//$('#properties_btn').addClass('disabled')
+							$('#properties_btn').addClass('disabled')
 							$('#bi_btn').addClass('disabled')
 							$('#sp_btn').addClass('disabled')
 							//$('#search_btn').addClass('disabled')
