@@ -1810,7 +1810,7 @@ OpenLayers.Feature.Vector(geom));
 				FIdER.selected_items = Enumerable.From(FIdER.selected_items).Distinct().ToArray();
 				for (fed in FIdER.vector_layer.features)
 					for (fid in FIdER.selected_items){
-						if (FIdER.selected_items[fid].attributes.IDPiper == FIdER.vector_layer.features[fed].attributes.IDPiper )
+						if (FIdER.selected_items[fid] == FIdER.vector_layer.features[fed].attributes.IDPiper )
 							if (FIdER.selected_items.length == 1)
 								FIdER.select_one_control.select(FIdER.vector_layer.features[fed]);
 							else
