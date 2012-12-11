@@ -3,13 +3,14 @@ var page = require('webpage').create(),
     address, output, size;
 
 if (system.args.length < 3 || system.args.length > 5) {
-    console.log('Usage: rasterize.js URL filename [paperwidth*paperheight|paperformat] [zoom]');
+
     console.log('  paper (pdf output) examples: "5in*7.5in", "10cm*20cm", "A4", "Letter"');
     phantom.exit(1);
 } else {
     address = system.args[1];
     output = system.args[2];
-    page.viewportSize = { width: 1024, height: 768 };
+    page.viewportSize = { width: 1366, height: 768 };
+    //console.log(address)    //console.log(output);
     if (system.args.length > 3 && system.args[2].substr(-4) === ".pdf") {
         size = system.args[3].split('*');
         page.paperSize = size.length === 2 ? { width: size[0], height: size[1], margin: '0px' }
