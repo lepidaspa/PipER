@@ -1651,26 +1651,7 @@
 				var has_ = PipER.bbox_layer.redraw();
 			});
 			
-			$('#export_image').live('click', function(){
-				console.log("ciao");
-				bb = "[" + PipER.map.getExtent().toBBOX() + "]";
-				filter = $.stringifyJSON(PipER.status.query);
-				selected = $.stringifyJSON(PipER.selected_items);
-				w = $(window).width();
-				h = $(window).height();
-				bl =""
-				pois=""
-				url = '/export'+
-					'?b='+bb+
-					"&f="+filter+
-					"&w="+w+
-					"&h="+h+
-					"&l="+bl+
-					"&p="+pois+
-					"&s="+selected;
-				console.log(url);
-				$('<a target="_blank" href="'+url+'"></a>').click();
-			});
+
 			
 			$('#ruler').live('click', function(){
 				PipER.measureControl.activate();
@@ -1978,14 +1959,16 @@
 					
 				a = Enumerable.From(PipER.selected_items).Select("$.attributes.IDPiper").ToArray();
 				
-				$('#export_image').attr('href', 
-					'/print?f='+$.stringifyJSON(PipER.status.query)+
-					"&s="+$.stringifyJSON(a)+
-					"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+
-					"&p="+tl+
-					"&w="+$(window).width()+
-					"&l="+PipER.map.baseLayer.name+
-					"&h="+$(window).height());
+				if (PipER.map){
+					$('#export_image').attr('href', 
+						'/print?f='+$.stringifyJSON(PipER.status.query)+
+						"&s="+$.stringifyJSON(a)+
+						"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+
+						"&p="+tl+
+						"&w="+$(window).width()+
+						"&l="+PipER.map.baseLayer.name+
+						"&h="+$(window).height());
+				}
 			}
 			
 			function move_bar(){
