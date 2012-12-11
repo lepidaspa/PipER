@@ -1572,6 +1572,7 @@
 			$('#clear_selection').live('click', function(){
 				
 				$('#bi_panel .subpanel .content').empty();
+				$('#sp_panel .subpanel .content').empty();
 				$('#properties_panel .subpanel .content').empty();
 				PipER.selected_items = [];
 				PipER.select_multi_control.unselectAll();
@@ -1890,7 +1891,14 @@
 							tl = $.stringifyJSON(PipER.track_layer.features[0].geometry)
 						else
 							tl = null;
-						$('#export_image').attr('href', '/print?f='+$.stringifyJSON(PipER.status.query)+"&s="+$.stringifyJSON()+"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+"&p="+tl+"&w="+$(window).width()+"&l="+PipER.map.baseLayer.name+"&h="+$(window).height())
+						$('#export_image').attr('href', 
+							'/print?f='+$.stringifyJSON(PipER.status.query)+
+							"&s="+$.stringifyJSON()+
+							"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+
+							"&p="+tl+
+							"&w="+$(window).width()+
+							"&l="+PipER.map.baseLayer.name+
+							"&h="+$(window).height())
 					});
 
 					//PipER.map.setOptions({restrictedExtent: PipER.start});
