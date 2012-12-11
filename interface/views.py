@@ -46,7 +46,7 @@ def do_export(request):
     w = request.REQUEST.get('w')
     h = request.REQUEST.get('h')
     
-    url = "http://echo720.server4you.net/export?f="+filter+"&s="+selected + "&b=" + bb + "&p=" + pois + "&l=" + bl
+    url = "http://5.144.184.145/export?f="+filter+"&s="+selected + "&b=" + bb + "&p=" + pois + "&l=" + bl
     print url
     filename = "/tmp/"+str(uuid4())+".png"
     print filename
