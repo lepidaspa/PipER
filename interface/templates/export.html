@@ -586,8 +586,8 @@
 	
 			//starting point
 			FIdER.start = new OpenLayers.Bounds();
-			FIdER.start.extend(new OpenLayers.LonLat({{bb.l}},{{bb.t}}).transform(FIdER.projections.wgs84, FIdER.projections.google));
-			FIdER.start.extend(new OpenLayers.LonLat({{bb.r}}, {{bb.b}}).transform(FIdER.projections.wgs84, FIdER.projections.google));
+			FIdER.start.extend(new OpenLayers.LonLat({{bb.l}},{{bb.t}}));
+			FIdER.start.extend(new OpenLayers.LonLat({{bb.r}}, {{bb.b}}));
 
 			FIdER.ccstyle = new OpenLayers.StyleMap();
 			$.get('/sld/default', function(sld){
@@ -633,21 +633,14 @@
 			FIdER.tr_style = new OpenLayers.StyleMap();
 			FIdER.tr_style.addUniqueValueRules("default", "type", {
 				'start':{
-					'fillColor':"#44ff44",
-					'strokeColor':"#44ff44   ",
-					'fillOpacity':0.5,
-					'strokeWidth':"3",
-					'pointRadius':'8'
+					'externalGraphic':"/fstatic/icon_poi.png",
+					'graphicXOffset':-16,
+					'graphicYOffset':0,
+					'graphicWidth':32,
+					'graphicHeight':37,
+					'graphicOpacity':1
 					
-				},
-				'end':{
-					'fillColor':"Red",
-					'strokeColor':"Red",
-					'fillOpacity':0.5,
-					'strokeWidth':"3",
-					'pointRadius':'8'
-					
-				},
+				}
 			});
 			FIdER.bgstyle = new OpenLayers.StyleMap({
 				'default':{
@@ -1943,26 +1936,32 @@ OpenLayers.Feature.Vector(geom));
 
 					FIdER.map.setOptions({restrictedExtent: FIdER.start});
 
-					//Base Maps
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
-						type : google.maps.MapTypeId.SATELLITE,
-						numZoomLevels : 20
-					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Physical", {
-						type : google.maps.MapTypeId.TERRAIN,
-						visibility : false
-					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Streets", {
-						numZoomLevels : 20,
-						visibility : false
-					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Hybrid", {
-						type : google.maps.MapTypeId.HYBRID,
-						numZoomLevels : 20,
-						visibility : false
-					}));
-					FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
+					switch("{{bl}}"){
 
+						//Base Maps
+						case "Google Satellite": FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {
+								type : google.maps.MapTypeId.SATELLITE,
+								numZoomLevels : 20
+							}));
+							break;
+						case "Google Physical":  FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Physical", {
+							type : google.maps.MapTypeId.TERRAIN,
+							visibility : false
+						}));
+							break;
+						case "Google Streets":  FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Streets", {
+							numZoomLevels : 20,
+							visibility : false
+						}));
+							break;
+						case "Google Hybrid":  FIdER.map.addLayer(new OpenLayers.Layer.Google("Google Hybrid", {
+							type : google.maps.MapTypeId.HYBRID,
+							numZoomLevels : 20,
+							visibility : false
+						}));
+							break;
+						case "OpenStreetMap":  FIdER.map.addLayer(new OpenLayers.Layer.OSM("OpenStreetMap"));
+					}
 					
 					FIdER.map.addLayer(FIdER.bg_layer);
 					FIdER.map.addLayer(FIdER.vector_layer);
@@ -2052,6 +2051,9 @@ OpenLayers.Feature.Vector(geom));
 					});
 					
 					//$('#info_btn').click();
+					
+					pois = {{pois|safe}};
+					FIdER.track_layer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(pois.x, pois.y), {type:'start'})]);
 				});
 				
 				

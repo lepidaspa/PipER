@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from uuid import  uuid4
 
 import subprocess 
+import os
 #=======================================================#
 
 def index(request):
@@ -45,10 +46,17 @@ def do_export(request):
     w = request.REQUEST.get('w')
     h = request.REQUEST.get('h')
     
-    url = "/export?f="+filter+"&s="+selected + "&b=" + bb + "&p=" + pois + "&l=" + bl
-    filename = str(uuid4())+".pdf"
+    url = "http://echo720.server4you.net/export?f="+filter+"&s="+selected + "&b=" + bb + "&p=" + pois + "&l=" + bl
+    print url
+    filename = "/tmp/"+str(uuid4())+".png"
+    print filename
     
-    subprocess.call(['phantomjs', 'export.js', url, w,h, filename])
+    subprocess.call(['phantomjs', 'export.js', url, filename])
+    f = open(filename)
+    c = f.read()
+    f.close()
+    os.remove(filename)
+    return HttpResponse(c, mimetype="image/png")
 
 def urls(request):
     return HttpResponse(json.dumps({

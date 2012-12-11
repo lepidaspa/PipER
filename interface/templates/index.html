@@ -1886,6 +1886,11 @@
 								q:"[]"
 							}
 						});
+						if (PipER.track_layer.features.length > 0)
+							tl = $.stringifyJSON(PipER.track_layer.features[0].geometry)
+						else
+							tl = null;
+						$('#export_image').attr('href', '/print?f='+$.stringifyJSON(PipER.status.query)+"&s="+$.stringifyJSON()+"&b="+"["+PipER.map.getExtent().toBBOX()+"]"+"&p="+tl+"&w="+$(window).width()+"&l="+PipER.map.baseLayer.name+"&h="+$(window).height())
 					});
 
 					//PipER.map.setOptions({restrictedExtent: PipER.start});
