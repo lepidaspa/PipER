@@ -305,6 +305,10 @@
 				
 			}
 			
+			.item .val{
+				font-weight:bold;
+			}
+			
 			
 		</style>
 		<script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
@@ -805,22 +809,12 @@
             
 			function reverseGeoSearch (featuregeom, array, attname)
 			{
-			    /*
 			
-			http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true_or_false
-			     */
 			
+				
 			    var coords = new OpenLayers.LonLat(featuregeom.x,
 			featuregeom.y).transform(PipER.map.getProjectionObject(), PipER.projections.wgs84);
 			
-			
-			    //console.log("Trying reverse geocoding for coordinates");
-			    //console.log(coords);
-			
-			    //console.log("Writing result to ID");
-			    //console.log(writetoid);
-			
-			    //console.log(dest);
 			
 			    var path =
 			'/external/maps.googleapis.com/maps/api/geocode/json?latlng='+coords.lat
@@ -1669,6 +1663,9 @@
 
 						$('#ruler_result').text(measure+units);
 						PipER.measureControl.deactivate();
+						setTimeout(4000, function(){
+							$('#ruler_result').text();
+						})
 					},
 					'measurepartial':function(event){
 						measure = Math.round(event.measure*100)/100;
