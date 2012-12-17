@@ -288,6 +288,10 @@
 			#__.collapsed .item{
 				display:list-item;
 			}
+			
+			#__.collapsed .head{
+				display:none;
+			}
 			.expanded .item {
 				display:list-item;
 			}
@@ -2072,9 +2076,6 @@
 			<div class="nav_btn" id="bi_btn" title="Business Intelligence">
 				<span>u</span>
 			</div>
-			<div class="nav_btn" id="sp_btn" title="Selezione Percorsi">
-				<span>*</span>
-			</div>
 			<div class="nav_btn" id="exp_btn" title="Esportazione">
 				<span>~</span>
 			</div>
@@ -2119,10 +2120,6 @@
 						<span>Tracciato</span>
 					</div>
 					<div class="tools_list">
-						<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
-						<a class="btn disabled export_csv"  href="" title="Download CSV" download="BI.zip">X</a>
-						<a class="btn" id="ruler" title="Misura" >`</a>	
-						<span id="ruler_result"></span>
 					</div>
 				<div class="content">
 					
@@ -2166,7 +2163,10 @@
 				</div>
 				<div class="tools_list">
 					<span class="btn" id="clear_selection" title="Annulla Selezione">'</span>		
-					<a class="btn disabled export_csv" href="" title="Download CSV" download="BI.zip">X</a>		
+					<a class="btn disabled export_csv" href="" title="Download CSV" download="BI.zip">X</a>	
+					<a class="btn area_select" href="" title="Seleziona area">p</a>	
+					<a class="btn" id="ruler" title="Misura" >`</a>	
+					<span id="ruler_result"></span>
 				</div>
 				<div class="content">
 					
