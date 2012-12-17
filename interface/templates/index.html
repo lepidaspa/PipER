@@ -947,6 +947,9 @@
 		                    $('#bi_panel .subpanel .content').empty();
 		                    $('#bi_panel .subpanel .content').append("Nessuna area selezionata");
 		                    $('#bi_panel .subpanel .content').show();
+		                    $('#sp_panel .subpanel .content').empty();
+		                    $('#sp_panel .subpanel .content').append("Nessun tracciato selezionato");
+		                    $('#sp_panel .subpanel .content').show();
 	                	
 	                }else if (ss.length == 1){
 	                	for (var e in ss[0].attributes)
@@ -1051,7 +1054,7 @@
 	                    
 	                    prepare_csv_export(xxte.attributes)
 	                }
-	                PipER.selected_items = ss;
+	                PipER.selected_items = Enumerable.From(ss).Select("$.attributes.IDPiper").Distinct().ToArray();;
 	                prepare_img();
             }
 			
@@ -1594,10 +1597,9 @@
 			}
 			
 			function reselect(){
-				PipER.selected_items = Enumerable.From(PipER.selected_items).Distinct().ToArray();
 				for (fed in PipER.vector_layer.features)
 					for (fid in PipER.selected_items){
-						if (PipER.selected_items[fid].attributes.IDPiper == PipER.vector_layer.features[fed].attributes.IDPiper )
+						if (PipER.selected_items[fid] == PipER.vector_layer.features[fed].attributes.IDPiper )
 							if (PipER.selected_items.length == 1)
 								PipER.select_one_control.select(PipER.vector_layer.features[fed]);
 							else
