@@ -1663,9 +1663,9 @@
 
 						$('#ruler_result').text(measure+units);
 						PipER.measureControl.deactivate();
-						setTimeout(4000, function(){
-							$('#ruler_result').text();
-						})
+						setTimeout( function(){
+							$('#ruler_result').text("");
+						}, 4000);
 					},
 					'measurepartial':function(event){
 						measure = Math.round(event.measure*100)/100;
