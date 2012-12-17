@@ -1821,6 +1821,14 @@
                     PipER.selected_control_type = null;
                     PipER.selected_control = null;
                     
+                    PipER.select_multi_control.events.on({
+						'boxselectionend':function(event){
+							setTimeout(function(){
+								PipER.select_multi_control.deactivate();
+								PipER.select_track_control.activate();
+							}, 100);
+						}
+					});
                     
                     PipER.measureControl = new OpenLayers.Control.Measure(
 	                    OpenLayers.Handler.Path, {
@@ -1958,14 +1966,7 @@
 				PipER.select_multi_control.activate();
 				PipER.select_track_control.deactivate();
 				
-				PipER.select_multi_control.events.on({
-					'boxselectionend':function(event){
-						setTimeout(function(){
-							PipER.select_multi_control.deactivate();
-							PipER.select_track_control.activate();
-						}, 1000);
-					}
-				});
+				
 			});
 			function prepare_img(){
 				if (PipER.track_layer.features.length > 0)
