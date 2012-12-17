@@ -1960,8 +1960,9 @@
 				
 				PipER.select_multi_control.events.on({
 					'boxselectionend':function(event){
-						PipER.select_multi_control.activate();
-						PipER.select_track_control.deactivate();
+							PipER.select_multi_control.deactivate();
+							PipER.select_track_control.activate();
+						
 					}
 				});
 			});
