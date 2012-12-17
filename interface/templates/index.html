@@ -1960,7 +1960,7 @@
 				else
 					tl = null;
 					
-				a = Enumerable.From(PipER.selected_items).Select("$.attributes.IDPiper").ToArray();
+				a = Enumerable.From(PipER.selected_items).ToArray();
 				
 				if (PipER.map){
 					$('#export_image').attr('href', 
