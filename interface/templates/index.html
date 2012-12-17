@@ -1140,16 +1140,9 @@
 				},
 				'bi_btn':function(){
 					PipER.select_one_control.deactivate();
-					PipER.select_multi_control.activate();
-					//PipER.select_one_bb_control.deactivate();
-					PipER.select_track_control.deactivate();
-				},
-				'sp_btn':function(){
-					PipER.select_one_control.deactivate();
 					PipER.select_multi_control.deactivate();
 					//PipER.select_one_bb_control.deactivate();
 					PipER.select_track_control.activate();
-					
 				}
 			}
 			
@@ -1959,6 +1952,19 @@
 				prepare_img();
 			});
 			
+			$('.area_select').live('click', function(){
+				PipER.select_one_control.deactivate();
+				//PipER.select_one_bb_control.activate();
+				PipER.select_multi_control.activate();
+				PipER.select_track_control.deactivate();
+				
+				PipER.select_multi_control.events.on({
+					'boxselectionend':function(event){
+						PipER.select_multi_control.activate();
+						PipER.select_track_control.deactivate();
+					}
+				});
+			});
 			function prepare_img(){
 				if (PipER.track_layer.features.length > 0)
 					tl = $.stringifyJSON(PipER.track_layer.features[0].geometry)
