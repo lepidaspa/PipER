@@ -1960,9 +1960,10 @@
 				
 				PipER.select_multi_control.events.on({
 					'boxselectionend':function(event){
+						setTimeout(function(){
 							PipER.select_multi_control.deactivate();
 							PipER.select_track_control.activate();
-						
+						}, 1000);
 					}
 				});
 			});
