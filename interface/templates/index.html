@@ -1591,7 +1591,10 @@
 						PipER.vector_layer.addFeatures(PipER.selectables[a].clone());
 				
 					setTimeout(reselect,750);	
+					
 				}
+				
+				$('.filter_stats').text('Selezionabili '+PipER.vector_layer.features.length+'/'+PipER.bg_layer.features.length);
 				prepare_img();
 				
 			}
@@ -2112,6 +2115,9 @@
 			<div class="subpanel" data-type="inventory">
 				<div class="title">
 					<span>Filtro</span>
+				</div>
+				<div class="tools_list">
+					<span id="filter_stats"></span>
 				</div>
 				<div class="content" id="inventory_q">
 			
