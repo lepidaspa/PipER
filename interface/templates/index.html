@@ -1640,7 +1640,12 @@
 			});
 			
 			$('.p_name').live('click', function(){
-				$(this).siblings('table').show();
+				s = $(this).siblings('table');
+				if (s.css('display') === 'table')
+					s.hide();
+				else
+					s.show();
+					
 			});
 			$('.proxy_check').live('click', function(){
 				c = $(this).is(':checked');
