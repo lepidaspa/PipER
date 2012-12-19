@@ -1045,12 +1045,12 @@
 		                	pa.push({'key':'Lunghezza calcolata', "value":Math.round(ss[aa].geometry.getLength()*100)/100+"m"});
 		                	if (ss[aa].geometry.getLength() == 0){
 		                		pa.push({'key':'Tipo di Elemento', "value":"Nodo"});
-		                		pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
+		                		//pa.push({'key':'Indirizzo indicativo', "value":reverseGeoSearch(ss[aa].geometry)});
 		                	}
 		                	else{
 		                		pa.push({'key':'Tipo di Elemento', "value":"Tratta"});
-		                		pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
-		                		pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
+		                		//pa.push({'key':'Indirizzo indicativo inizio', "value":reverseGeoSearch(ss[aa].geometry.components[0])});
+		                		//pa.push({'key':'Indirizzo indicativo fine', "value":reverseGeoSearch(ss[aa].geometry.components[PipER.vector_layer.selectedFeatures[0].geometry.components.length-1])});
 		                	}
 		                	
 		                	axxte =  {"attributes":pa, "id":ss[aa].id.replace(/\./g,'_'), 'IDPiper':ss[aa].attributes.IDPiper, 'ia':$.stringifyJSON(ss[aa].attributes)};
