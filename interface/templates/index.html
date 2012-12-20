@@ -952,7 +952,7 @@
 		                    $('#properties_panel .subpanel .content').append("Nessun elemento selezionato");
 		                    $('#properties_panel .subpanel .content').show();
 		                    $('#bi_panel .subpanel .content').empty();
-		                    $('#bi_panel .subpanel .content').append("Nessuna area selezionata");
+		                    $('#bi_panel .subpanel .content').append("Nessuna area o percorso selezionato");
 		                    $('#bi_panel .subpanel .content').show();
 		                    $('#sp_panel .subpanel .content').empty();
 		                    $('#sp_panel .subpanel .content').append("Nessun tracciato selezionato");
@@ -1724,7 +1724,7 @@
 		                    $('#properties_panel .subpanel .content').append("Nessun elemento selezionato");
 		                    $('#properties_panel .subpanel .content').show();
 		                    $('#bi_panel .subpanel .content').empty();
-		                    $('#bi_panel .subpanel .content').append("Nessuna area selezionata");
+		                    $('#bi_panel .subpanel .content').append("Nessuna area o percorso selezionato");
 		                    $('#bi_panel .subpanel .content').show();
 						}
 						PipER.vector_layer.styleMap.styles.default = PipER.ccstyle.styles.default;
@@ -2222,15 +2222,6 @@
 					<a id="fwp_link" href="//5.144.184.146/fwp/selng/">Vai alla Piattaforma di Gestione dei Proxy</a>
 				</div>
 				<div class="title">
-					<span>Strumenti - Infastrutture</span>
-				</div>
-					<div class="tools_list">
-						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
-					</div>
-				<div class="content" id="infras_list">
-					
-				</div>
-				<div class="title">
 					<span>Strumenti - Proxy</span>
 				</div>
 					<div class="tools_list">
@@ -2241,6 +2232,16 @@
 				<div class="content" id="admin_proxies">
 					
 				</div>
+				<div class="title">
+					<span>Strumenti - Infastrutture</span>
+				</div>
+					<div class="tools_list">
+						<span class="btn" id="add_infrastructure" title="Aggiungi Infrastruttura">+</span>		
+					</div>
+				<div class="content" id="infras_list">
+					
+				</div>
+				
 				<div class="title">
 					<span>Strumenti - Modelli</span>
 				</div>
