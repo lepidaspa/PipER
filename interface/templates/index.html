@@ -1512,7 +1512,7 @@
 				if (PipER.status.done_inner_query && PipER.status.done_outer_query){
 					
 					$('#spinner').hide();
-					refresh_sight(false);
+					refresh_sight();
 					prepare_export();
 				}
 				else 
@@ -1947,8 +1947,8 @@
 							$('#search_btn').removeClass('filter_active');
 						else
 							$('#search_btn').addClass('filter_active');
-						refresh_sight();
 						PipER.vector_layer.redraw();
+						refresh_sight();
 				});
 				$('#do_search_geo').click(function(){
 					
