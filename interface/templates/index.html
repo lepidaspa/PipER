@@ -2047,6 +2047,8 @@
 		 		PipER.status.active_layer.addFeatures(PipER.geojson_format.read($.stringifyJSON(datas)));	
 				PipER.status.done_inner_query = true;
 		 		PipER.check_spinner();
+		 		
+				refresh_sight();
 			}
 			
 			function get_queries(datas){
