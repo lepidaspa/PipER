@@ -1,0 +1,3 @@
+00 1 * * Sat python /home/ubuntu/PipER/manage.py clear_db
+05 1 * * Sat python /home/ubuntu/PipER/manage.py pull_remotes
+00 2 * * Sat python /home/ubuntu/PipER/manage.py get_remotes
