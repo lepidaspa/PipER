@@ -4,7 +4,7 @@ import urllib2
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.conf import settings
-
+import sys
 from broker.models import * 
 from django.views.decorators.csrf import csrf_exempt
 from uuid import  uuid4
@@ -47,11 +47,10 @@ def do_export(request):
     h = request.REQUEST.get('h')
     
     url = "http://5.144.184.145/export?f="+filter+"&s="+selected + "&b=" + bb + "&p=" + pois + "&l=" + bl
-    print url
     filename = "/tmp/"+str(uuid4())+".png"
-    print filename
-    
-    subprocess.call(['phantomjs', 'export.js', url, filename])
+    filename = filename.replace('-','')
+   
+    p = subprocess.call(['phantomjs', '/home/ubuntu/PipER/export.js', url, filename])
     f = open(filename)
     c = f.read()
     f.close()

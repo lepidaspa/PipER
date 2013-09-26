@@ -1229,7 +1229,7 @@
 			
 			
 			$('.refresh_remotes').live('click', function(){
-				id= $(this).parent('tr').data('id');
+				id= $(this).closest('tr').data('id');
 				$('<div>Desideri forzare il refresh del proxy?</div>').dialog({
 					title:"Forzare il refresh dei proxy",
 						modal:true,
@@ -1247,7 +1247,8 @@
 				});	
 			});
 			$('.refresh_local').live('click', function(){
-				id= $(this).parent('tr').data('id');
+				id= $(this).closest('tr').data('id');
+				console.log(id);
 				$('<div>Desideri scaricare i dati dal proxy?</div>').dialog({
 					title:"Scaricamento dati dai proxy",
 						modal:true,
@@ -1265,7 +1266,7 @@
 				});	
 			});
 			$('.clear_db').live('click', function(){
-				id= $(this).parent('tr').data('id');
+				id= $(this).closest('tr').data('id');
 					$('<div>Desideri cancellare il contenuto del database relativo al proxy slezionato?</div>').dialog({
 						title:"Cancellazione del DataBase",
 						modal:true,

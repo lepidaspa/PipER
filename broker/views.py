@@ -131,7 +131,7 @@ def force_refresh_response():
 
 def force_pull_remote(request):
     proxy = request.REQUEST.get('id', None)
-    return HttpResponse(force_pull_remote_response())
+    return HttpResponse(force_pull_remote_response(proxy))
 
 def force_pull_remote_response(proxy):
     yield "<div>starting</div>"
