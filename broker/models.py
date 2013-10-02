@@ -108,12 +108,13 @@ def get_for_bb(BB):
 def all_prox():
     ret = []
     for owner in Owner.objects.all():
-        oj = {}
-        oj['name']=owner.name
-        oj['global_count'] = 0
-        oj['data'] = []
-        for proxy in owner.proxies.all():
+	for proxy in owner.proxies.all():
+            oj = {}
+            oj['name']=owner.name
+            oj['global_count'] = 0
             oj['data'] = []
+            a = {}
+            #oj['data'] = []
             pj = {}
             pj['token']=proxy.token
             pj['url']=proxy.url
@@ -130,9 +131,14 @@ def all_prox():
                 mj['active'] = meta.active
                 mj['crondata'] = proxy.data.timing.crontab
                 pj['meta'].append(mj)
-            oj['data'].append(pj)
+	    a = pj
+            oj['data'].append(a)
             ret.append(oj)   
-    return ret  
+    rret = []
+    for r in ret:
+	if r['global_count']>0:
+	    rret.append(r)
+    return rret  
 
 
 class OwnerData(models.Model):

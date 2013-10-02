@@ -145,14 +145,16 @@ def force_pull_remote_response(proxy):
                 yield "<div>error pulling proxy %s</div>" % str(proxy.id)
         yield "<div>done</div>"
     else:
-        yield "<div>getting proxy %s</div>" % str(proxy)
-        call_command('pull_remote', str(proxy))
-        yield "<div>got proxy %s</div>" % str(proxy)
+	m = Metadata.objects.get(id = proxy)
+        yield "<div>getting proxy %s</div>" % str(m.proxy)
+        call_command('pull_remote', str(m.proxy.id))
+        yield "<div>got proxy %s</div>" % str(m.proxy)
+
     
 
 def force_get_remote(request):
     proxy = request.REQUEST.get('id', None)
-    return HttpResponse(force_pull_remote_response(proxy))
+    return HttpResponse(force_get_remote_response(proxy))
 
 def force_get_remote_response(proxy):
     yield "<div>starting</div>"
@@ -166,9 +168,10 @@ def force_get_remote_response(proxy):
                 yield "<div>error getting proxy %s</div>" % str(proxy.id)
         yield "<div>done</div>"
     else:
-        yield "<div>getting proxy %s</div>" % str(proxy)
-        call_command('get_remote', str(proxy))
-        yield "<div>got proxy %s</div>" % str(proxy)
+	m = Metadata.objects.get(id = proxy)
+        yield "<div>getting proxy %s</div>" % str(m.proxy)
+        call_command('get_remote', str(m.proxy.id))
+        yield "<div>got proxy %s</div>" % str(m.proxy)
         
         
 
@@ -190,6 +193,9 @@ def all_owners(request):
     return HttpResponse(json.dumps([o.name for o in Owner.objects.all()]))
     
 def delete(request, proxy_id):
-    ProxyRequest.objects.get(token = proxy_id).delete()
+    try:
+        ProxyRequest.objects.get(token = proxy_id).delete()
+    except:
+        pass
     return HttpResponse()
     

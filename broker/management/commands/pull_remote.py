@@ -16,6 +16,7 @@ class Command(BaseCommand):
 	else:
 		todo.extend(Proxy.objects.all().values_list('id', flat=True))
 	for i in  todo:
+		print "getting data from %s" % i
 	        p = Proxy.objects.get(id=i)
         	url = p.request.url
 	        if url[-1] != "/":
