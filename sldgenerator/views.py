@@ -31,10 +31,10 @@ def get_default_sld(request):
                   '#ff0000'
                   ]
     
-    m = "Duct"
+    m = "Cavidotto"
     f = "Tipo"
     
-    mod = do_get_model_secondary([m])
+    mod = inner_get_model()
     print json.dumps(mod)
     
     if mod =={}:
@@ -119,10 +119,10 @@ def get_selected_sld(request):
                   '#ff0000'
                   ]
     
-    m = "Duct"
+    m = "Cavidotto"
     f = "Tipo"
     
-    mod = do_get_model_secondary([m])
+    mod = inner_get_model_secondary()
     print json.dumps(mod)
     
     if mod =={}:

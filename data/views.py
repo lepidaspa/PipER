@@ -89,6 +89,12 @@ def run_query(bb, query):
     }
     
     return response
-    
-    
-    
+   
+@csrf_exempt 
+def submit_write(request):
+    data = json.loads(request.body)  
+    proxy = Proxy.objects.get(data__token=data.get('token'))
+    put_data(proxy, data)
+
+
+    return HttpResponse ()

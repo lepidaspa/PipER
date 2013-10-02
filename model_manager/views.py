@@ -24,7 +24,6 @@ def _get_model(request):
             for attribute in model.attributes.all():
                 data[model.name][str(attribute)] = attribute.type
     return HttpResponse(json.dumps(data), mimetype="application/json")
-        
 
 def _get_model_secondary(request):
     models = request.REQUEST.get('models', [])
@@ -33,10 +32,21 @@ def _get_model_secondary(request):
     else:
         models = models.split('|')
         models = DataModel.objects.filter(name__in=models)
-    data = {}
     m = request.REQUEST.get('m', None)
-    for model in models:
-        if (m is not None and m == model.name) or m is None:
+    data = inner_do_get_model(models)
+    return HttpResponse(json.dumps(data), mimetype="application/json")
+
+def inner_get_model():
+    return inner_do_get_model()
+
+def inner_get_model_secondary():
+    return inner_do_get_model()
+
+def inner_do_get_model(models = []):
+    data = {}
+    if models == []:
+        models = DataModel.objects.all()
+    for model in models:    
             data[model.name] = {}
             data[model.name]['name'] = model.name
             data[model.name]['objtype'] = model.geo_type
@@ -54,8 +64,7 @@ def _get_model_secondary(request):
                     data[model.name]['properties'][str(attribute)] = [ str(o) for o in Infrastructure.objects.all()]
                 else:
                     data[model.name]['properties'][str(attribute)] = attribute.type
-    return HttpResponse(json.dumps(data), mimetype="application/json")
-        
+    return data 
     
     
     
