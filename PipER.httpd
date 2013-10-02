@@ -1,0 +1,47 @@
+<VirtualHost *:443>
+	
+#	servername piper.lepida.it
+#	serveralias 5.144.184.145
+#</VirtualHost>
+#<VirtualHost *:443>
+#	servername piper.lepida.it
+ #       servername 5.144.184.145
+
+<Location />
+  AuthType shibboleth
+  Require shibboleth
+  ShibUseHeaders On
+	ShibRequestSetting requireSession 1
+</Location>
+
+WSGIDaemonProcess piper processes=1 threads=5 display-name=piper python-path=/usr/local/lib/python2.7/dist-packages/:/srv/PipER/PipER/:/srv/PipER/
+	WSGIProcessGroup piper	
+	WSGIScriptAlias / /srv/PipER/PipER/wsgi.py
+	<Directory /home/ubuntu/PipER/PipER/>
+		Order deny,allow
+		Allow from all
+	</Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+#	  servername piper.lepida.it
+       servername 5.144.184.145
+
+	WSGIDaemonProcess pipern processes=3 threads=15 display-name=pipern python-path=/usr/local/lib/python2.7/dist-packages/:/srv/Piper/:/srv/featureserver
+	WSGIProcessGroup pipern	
+	WSGIScriptAlias /wfs /srv/featureserver/featureserver.cgi
+        WSGIScriptAlias / /srv/Piper/PipER/wsgi.py
+
+
+        <Directory /home/ubuntu/PipER/PipER/>
+                Order deny,allow
+                Allow from all
+        </Directory>
+
+        <Directory /srv/featureserver/FeatureServer/ >
+                        Order deny,allow
+                        Allow from all
+        </Directory>
+
+
+</VirtualHost>

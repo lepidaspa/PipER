@@ -11,7 +11,17 @@ from data.views import *
 
 def index(request):
     return HttpResponse(json.dumps(all_prox()))
-    
+  
+def inner_json(request):
+    """
+    Search pattern
+    """
+
+    data = run_query([-180, -90, 180, 90], {})
+
+    return HttpResponse(json.dumps(data))
+
+ 
 def search(request):
     """
     Search pattern
@@ -22,9 +32,7 @@ def search(request):
     query= json.loads(query)
     cb_data = request.REQUEST.get('cbd')
     cb_queries = request.REQUEST.get('cbq')
-
-    
-
+ 
     proxies = get_for_bb(bb)
 
     data = run_query(bb, query)   
@@ -45,8 +53,6 @@ def search(request):
 
 def show(request):
     cbd = request.REQUEST.get('cbd', None)
-    if cbd is None:
-        return HttpResponse()
     jsr = {}
     jsr['type'] = "FeatureCollection"
     jsr['features'] = []
@@ -71,8 +77,12 @@ def show(request):
                           "highlight":"false"
         }
         jsr['features'].append(jf)
-        
-    return HttpResponse(cbd+"("+json.dumps(jsr)+");")
+    
+    if cbd is not None:
+    
+        return HttpResponse(cbd+"("+json.dumps(jsr)+");")
+    else:
+        return HttpResponse(json.dumps(jsr))
         
 
 def do_search(request):

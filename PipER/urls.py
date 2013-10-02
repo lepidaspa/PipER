@@ -54,5 +54,7 @@ urlpatterns = patterns('',
     
     url(r'^sld/default$', 'sldgenerator.views.get_default_sld'),
     url(r'^sld/selected$', 'sldgenerator.views.get_selected_sld'),
-    url(r'^external/(?P<path>.*)$', 'interface.views.proxy')
+    url(r'^external/(?P<path>.*)$', 'interface.views.proxy'),
+
+    url(r'^data.geojson$', 'broker.views.inner_json'),
 )
