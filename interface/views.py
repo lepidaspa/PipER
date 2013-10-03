@@ -142,7 +142,6 @@ def approve_manifest (request):
     """
     Approves the manifest and confirms the creation of the softproxy on the main server
     """
-    print request.REQUEST.get('from',"CAZZI")
     print "Answering manifest request"
 
     message = json.loads(request.body)
